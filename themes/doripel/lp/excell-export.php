@@ -16,7 +16,7 @@ if (null === $Admin || false === $Admin || $Admin < $AdminLevel) {
     exit('<div style="text-align: center; margin: 5% 0; color: #C54550; font-size: 1.6em; font-weight: 400; background: #fff; float: left; width: 100%; padding: 30px 0;"><b>ACESSO NEGADO:</b> Você não esta logado<br>ou não tem permissão para acessar essa página!</div>');
 }
 
-$Read->exeRead(DB_LEADS, "ORDER BY lead_name DESC");
+$Read->exeRead(DB_LEADS, "ORDER BY lead_email ASC, lead_date DESC, lead_id DESC");
 
 if (!$Read->getResult()) {
     echo Check::erro('<span>Ainda não existem conversões para esse material!</span>', E_USER_NOTICE);
@@ -29,6 +29,23 @@ header('Cache-Control: max-age=0');
 header('Pragma: public');
 header('Expires: 0');
 
+$Leads = [];
+$Emails = [];
+
+foreach ($Read->getResult() as $Lead) {
+    $Email = strtolower(trim((string) ($Lead['lead_email'] ?? '')));
+    if ($Email === '' || isset($Emails[$Email])) {
+        continue;
+    }
+
+    $Emails[$Email] = true;
+    $Leads[] = $Lead;
+}
+
+usort($Leads, static function (array $LeadA, array $LeadB): int {
+    return strcasecmp((string) ($LeadA['lead_name'] ?? ''), (string) ($LeadB['lead_name'] ?? ''));
+});
+
 $Output = fopen('php://output', 'wb');
 if ($Output === false) {
     exit('Não foi possível gerar o arquivo de exportação.');
@@ -37,7 +54,7 @@ if ($Output === false) {
 fwrite($Output, "\xEF\xBB\xBF");
 fputcsv($Output, ['Nome', 'E-mail', 'Profissão', 'Cidade', 'Conversão', 'Data'], ';', '"', '');
 
-foreach ($Read->getResult() as $Lead) {
+foreach ($Leads as $Lead) {
     fputcsv($Output, [
         Check::getCapilalize((string) ($Lead['lead_name'] ?? '')),
         strtolower((string) ($Lead['lead_email'] ?? '')),
