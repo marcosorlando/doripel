@@ -1,29 +1,31 @@
 <?php
 
-if (!empty($_SESSION['userLogin'])) {
-    $wcFbUserSection = \array_map('mb_strtolower', $_SESSION['userLogin']);
-    $wcFbUserSection['user_lastname'] = \substr(
-        $wcFbUserSection['user_lastname'],
-        \strrpos($wcFbUserSection['user_lastname'], ' ')
-    );
-    $wcFbUserSection['user_phone'] = (empty($wcFbUserSection['user_cell']) ? (isset($wcFbUserSection['user_telephone']) && ('' !== $wcFbUserSection['user_telephone'] && '0' !== $wcFbUserSection['user_telephone']) ? $wcFbUserSection['user_telephone'] : null) : ($wcFbUserSection['user_cell']));
+    if (!empty($_SESSION['userLogin'])) {
+        $wcFbUserSection = \array_map('mb_strtolower', $_SESSION['userLogin']);
+        $wcFbUserSection['user_lastname'] = \substr(
+            $wcFbUserSection['user_lastname'],
+            \strrpos($wcFbUserSection['user_lastname'], ' ')
+        );
+        $wcFbUserSection['user_phone'] = (empty($wcFbUserSection['user_cell']) ? (isset($wcFbUserSection['user_telephone']) && ('' !== $wcFbUserSection['user_telephone'] && '0' !== $wcFbUserSection['user_telephone']) ? $wcFbUserSection['user_telephone'] : null) : ($wcFbUserSection['user_cell']));
 
-    if (isset($wcFbUserSection['user_phone']) && ('' !== $wcFbUserSection['user_phone'] && '0' !== $wcFbUserSection['user_phone'])) {
-        $wcFbUserSection['user_phone'] = \str_replace(['(', ')', ' ', '-', '.'], '', $wcFbUserSection['user_phone']);
+        if (isset($wcFbUserSection['user_phone']) && ('' !== $wcFbUserSection['user_phone'] && '0' !== $wcFbUserSection['user_phone'])) {
+            $wcFbUserSection['user_phone'] = \str_replace(['(', ')', ' ', '-', '.'],
+                '',
+                $wcFbUserSection['user_phone']);
+        }
+
+        $wcFbUserSection['user_datebirth'] = \date('Ymd', \strtotime((string)$wcFbUserSection['user_datebirth']));
+
+        $Read = new Read();
+        $Read->fullRead(
+            'SELECT addr_city, addr_state, addr_zipcode FROM ' . DB_USERS_ADDR . ' WHERE user_id = :id',
+            'id=' . $wcFbUserSection['user_id']
+        );
+        if ($Read->getResult()) {
+            $wcFbUserAddr = \array_map('mb_strtolower', $Read->getResult()[0]);
+            $wcFbUserAddr['addr_zipcode'] = \str_replace(['.', '-'], '', $wcFbUserAddr['addr_zipcode']);
+        }
     }
-
-    $wcFbUserSection['user_datebirth'] = \date('Ymd', \strtotime((string) $wcFbUserSection['user_datebirth']));
-
-    $Read = new Read();
-    $Read->fullRead(
-        'SELECT addr_city, addr_state, addr_zipcode FROM '.DB_USERS_ADDR.' WHERE user_id = :id',
-        'id='.$wcFbUserSection['user_id']
-    );
-    if ($Read->getResult()) {
-        $wcFbUserAddr = \array_map('mb_strtolower', $Read->getResult()[0]);
-        $wcFbUserAddr['addr_zipcode'] = \str_replace(['.', '-'], '', $wcFbUserAddr['addr_zipcode']);
-    }
-}
 ?>
 <script>
     $(function () {
@@ -133,13 +135,13 @@ if (!empty($_SESSION['userLogin'])) {
             });
         }
 
-        <?php if (APP_PRODUCTS_TRAVI !== 1) { ?>
+        <?php if (APP_PRODUCTS_DORIPEL !== 1) { ?>
         //E-COMMERCE :: PRODUTO
         WC_SEGMENT_ECOMMERCE = <?= empty(SEGMENT_WC_ECOMMERCE) ? 0 : 1; ?>;
         if (WC_LINK.match('produto/') && WC_SEGMENT_ECOMMERCE) {
             fbq('track', 'ViewContent', {
                 content_name: '<?= empty($pdt_title) ? null : $pdt_title; ?>',
-                content_ids: '<?= empty($pdt_id) ? null : 'product_'.$pdt_id; ?>',
+                content_ids: '<?= empty($pdt_id) ? null : 'product_' . $pdt_id; ?>',
                 content_type: 'product',
                 content_category: '<?= empty($Category['cat_title']) ? 'null' : $Category['cat_title']; ?>',
                 value: '<?= empty($pdt_price) ? null : $pdt_price; ?>',
@@ -189,10 +191,10 @@ if (!empty($_SESSION['userLogin'])) {
         var CartValue = $('.wc_cart_price span').text().replace('.', '').replace(',', '.');
         if (WC_LINK.match('pedido/home') && CartValue && WC_SEGMENT_ECOMMERCE) {
             fbq('track', 'AddToCart', {
-                content_ids: [<?= empty($wcCartIds) ? null : "'product_".\implode(
-                    "', 'product_",
-                    $wcCartIds
-                )."'"; ?>],
+                content_ids: [<?= empty($wcCartIds) ? null : "'product_" . \implode(
+                        "', 'product_",
+                        $wcCartIds
+                    ) . "'"; ?>],
                 content_type: 'product',
                 value: CartValue,
                 currency: 'BRL',
@@ -231,10 +233,10 @@ if (!empty($_SESSION['userLogin'])) {
         //E-COMMERCE :: COMPRA CONCLUÍDA
         if (WC_LINK.match('pedido/obrigado') && WC_SEGMENT_ECOMMERCE) {
             fbq('track', 'Purchase', {
-                content_ids: [<?= empty($wcCartIds) ? null : "'product_".\implode(
-                    "', 'product_",
-                    $wcCartIds
-                )."'"; ?>],
+                content_ids: [<?= empty($wcCartIds) ? null : "'product_" . \implode(
+                        "', 'product_",
+                        $wcCartIds
+                    ) . "'"; ?>],
                 content_type: 'product',
                 value: CartValue,
                 currency: 'BRL',
@@ -258,7 +260,7 @@ if (!empty($_SESSION['userLogin'])) {
                     $realty_transaction
                 ); ?>',
                 content_finality: '<?= empty($realty_finality) ? 'null' : \getWcRealtyFinality($realty_finality); ?>',
-                content_ids: '<?= empty($realty_id) ? null : 'realty_'.$realty_id; ?>',
+                content_ids: '<?= empty($realty_id) ? null : 'realty_' . $realty_id; ?>',
                 content_type: 'product',
                 value: '<?= empty($realty_price) ? null : $realty_price; ?>',
                 currency: 'BRL',

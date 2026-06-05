@@ -335,6 +335,7 @@
                 'DB_PDT_COLORS_DORIPEL' => 'ws_products_colors_doripel',
                 'DB_PDT_STOCK_DORIPEL' => 'ws_products_stock_doripel',
                 'DB_PDT_VOLUMES_DORIPEL' => 'ws_products_volumes_doripel',
+                'DB_CTAS' => 'ws_ctas',
 
                 'DB_REPRESENTATIVES' => 'ws_representatives',
                 'DB_STATES' => 'states',

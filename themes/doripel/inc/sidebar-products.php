@@ -1,4 +1,6 @@
 <?php
+
+use App\Helpers\Check;
 setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
 date_default_timezone_set('America/Sao_Paulo');
 ?>
@@ -21,17 +23,17 @@ date_default_timezone_set('America/Sao_Paulo');
     <form name="search" action="" method="post" enctype="multipart/form-data">
       <div class="position-relative">
                   <?php
-          $Read->ExeRead(DB_PDT_COLORS_DORIPEL,
+          $Read->exeRead(DB_PDT_COLORS_DORIPEL,
             "WHERE color_title IN(SELECT pdt_color FROM " . DB_PDT_DORIPEL . " WHERE pdt_status <> 0 AND pdt_created <= NOW()) ORDER BY color_title ASC");
-          if (!$Read->getResult()):
-              echo Erro("Ainda não existem cores cadastradas!", E_USER_NOTICE);
-          else:
+          if (!$Read->getResult()) {
+              echo Check::erro("Ainda não existem cores cadastradas!", E_USER_NOTICE);
+          } else {
 
-              foreach ($Read->getResult() as $Colors):
+              foreach ($Read->getResult() as $Colors) {
                   extract($Colors);
                   echo "<label><input name='p' type='radio' class='input-check-filter' value='{$color_name}'>  {$color_title}</label><br>";
-              endforeach;
-          endif;
+              }
+          }
           ?>
         <button class="btn btn-deep-pink btn-small"><i class="fa fa-filter"></i> FILTRAR</button>
       </div>
@@ -45,25 +47,25 @@ date_default_timezone_set('America/Sao_Paulo');
       <span>Categorias</span></div>
 
       <?php
-      $Read->ExeRead(DB_PDT_CATS_DORIPEL,
+      $Read->exeRead(DB_PDT_CATS_DORIPEL,
         "WHERE cat_parent IS NULL AND cat_id IN(SELECT pdt_category FROM " . DB_PDT_DORIPEL . " WHERE pdt_status <> 0 AND pdt_created <= NOW()) ORDER BY cat_title ASC");
-      if (!$Read->getResult()):
-          echo Erro("Ainda não existem sessões cadastradas!", E_USER_NOTICE);
-      else:
+      if (!$Read->getResult()) {
+          echo Check::erro("Ainda não existem sessões cadastradas!", E_USER_NOTICE);
+      } else {
           echo "<ul class='list-style-6 margin-50px-bottom text-small'>";
-          foreach ($Read->getResult() as $Ses):
+          foreach ($Read->getResult() as $Ses) {
               echo "<li><a title='moveis/{$Ses['cat_name']}' href='" . BASE . "/moveis/{$Ses['cat_name']}'><i class='fa fa-tags text-deep-pink'></i> {$Ses['cat_title']}</a></li>";
-              $Read->ExeRead(DB_PDT_CATS_DORIPEL,
-                "WHERE cat_parent = :cp AND cat_id IN(SELECT pdt_subcategory FROM " . DB_PDT_DORIPEL . " WHERE pdt_status = 1 AND pdt_created <= NOW()) ORDER BY cat_title ASC",
+              $Read->exeRead(DB_PDT_CATS_DORIPEL,
+                "WHERE cat_parent = :cp AND EXISTS(SELECT 1 FROM " . DB_PDT_DORIPEL . " p WHERE p.pdt_status = 1 AND p.pdt_created <= NOW() AND FIND_IN_SET(cat_id, p.pdt_subcategory)) ORDER BY cat_title ASC",
                 "cp={$Ses['cat_id']}");
-              if ($Read->getResult()):
-                  foreach ($Read->getResult() as $Cat):
+              if ($Read->getResult()) {
+                  foreach ($Read->getResult() as $Cat) {
                       echo "<li><a title='moveis/{$Cat['cat_name']}' href='" . BASE . "/moveis/{$Cat['cat_name']}'><i class='margin-10px-left fa fa-tag'></i> {$Cat['cat_title']}</a></li>";
-                  endforeach;
-              endif;
-          endforeach;
+                  }
+              }
+          }
           echo "</ul>";
-      endif;
+      }
       ?>
   </div>
   <div class="margin-45px-bottom xs-margin-25px-bottom">

@@ -26,52 +26,52 @@
 
                             <?php
 
-                                $Read->FullRead("SELECT cat_id, cat_title, cat_name FROM " . DB_PDT_CATS_DORIPEL . " WHERE cat_parent IS NULL AND cat_id IN(SELECT pdt_category FROM " . DB_PDT_DORIPEL . " WHERE pdt_status = 1) ORDER BY cat_title ASC");
-                                //$Read->ExeRead(DB_PDT_CATS_DORIPEL, "WHERE cat_parent IS NULL ORDER BY cat_name ASC");
-                                if ($Read->getResult()):
-                                    foreach ($Read->getResult() as $Cat):
+                                $Read->fullRead("SELECT cat_id, cat_title, cat_name FROM " . DB_PDT_CATS_DORIPEL . " WHERE cat_parent IS NULL AND cat_id IN(SELECT pdt_category FROM " . DB_PDT_DORIPEL . " WHERE pdt_status = 1) ORDER BY cat_title ASC");
+                                //$Read->exeRead(DB_PDT_CATS_DORIPEL, "WHERE cat_parent IS NULL ORDER BY cat_name ASC");
+                                if ($Read->getResult()) {
+                                    foreach ($Read->getResult() as $Cat) {
                                         echo "<li class='dropdown simple-dropdown'><a title=' " . SITE_NAME . " | {$Cat['cat_title']}' href='" . BASE . "/moveis/{$Cat['cat_name']}'>{$Cat['cat_title']}</a>";
 
-                                        $Read->ExeRead(DB_PDT_CATS_DORIPEL, "WHERE cat_parent = :ct ORDER BY cat_name ASC", "ct={$Cat['cat_id']}");
-                                        if ($Read->getResult()):
+                                        $Read->exeRead(DB_PDT_CATS_DORIPEL, "WHERE cat_parent = :ct AND EXISTS(SELECT 1 FROM " . DB_PDT_DORIPEL . " p WHERE p.pdt_status = 1 AND p.pdt_created <= NOW() AND FIND_IN_SET(cat_id, p.pdt_subcategory)) ORDER BY cat_name ASC", "ct={$Cat['cat_id']}");
+                                        if ($Read->getResult()) {
                                             echo "<ul class='dropdown-menu' role='menu' >";
-                                            foreach ($Read->getResult() as $SubCat):
+                                            foreach ($Read->getResult() as $SubCat) {
                                                 echo "<li><a title='{$Cat['cat_title']} | {$SubCat['cat_title']}' href='" . BASE . "/moveis/{$SubCat['cat_name']}'>{$SubCat['cat_title']}</a></li>";
-                                            endforeach;
+                                            }
                                             echo "</ul>";
-                                        endif;
+                                        }
                                         echo "</li>";
-                                    endforeach;
-                                endif;
+                                    }
+                                }
 
-                                $Read->ExeRead(DB_CATEGORIES, "WHERE category_parent IS NULL ORDER BY category_name ASC");
-                                if ($Read->getResult()):
-                                    foreach ($Read->getResult() as $Cat):
+                                $Read->exeRead(DB_CATEGORIES, "WHERE category_parent IS NULL ORDER BY category_name ASC");
+                                if ($Read->getResult()) {
+                                    foreach ($Read->getResult() as $Cat) {
                                         echo "<li class='dropdown simple-dropdown'><a title=' " . SITE_NAME . " | {$Cat['category_title']}' href='" . BASE . "/artigos/{$Cat['category_name']}'>{$Cat['category_title']}</a>";
-                                        $Read->ExeRead(DB_CATEGORIES, "WHERE category_parent = :ct ORDER BY category_name ASC", "ct={$Cat['category_id']}");
-                                        if ($Read->getResult()):
+                                        $Read->exeRead(DB_CATEGORIES, "WHERE category_parent = :ct ORDER BY category_name ASC", "ct={$Cat['category_id']}");
+                                        if ($Read->getResult()) {
                                             echo "<ul class='dropdown-menu' role='menu' >";
-                                            foreach ($Read->getResult() as $SubCat):
+                                            foreach ($Read->getResult() as $SubCat) {
                                                 echo "<li><a title='{$Cat['category_title']} | {$SubCat['category_title']}' href='" . BASE . "/artigos/{$SubCat['category_name']}'>{$SubCat['category_title']}</a></li>";
-                                            endforeach;
+                                            }
                                             echo "</ul>";
-                                        endif;
+                                        }
                                         echo "</li>";
-                                    endforeach;
-                                endif;
+                                    }
+                                }
 
-                                $Read->FullRead("SELECT page_title, page_name FROM " . DB_PAGES . " WHERE page_status = 1 AND page_id != 2 ORDER BY page_order ASC, page_name ASC");
-                                if ($Read->getResult()):
-                                    foreach ($Read->getResult() as $Page):
+                                $Read->fullRead("SELECT page_title, page_name FROM " . DB_PAGES . " WHERE page_status = 1 AND page_id != 2 ORDER BY page_order ASC, page_name ASC");
+                                if ($Read->getResult()) {
+                                    foreach ($Read->getResult() as $Page) {
                                         echo "<li><a title='" . SITE_NAME . " | {$Page['page_title']}' href='" . BASE . "/{$Page['page_name']}'>{$Page['page_title']}</a></li>";
-                                    endforeach;
-                                endif;
+                                    }
+                                }
 
-                                //if (ACC_MANAGER):
+                                //if (ACC_MANAGER) {
                                 //   echo "<li class='login'>";
                                 // require '_cdn/widgets/account/account.bar.php';
                                 // echo "</li>";
-                                //endif;
+                                //}
                             ?>
                             <!--              <li>-->
                             <!--                <a title="--><? //= SITE_NAME; ?><!-- | PEDIDOS ONLINE" >-->

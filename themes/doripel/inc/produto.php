@@ -7,7 +7,7 @@
       </a>
     </div>
     <div class="post-details">
-      <a href="<?= BASE; ?>/movel/<?= $pdt_title; ?>">
+      <a href="<?= BASE; ?>/movel/<?= $pdt_name; ?>">
         <h2 class="post-title text-medium text-dark-gray display-block sm-width-100 text-center"><?= $pdt_title; ?> - <?= $pdt_color; ?></h2>
       </a>
       <h3 class="text-medium sm-width-100 text-center text-extra-medium-gray">REF. <?= $pdt_ref; ?></h3>

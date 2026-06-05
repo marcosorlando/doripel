@@ -1,17 +1,20 @@
 <?php
-if (!$Read):
+
+use App\Models\Email;
+use App\Conn\Read;
+if (!$Read){
   $Read = new Read;
-endif;
+}
 
 $Email = new Email;
 
-$Read->ExeRead(DB_PAGES, "WHERE page_name = :nm", "nm={$URL[0]}");
-if (!$Read->getResult()):
+$Read->exeRead(DB_PAGES, "WHERE page_name = :nm", "nm={$URL[0]}");
+if (!$Read->getResult()){
   require REQUIRE_PATH . '/404.php';
   return;
-else:
+} else {
   extract($Read->getResult()[0]);
-endif;
+}
 ?>
 <div class="top_conversion breadcrumbs">
   <div class="content">
@@ -32,7 +35,7 @@ endif;
     <div class="clear"></div>
   </div>
 </div>
-<?php if (APP_COMMENTS && COMMENT_ON_PAGES): ?>
+<?php if (APP_COMMENTS && COMMENT_ON_PAGES){ ?>
   <div class="container" style="background: #fff; padding: 20px 0;">
     <div class="content">
       <?php
@@ -43,4 +46,4 @@ endif;
       <div class="clear"></div>
     </div>
   </div>
-<?php endif; ?>
+<?php } ?>

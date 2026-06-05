@@ -1,23 +1,20 @@
 <?php
 
+use App\Helpers\Check;
+use App\Conn\Create;
+use App\Models\Email;
+
+
     //DEFINE O CALLBACK E RECUPERA O POST
     require_once '../../../../_app/Config.inc.php';
 
     $jSON = null;
     $CallBack = 'Leads';
-    $PostData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-    var_dump($PostData);
-
-    die;
+    $PostData = filter_input_array(INPUT_POST, FILTER_DEFAULT) ?: [];
 
 
     //VALIDA AÇÃO
-    if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBack):
-
-        var_dump($PostData);
-
-    die;
+    if (isset($PostData['callback'], $PostData['callback_action']) && $PostData['callback'] === $CallBack) {
 
         //PREPARA OS DADOS
         $Case = $PostData['callback_action'];
@@ -38,25 +35,25 @@
         $PostData = array_map('strip_tags', $PostData);
 
         //SELECIONA AÇÃO
-        switch ($Case):
+        switch ($Case) {
             //CAPTURA DE ACORDO COM CALLBACK-ACTION
             case 'manage':
 
-                if (in_array('', $PostData)):
+                if (in_array('', $PostData, true)) {
 
-                    $jSON['trigger'] = AjaxErro('<strong>OPPSSS:</strong> Favor preencha todos os campos!', E_USER_NOTICE);
+                    $jSON['trigger'] = Check::ajaxErro('<strong>OPPSSS:</strong> Favor preencha todos os campos!', E_USER_NOTICE);
 
-                elseif (!Check::Email($PostData['lead_email']) || !filter_var($PostData['lead_email'], FILTER_VALIDATE_EMAIL)):
+                } elseif (!Check::email($PostData['lead_email']) || !filter_var($PostData['lead_email'], FILTER_VALIDATE_EMAIL)) {
 
-                    $jSON['trigger'] = AjaxErro('<strong>OPPSSS:  </strong>' . $PostData['lead_name'] . ' o e-mail informado não é válido!', E_USER_NOTICE);
+                    $jSON['trigger'] = Check::ajaxErro('<strong>OPPSSS:  </strong>' . $PostData['lead_name'] . ' o e-mail informado não é válido!', E_USER_NOTICE);
 
-                elseif ($human == false):
+                } elseif ($human == false) {
 
-                    $jSON['trigger'] = AjaxErro('<strong>OPPSSS:  </strong>' . $PostData['lead_name'] . ', para receber seu material, realize a soma dos números corretamente', E_USER_WARNING);
-                else:
+                    $jSON['trigger'] = Check::ajaxErro('<strong>OPPSSS:  </strong>' . $PostData['lead_name'] . ', para receber seu material, realize a soma dos números corretamente', E_USER_WARNING);
+                } else {
 
                     $Create = new Create;
-                    $Create->ExeCreate(DB_LEADS, $PostData);
+                    $Create->exeCreate(DB_LEADS, $PostData);
 
                     $BaseDir = BASE;
                     $Path = INCLUDE_PATH;
@@ -165,21 +162,20 @@
                     //EnviarMontando($Assunto, $Mensagem, $RemetenteNome, $RemetenteEmail, $DestinoNome, $DestinoEmail) {
                     $Email->EnviarMontando('E-book: ' . $ebook_title, $MailContent, SITE_ADDR_NAME, MAIL_USER, $PostData['lead_name'], $PostData['lead_email']);
 
-                    $jSON['trigger'] = AjaxErro("<strong>Obrigado!</strong> Um link foi enviado para seu e-mail para salvar seu E-book!");
+                    $jSON['trigger'] = Check::ajaxErro("<strong>Obrigado!</strong> Um link foi enviado para seu e-mail para salvar seu E-book!");
                     $jSON['redirect'] = $Link;
-                    //endif;
-                endif;
+                }
                 break;
-        endswitch;
+        }
 
         //RETORNA O CALLBACK
-        if ($jSON):
+        if ($jSON) {
             echo json_encode($jSON);
-        else:
-            $jSON['trigger'] = AjaxErro('<strong class="icon-warning">OPSS:</strong> Desculpe. Mas uma ação do sistema não respondeu corretamente. Ao persistir, contate o desenvolvedor!', E_USER_ERROR);
+        } else {
+            $jSON['trigger'] = Check::ajaxErro('<strong class="icon-warning">OPSS:</strong> Desculpe. Mas uma ação do sistema não respondeu corretamente. Ao persistir, contate o desenvolvedor!', E_USER_WARNING);
             echo json_encode($jSON);
-        endif;
-    else:
+        }
+    } else {
         //ACESSO DIRETO
-        die('<br><br><br><center><h1>Acesso Restrito!</h1></center>');
-    endif;
+        exit('<br><br><br><center><h1>Acesso Restrito!</h1></center>');
+    }

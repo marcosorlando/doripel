@@ -1,17 +1,20 @@
 <?php
-if (!$Read):
+
+use App\Models\Email;
+use App\Conn\Read;
+if (!$Read){
   $Read = new Read;
-endif;
+}
 
 $Email = new Email;
 
-$Read->ExeRead(DB_PAGES, "WHERE page_name = :nm", "nm={$URL[0]}");
-if (!$Read->getResult()):
+$Read->exeRead(DB_PAGES, "WHERE page_name = :nm", "nm={$URL[0]}");
+if (!$Read->getResult()){
   require REQUIRE_PATH . '/404.php';
   return;
-else:
+} else {
   extract($Read->getResult()[0]);
-endif;
+}
 ?>
 <!-- start page title section -->
 <section class="wow fadeIn bg-extra-dark-gray padding-35px-tb page-title-small top-space">

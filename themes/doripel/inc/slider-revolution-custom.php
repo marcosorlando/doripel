@@ -1,3 +1,7 @@
+<?php
+
+use App\Conn\Read;
+?>
 <!-- start slider section -->
 <section class="no-padding main-slider height-100 mobile-height wow fadeIn bg_blue ">
     <div class="swiper-full-screen swiper-container height-100 width-100 black-move">
@@ -5,9 +9,11 @@
 
             <?php
 
-                $Read = new Read;
-                $Read->ExeRead(DB_SLIDES, "WHERE slide_status = 1 AND slide_start <= NOW() AND (slide_end >= NOW() OR slide_end IS NULL) ORDER BY slide_date DESC");
-                if (!$Read->getResult()):
+                if (empty($Read)) {
+                    $Read = new Read;
+                }
+                $Read->exeRead(DB_SLIDES, "WHERE slide_status = 1 AND slide_start <= NOW() AND (slide_end >= NOW() OR slide_end IS NULL) ORDER BY slide_date DESC");
+                if (!$Read->getResult()) {
 
                     ?>
                     <!-- start slider static -->
@@ -34,8 +40,8 @@
                     </div>
                     <!-- end slider static -->
                 <?php
-                else:
-                    foreach ($Read->getResult() as $Slide):
+                } else {
+                    foreach ($Read->getResult() as $Slide) {
                         extract($Slide);
                         ?>
 
@@ -71,8 +77,8 @@
                         </div>
                         <!-- end slider item -->
                     <?php
-                    endforeach;
-                endif;
+                    }
+                }
             ?>
         </div>
         <!-- start slider pagination -->

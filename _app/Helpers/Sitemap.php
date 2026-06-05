@@ -158,9 +158,9 @@
                 }
             }
 
-            if ($this->isFeatureEnabled('APP_PRODUCTS_TRAVI')) {
+            if ($this->isFeatureEnabled('APP_PRODUCTS_DORIPEL')) {
                 // PRODUCTS CATEGORIES
-                $Read->fullRead('SELECT cat_name, cat_created FROM ' . DB_PDT_CATS_TRAVI . ' ORDER BY cat_title ASC');
+                $Read->fullRead('SELECT cat_name, cat_created FROM ' . DB_PDT_CATS_DORIPEL . ' ORDER BY cat_title ASC');
                 $productCategories = $Read->getResult();
                 if (is_array($productCategories) && [] !== $productCategories) {
                     /**
@@ -191,7 +191,7 @@
                 }
 
                 // PRODUTCTS
-                $Read->fullRead('SELECT pdt_name, pdt_created FROM ' . DB_PDT_TRAVI . ' ORDER BY pdt_created DESC');
+                $Read->fullRead('SELECT pdt_name, pdt_created FROM ' . DB_PDT_DORIPEL . ' ORDER BY pdt_created DESC');
                 $products = $Read->getResult();
                 if (is_array($products) && [] !== $products) {
                     /**

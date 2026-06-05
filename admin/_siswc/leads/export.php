@@ -46,7 +46,7 @@ if (false === $output) {
 \fwrite($output, "\xEF\xBB\xBF");
 
 $columns = ['Nome', 'E-mail', 'Profissão', 'Cidade', 'Conversão', 'Data'];
-\fputcsv($output, $columns, ';');
+\fputcsv($output, $columns, ';', '"', '');
 
 foreach ($read->getResult() as $lead) {
     $leadName = isset($lead['lead_name']) ? Check::getCapilalize((string) $lead['lead_name']) : '';
@@ -77,7 +77,9 @@ foreach ($read->getResult() as $lead) {
             $leadConversion,
             $leadDate,
         ],
-        ';'
+        ';',
+        '"',
+        ''
     );
 }
 

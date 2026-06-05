@@ -1,13 +1,17 @@
 <?php
 
-    $Read->ExeRead(DB_PAGES, "WHERE page_name = :nm AND page_status = 1", "nm={$URL[0]}");
-    if (!$Read->getResult()):
+use App\Helpers\Check;
+use App\Models\Email;
+
+
+    $Read->exeRead(DB_PAGES, "WHERE page_name = :nm AND page_status = 1", "nm={$URL[0]}");
+    if (!$Read->getResult()){
         require REQUIRE_PATH . '/404.php';
 
         return;
-    else:
+    } else {
         extract($Read->getResult()[0]);
-    endif;
+    }
 ?>
 <!-- start page title section -->
 <section class="wow fadeIn bg-light-gray padding-35px-tb page-title-small top-space">
@@ -109,17 +113,17 @@
         </div>
         <?php
 
-            $Contato = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+            $Contato = filter_input_array(INPUT_POST, FILTER_DEFAULT) ?: [];
 
-            if ($Contato && $Contato['action'] == 'contact'):
+            if ($Contato && isset($Contato['action']) && $Contato['action'] == 'contact'){
                 unset($Contato['action']);
 
-                if (in_array('', $Contato)):
-                    Erro("Para enviar seu contato, favor preencha todos os campos!", E_USER_WARNING);
-                elseif (!Check::Email($Contato['email']) || !filter_var($Contato['email'], FILTER_VALIDATE_EMAIL)):
-                    Erro("Desculpe, mas o e-mail que você informou não tem um formato válido!", E_USER_ERROR);
-                else:
-                    array_map('strip_tags', $Contato);
+                if (in_array('', $Contato)){
+                    echo Check::erro("Para enviar seu contato, favor preencha todos os campos!", E_USER_WARNING);
+                } elseif (!Check::email($Contato['email']) || !filter_var($Contato['email'], FILTER_VALIDATE_EMAIL)){
+                    echo Check::erro("Desculpe, mas o e-mail que você informou não tem um formato válido!", E_USER_WARNING);
+                } else {
+                    $Contato = array_map('strip_tags', $Contato);
 
                     $MailContent = '
                         <table width="550" style="font-family: Tahoma, sans-serif">
@@ -159,20 +163,20 @@
                     $Email = new Email;
                     $Email->EnviarMontando($Contato['assunto'], $MailContent, $Contato['nome'], $Contato['email'], SITE_ADDR_NAME, SITE_ADDR_EMAIL);
 
-                    if (!$Email->getError()):
+                    if (!$Email->getError()){
                         $_SESSION['sucesso'] = "{$Saudacao} {$Contato['nome']}, sua mensagem foi recebida com sucesso. Obrigado!";
                         $Email->EnviarMontando('Confirmação de recebimento', $Agradecimento, 'Doripel Móveis', 'doripel@doripel.com.br', $Contato['nome'], $Contato['email']);
                         header('Location: ' . BASE . '/contato#formulario');
-                    else:
-                        Erro("Desculpe, não foi possível enviar sua mensagem. Entre em contato via por E-mail: " . SITE_ADDR_EMAIL . ". Obrigado!", E_USER_ERROR);
-                    endif;
-                endif;
-            endif;
+                    } else {
+                        echo Check::erro("Desculpe, não foi possível enviar sua mensagem. Entre em contato via por E-mail: " . SITE_ADDR_EMAIL . ". Obrigado!", E_USER_WARNING);
+                    }
+                }
+            }
 
-            if (!empty($_SESSION['sucesso']) && empty($Contato)):
-                Erro($_SESSION['sucesso']);
+            if (!empty($_SESSION['sucesso']) && empty($Contato)){
+                echo Check::erro($_SESSION['sucesso']);
                 unset($_SESSION['sucesso']);
-            endif;
+            }
         ?>
         <form action="" class="animated fadeIn" method="post" enctype="multipart/form-data" novalidate="true">
             <input type="hidden" name="action" value="contact"/>

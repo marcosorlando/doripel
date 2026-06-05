@@ -1,10 +1,12 @@
 <?php
-if (!$Read):
+
+use App\Conn\Read;
+if (!$Read){
   $Read = new Read;
-endif;
-if (!ACC_MANAGER):
+}
+if (!ACC_MANAGER){
   require REQUIRE_PATH . '/404.php';
-else:
+} else {
   ?>
   <section class="wow fadeIn bg-light-gray padding-35px-tb page-title-small top-space margin-25px-bottom">
     <div class="container">
@@ -31,4 +33,4 @@ else:
   </div>
 
 <?php
-endif;
+}

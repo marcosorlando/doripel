@@ -6,7 +6,7 @@
     use App\Helpers\Check;
 
     $AdminLevel = LEVEL_WC_PRODUCTS;
-    if (!APP_PRODUCTS_TRAVI || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
+    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
         Check::accessBlocked();
     }
 

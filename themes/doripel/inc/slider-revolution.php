@@ -1,3 +1,7 @@
+<?php
+
+use App\Conn\Read;
+?>
 <!-- start slider header section -->
 <section class="wow fadeIn example no-padding no-transition">
   <article class="content">
@@ -7,9 +11,11 @@
       <div id="rev_slider_1078_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.1">
         <ul>
             <?php
-            $Read = new Read;
-            $Read->ExeRead(DB_SLIDES,"WHERE slide_status = 1 AND slide_start <= NOW() AND (slide_end >= NOW() OR slide_end IS NULL) ORDER BY slide_date DESC");
-            if (!$Read->getResult()):
+            if (empty($Read)) {
+                $Read = new Read;
+            }
+            $Read->exeRead(DB_SLIDES,"WHERE slide_status = 1 AND slide_start <= NOW() AND (slide_end >= NOW() OR slide_end IS NULL) ORDER BY slide_date DESC");
+            if (!$Read->getResult()) {
                 ?>
               <!-- slides  -->
               <li data-index="rs-3045" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="200" data-thumb="" data-rotate="0" data-fstransition="fade" data-fsmasterspeed="100" data-fsslotamount="0" data-saveperformance="off" data-title="" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
@@ -78,8 +84,8 @@
               </li>
 
             <?php
-            else:
-                foreach ($Read->getResult() as $Slide):
+            } else {
+                foreach ($Read->getResult() as $Slide) {
                     extract($Slide);
                     ?>
                   <!-- slides  -->
@@ -153,8 +159,8 @@
                   </li>
                   <!-- end slider item -->
                 <?php
-                endforeach;
-            endif;
+                }
+            }
             ?>
 
         </ul>

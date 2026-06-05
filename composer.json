@@ -1,6 +1,6 @@
 {
-  "name": "localhost/zen",
-  "description": "Website da Zen Agência Web",
+  "name": "localhost/doripel",
+  "description": "Website da Doripel Móveis",
   "license": "proprietary",
   "autoload": {
     "psr-4": {
@@ -39,7 +39,7 @@
     "wc:legacy-dr": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --dry-run `seu-diretorio-alvo`",
     "wc:legacy-apply": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo`",
     "wc:legacy-apply-report": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo` --report `caminho/para/o/arquivo/de/relatorio`",
-      "wc:legacy-apply-backup": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo` --report `caminho/para/o/arquivo/de/relatorio`"
+    "wc:legacy-apply-backup": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo` --report `caminho/para/o/arquivo/de/relatorio`"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.94"

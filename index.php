@@ -119,17 +119,11 @@
 	<meta property="twitter:image" content="<?= $SEO->getImage(); ?>"/>
 	<meta property="twitter:url" content="<?= BASE; ?>/<?= $getURL; ?>"/>
 
-    <?php
-        require_once REQUIRE_PATH . '/inc/fonts.php';
-    ?>
-
 	<!-- favicon -->
-	<link rel="shortcut icon" href="<?= INCLUDE_PATH; ?>/assets/images/icons/favicon.png">
-	<link rel="apple-touch-icon" href="<?= INCLUDE_PATH; ?>/assets/images/icons/apple-touch-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="72x72"
-	      href="<?= INCLUDE_PATH; ?>/assets/images/icons/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114"
-	      href="<?= INCLUDE_PATH; ?>/assets/images/icons/apple-touch-icon-114x114.png">
+	<link rel='shortcut icon' href='<?= INCLUDE_PATH; ?>/images/favicon.png'>
+	<link rel='apple-touch-icon' href='<?= INCLUDE_PATH; ?>/images/apple-touch-icon-57x57.png'>
+	<link rel='apple-touch-icon' sizes='72x72' href='<?= INCLUDE_PATH; ?>/images/apple-touch-icon-72x72.png'>
+	<link rel='apple-touch-icon' sizes='114x114' href='<?= INCLUDE_PATH; ?>/images/apple-touch-icon-114x114.png'>
 
 	<link rel='stylesheet' href='<?= BASE; ?>/assets/bootcss/reset.min.css'/>
 
@@ -140,25 +134,37 @@
          endif;*/
     ?>
 
-	<!--ZEN THEME CSS-->
+	<!--DORIPEL THEME CSS-->
 
-	<!-- Font Icons -->
-	<link href='<?= INCLUDE_PATH; ?>/assets/fonts/font-awesome/css/font-awesome.min.css' rel='stylesheet'
-	      type='text/css'/>
-	<link href='<?= INCLUDE_PATH; ?>/assets/fonts/Stroke-Gap-Icons-Webfont/style.min.css' rel='stylesheet'
-	      type='text/css'/>
-	<!-- components -->
-	<link href='<?= INCLUDE_PATH; ?>/assets/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
-	<link href='<?= INCLUDE_PATH; ?>/assets/owl-carousel/owl-carousel/owl.carousel.css' rel='stylesheet'
-	      type='text/css'/>
-	<link href='<?= INCLUDE_PATH; ?>/assets/slider-pro/dist/css/slider-pro.min.css' rel='stylesheet'
-	      type='text/css'/>
-	<link href='<?= INCLUDE_PATH; ?>/assets/slick-carousel/slick/slick.css' rel='stylesheet' type='text/css'/>
-	<link href='<?= INCLUDE_PATH; ?>/assets/animate/animate.min.css' rel='stylesheet' type='text/css'/>
-	<link href='<?= INCLUDE_PATH; ?>/assets/fancybox/source/jquery.fancybox.css' rel='stylesheet' type='text/css'/>
+	<!-- animation -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/animate.css'/>
+	<!-- bootstrap -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/bootstrap.min.css'/>
+	<!-- et line icon -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/et-line-icons.css'/>
+	<!-- font-awesome icon -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/font-awesome.min.css'/>
+	<!-- themify icon -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/themify-icons.css'>
+	<!-- flaticon icon -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/flaticon.css'>
+	<!-- swiper carousel -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/swiper.min.css'>
+	<!-- justified gallery -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/justified-gallery.min.css'>
+	<!-- magnific popup -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/magnific-popup.css'/>
+	<!-- revolution slider -->
+	<link rel='stylesheet' type='text/css' href='<?= INCLUDE_PATH; ?>/revolution/css/settings.css' media='screen'/>
+	<link rel='stylesheet' type='text/css' href='<?= INCLUDE_PATH; ?>/revolution/css/layers.css'>
+	<link rel='stylesheet' type='text/css' href='<?= INCLUDE_PATH; ?>/revolution/css/navigation.css'>
+	<!-- bootsnav -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/bootsnav.css'>
+	<!-- style -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/css/style.css'/>
+	<!-- responsive css -->
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/responsive.css'/>
 
-	<link href='<?= INCLUDE_PATH; ?>/assets/css/style.css' rel='stylesheet' type='text/css'/>
-	<link href='<?= INCLUDE_PATH; ?>/assets/css/main.css' rel='stylesheet' type='text/css'/>
 	<!--ZEN THEME JS-->
 
 	<!-- JS BASE ASSETS PROJECT -->
@@ -490,32 +496,79 @@
 
 <!--ZEN THEME JS-->
 <!-- components -->
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
 
-<script src='<?= INCLUDE_PATH; ?>/assets/jquery-ui/jquery-ui.min.js' type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/bootstrap/dist/js/bootstrap.min.js' type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/owl-carousel/owl-carousel/owl.carousel.min.js'
-        type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/waypoints/lib/jquery.waypoints.min.js' type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/slider-pro/dist/js/jquery.sliderPro.min.js'
-        type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/slick-carousel/slick/slick.min.js' type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.min.js'
-        type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/wow/dist/wow.min.js' type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/fancybox/source/jquery.fancybox.pack.js' type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/js/modernizr.js' type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/js/custom.min.js' type='text/javascript'></script>
-<script src='<?= INCLUDE_PATH; ?>/assets/js/contact.js' type='text/javascript'></script>
-
-<script>
-    if (window.jQuery && !window.__zenSearchHandlerBound) {
-        jQuery(document).on('click', '#search-open, #search-close', function (e) {
-            e.preventDefault();
-            jQuery('.header').toggleClass('search-open');
-        });
-    }
-</script>
+<!-- start scroll to top -->
+<a class='scroll-top-arrow' href='javascript:void(0);'><i class='ti-arrow-up'></i></a>
+<!-- end scroll to top -->
+<!-- javascript libraries -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/modernizr.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/bootstrap.min.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.easing.1.3.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/skrollr.min.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/smooth-scroll.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.appear.js'></script>
+<!-- menu navigation -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/bootsnav.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.nav.js'></script>
+<!-- animation -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/wow.min.js'></script>
+<!-- page scroll -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/page-scroll.js'></script>
+<!-- swiper carousel -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/swiper.min.js'></script>
+<!-- counter -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.count-to.js'></script>
+<!-- parallax -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.stellar.js'></script>
+<!-- magnific popup -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.magnific-popup.min.js'></script>
+<!-- portfolio with shorting tab -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/isotope.pkgd.min.js'></script>
+<!-- images loaded -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/imagesloaded.pkgd.min.js'></script>
+<!-- pull menu -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/classie.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/hamburger-menu.js'></script>
+<!-- counter -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/counter.js'></script>
+<!-- fit video -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.fitvids.js'></script>
+<!-- equalize -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/equalize.min.js'></script>
+<!-- skill bars -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/skill.bars.jquery.js'></script>
+<!-- justified gallery -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/justified-gallery.min.js'></script>
+<!--pie chart-->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.easypiechart.min.js'></script>
+<!-- instagram -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/instafeed.min.js'></script>
+<!-- retina -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/retina.min.js'></script>
+<!-- revolution -->
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/revolution/js/jquery.themepunch.tools.min.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/revolution/js/jquery.themepunch.revolution.min.js'></script>
+<!-- revolution slider extensions (load below extensions JS files only on local file systems to make the slider work! The following part can be removed on server for on demand loading) -->
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.actions.min.js'></script>
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.carousel.min.js'></script>
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.kenburn.min.js'></script>
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.layeranimation.min.js'></script>
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.migration.min.js'></script>
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.navigation.min.js'></script>
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.parallax.min.js'></script>
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.slideanims.min.js'></script>
+<script type='text/javascript'
+        src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.video.min.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/js/main.js'></script>
 <!--ZEN THEME JS-->
 
 <!--ACCESS-->

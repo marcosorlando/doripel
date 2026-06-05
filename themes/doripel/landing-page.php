@@ -1,16 +1,19 @@
 <?php
-    if (!$Read):
-        $Read = new Read;
-    endif;
 
-    $Read->ExeRead(DB_LANDING_PAGES, "WHERE page_name = :nm", "nm={$URL[0]}");
-    if (!$Read->getResult()):
+use App\Conn\Read;
+
+    if (!$Read){
+        $Read = new Read;
+    }
+
+    $Read->exeRead(DB_LANDING_PAGES, "WHERE page_name = :nm", "nm={$URL[0]}");
+    if (!$Read->getResult()){
         require REQUIRE_PATH . '/404.php';
 
         return;
-    else:
+    } else {
         extract($Read->getResult()[0]);
-    endif;
+    }
 ?>
 <!--<link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">-->
 <link href="<?= INCLUDE_PATH; ?>/lp/fixedform.css" rel="stylesheet">

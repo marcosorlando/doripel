@@ -103,7 +103,7 @@
                             }
                         } elseif ($Comm['pdt_id']) {
                             $Read->fullRead(
-                                'SELECT pdt_name, pdt_title FROM ' . DB_PDT_TRAVI . ' WHERE pdt_id = :id',
+                                'SELECT pdt_name, pdt_title FROM ' . DB_PDT_DORIPEL . ' WHERE pdt_id = :id',
                                 'id=' . $Comm['pdt_id']
                             );
                             if ($Read->getResult()) {
@@ -145,12 +145,12 @@
                                                 echo \str_pad((string)$Comm['id'], 4, 0, 0); ?> - <?php
                                                 echo $Title; ?>
 										</a>
-                                    <?php
+                                        <?php
                                     } else { ?>
 										<span class="na">#<?php
                                                 echo \str_pad((string)$Comm['id'], 4, 0, 0); ?> - <?php
                                                 echo $Title; ?></span>
-                                    <?php
+                                        <?php
                                     } ?>
 							</h1>
 							<p class="row icon-user-plus">

@@ -78,7 +78,7 @@
                     foreach ($Read->getResult() as $Search) {
                         extract($Search);
                         $Read->fullRead(
-                            'SELECT pdt_id FROM ' . DB_PDT_TRAVI . " WHERE pdt_status = 1 AND (pdt_title LIKE '%' :s '%' OR pdt_subtitle LIKE '%' :s '%' OR pdt_tags LIKE '%' :s '%')",
+                            'SELECT pdt_id FROM ' . DB_PDT_DORIPEL . " WHERE pdt_status = 1 AND (pdt_title LIKE '%' :s '%' OR pdt_subtitle LIKE '%' :s '%' OR pdt_tags LIKE '%' :s '%')",
                             's=' . $search_key
                         );
                         $ResultPosts = $Read->getRowCount();

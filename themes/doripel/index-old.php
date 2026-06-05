@@ -1,3 +1,7 @@
+<?php
+
+use App\Helpers\Check;
+?>
 <?php  require REQUIRE_PATH.  '/inc/slider-revolution-pofo.php';?>
 <!-- start blog section -->
 <section id="creative" class="wow fadeIn" style="background: url(<?= INCLUDE_PATH; ?>/images/testimonial-bg.png)">
@@ -104,7 +108,7 @@
   </div>
 </section>
 <!-- end feature box section -->
-<!-- start information section --> 
+<!-- start information section -->
 <section class="cover-background no-padding-bottom xs-padding-50px-bottom wow fadeIn" style="background: url(<?= INCLUDE_PATH; ?>/images/capa-mulher-estrangeira-e-bem-sucedida.jpg)">
   <div class="container">
     <div class="row">
@@ -120,7 +124,7 @@
     </div>
   </div>
 </section>
-<!-- end information section --> 
+<!-- end information section -->
 <!-- start portfolio section -->
 <section class="no-padding-bottom wow fadeIn">
   <div class="container-fluid">
@@ -243,7 +247,7 @@
                           <p class="text-medium-gray text-uppercase text-extra-small">para mudar de vida</p>
                         </div>
                       </div>
-                    </div> 
+                    </div>
                   </figcaption>
                 </figure>
               </a>
@@ -358,7 +362,7 @@
             <!-- end feature box item -->
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
 </section>
@@ -412,7 +416,7 @@
       </div>
       <!-- end counter box -->
     </div>
-  </div>            
+  </div>
 </section>
 <!-- end counter section -->
 <!-- start hover box section -->
@@ -521,19 +525,19 @@
     <div class="row equalize xs-equalize-auto">
       <!-- start blog item -->
       <?php
-      $Read->FullRead("SELECT p.post_title, p.post_subtitle, p.post_content, p.post_name, p.post_cover, p.post_date, p.post_author, u.user_name, u.user_lastname, u.user_genre FROM " . DB_POSTS . " p, " . DB_USERS . " u WHERE post_status = 1 AND post_date <= NOW() AND post_author = user_id ORDER BY post_date DESC LIMIT :limit", "limit=3");
+      $Read->fullRead("SELECT p.post_title, p.post_subtitle, p.post_content, p.post_name, p.post_cover, p.post_date, p.post_author, u.user_name, u.user_lastname, u.user_genre FROM " . DB_POSTS . " p, " . DB_USERS . " u WHERE post_status = 1 AND post_date <= NOW() AND post_author = user_id ORDER BY post_date DESC LIMIT :limit", "limit=3");
 
 
-      if (!$Read->getResult()):
-        echo Erro("Ainda Não existe posts cadastrados nesta secão. Favor volte mais tarde :)", E_USER_NOTICE);
-      else:        
-        foreach ($Read->getResult() as $Post):
+      if (!$Read->getResult()){
+        echo Check::erro("Ainda Não existe posts cadastrados nesta secão. Favor volte mais tarde :)", E_USER_NOTICE);
+      } else {
+        foreach ($Read->getResult() as $Post){
           extract($Post);
           require REQUIRE_PATH.  '/inc/post-index.php';
-        endforeach;
-      endif;
+        }
+      }
       ?>
-      <!-- end blog item -->  
+      <!-- end blog item -->
     </div>
   </div>
 </section>

@@ -1,28 +1,39 @@
 <?php
+
+use App\Conn\Read;
+use App\Conn\Update;
+use App\Helpers\DateHelper;
 setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
 date_default_timezone_set('America/Sao_Paulo');
 
-if (!$Read):
+if (!$Read){
   $Read = new Read;
-endif;
+}
 
-$Read->ExeRead(DB_POSTS, "WHERE post_name = :nm", "nm={$URL[1]}");
-if (!$Read->getResult()):
+if (empty($URL[1])){
   require REQUIRE_PATH . '/404.php';
   return;
-else:
-  extract($Read->getResult()[0]);
+}
+
+$Read->exeRead(DB_POSTS, "WHERE post_name = :nm", "nm={$URL[1]}");
+if (!$Read->getResult()){
+  require REQUIRE_PATH . '/404.php';
+  return;
+} else {
+  $Post = $Read->getResult()[0];
+  extract($Post);
   $Update = new Update;
-  $UpdateView = ['post_views' => $post_views + 1, 'post_lastview' => date('Y-m-d H:i:s')];
-  $Update->ExeUpdate(DB_POSTS, $UpdateView, "WHERE post_id = :id", "id={$post_id}");
+  $UpdateView = ['post_views' => (int)($post_views ?? 0) + 1, 'post_lastview' => date('Y-m-d H:i:s')];
+  $Update->exeUpdate(DB_POSTS, $UpdateView, "WHERE post_id = :id", "id={$post_id}");
 
-  $Read->FullRead("SELECT category_title, category_name FROM " . DB_CATEGORIES . " WHERE category_id = :id", "id={$post_category}");
-  $PostCategory = $Read->getResult()[0];
+  $Read->fullRead("SELECT category_title, category_name FROM " . DB_CATEGORIES . " WHERE category_id = :id", "id={$post_category}");
+  $PostCategory = ($Read->getResult() ? $Read->getResult()[0] : ['category_title' => '', 'category_name' => '']);
 
-  $Read->FullRead("SELECT user_name, user_lastname, user_thumb, user_genre,user_twitter, user_youtube, user_google, user_description FROM " . DB_USERS . " WHERE user_id = :user", "user={$post_author}");
-  $AuthorName = "{$Read->getResult()[0]['user_name']} {$Read->getResult()[0]['user_lastname']}";
-endif;
-extract($Read->getResult()[0]);
+  $Read->fullRead("SELECT user_name, user_lastname, user_thumb, user_genre,user_twitter, user_youtube, user_google, user_description FROM " . DB_USERS . " WHERE user_id = :user", "user={$post_author}");
+  $Author = ($Read->getResult() ? $Read->getResult()[0] : []);
+  $AuthorName = trim(($Author['user_name'] ?? '') . ' ' . ($Author['user_lastname'] ?? ''));
+}
+extract($Author);
 ?>
 
 <section class="wow fadeIn bg-light-gray padding-35px-tb page-title-small top-space">
@@ -55,18 +66,18 @@ extract($Read->getResult()[0]);
       <main class="col-md-9 col-sm-12 col-xs-12 right-sidebar sm-margin-60px-bottom xs-margin-40px-bottom no-padding-left sm-no-padding-right">
         <div class="col-md-12 col-sm-12 col-xs-12 blog-details-text last-paragraph-no-margin">
           <?php
-          if ($post_video):
+          if ($post_video){
             echo "<div class='embed-container'>";
             echo "<iframe id='mediaview' width='640' height='360' src='https://www.youtube.com/embed/{$post_video}?rel=0&amp;showinfo=0&autoplay=0&origin=" . BASE . "' frameborder='0' allowfullscreen></iframe>";
             echo "</div>";
-          else:
+          } else {
             echo "<img class='width-100' title='{$post_title}' alt='{$post_title}' src='" . BASE . "/tim.php?src=uploads/{$post_cover}&w=" . IMAGE_W . "&h=" . IMAGE_H . "'/>";
-          endif;
+          }
           ?>
           <h2><?= $post_subtitle; ?></h2>
           <p class="postby">
             <i class="<?= $user_genre == 1 ? 'icon-profile-male' : 'icon-profile-female'; ?>"></i> <b><?= $AuthorName; ?></b> 
-            <i class="icon-calendar"></i> <time datetime="<?= date('Y-m-d', strtotime($post_date)); ?>" pubdate="pubdate"><?= utf8_encode(strftime(" %d de %B de %Y", strtotime($post_date))); ?></time>
+            <i class="icon-calendar"></i> <time datetime="<?= DateHelper::iso($post_date); ?>" pubdate="pubdate"><?= DateHelper::human($post_date); ?></time>
             <i class="icon-ribbon"></i> <b><?= $PostCategory['category_title']; ?></b> 
             <i class="icon-laptop"></i> <b><?= $post_views; ?></b> views 
             <i class="icon-clock"></i> <b><?= $post_time; ?> </b> min. de leitura
@@ -106,10 +117,10 @@ extract($Read->getResult()[0]);
 
             <?php
             $tags = explode(',', $post_tags);
-            foreach ($tags as $key => $value) :
+            foreach ($tags as $key => $value) {
               ?>
               <a href="<?= BASE; ?>/pesquisa/<?= $value ?>"><?= $value ?></a>
-            <?php endforeach; ?>
+            <?php } ?>
           </div>
         </div>
 
@@ -145,19 +156,19 @@ extract($Read->getResult()[0]);
           <div class="position-relative overflow-hidden width-100">
 
             <?php
-            if (APP_COMMENTS && COMMENT_ON_POSTS):
+            if (APP_COMMENTS && COMMENT_ON_POSTS){
               $CommentKey = $post_id;
               $CommentType = 'post';
               require '_cdn/widgets/comments/comments.php';
-            endif;
+            }
             ?>
           </div>
         </div>
         <!-- start post item -->
         <?php
-        $Read->ExeRead(DB_POSTS, "WHERE post_status = 1 AND post_date <= NOW() AND post_category_parent != :ct AND post_id != :id ORDER BY post_date DESC LIMIT 3", "ct={$post_category_parent}&id={$post_id}");
+        $Read->exeRead(DB_POSTS, "WHERE post_status = 1 AND post_date <= NOW() AND post_category_parent != :ct AND post_id != :id ORDER BY post_date DESC LIMIT 3", "ct={$post_category_parent}&id={$post_id}");
 
-        if ($Read->getResult()):
+        if ($Read->getResult()){
 
           echo '<div class="col-md-12 col-sm-12 col-xs-12 no-padding">';
           echo '<div class="col-md-12 col-sm-12 col-xs-12 margin-lr-auto text-center margin-80px-tb sm-margin-50px-tb xs-margin-30px-tb">';
@@ -166,17 +177,16 @@ extract($Read->getResult()[0]);
           echo '</div>';
           echo '</div>';
 
-          foreach ($Read->getResult() as $More):
+          foreach ($Read->getResult() as $More){
             extract($More);
             require REQUIRE_PATH . '/inc/post.php';
-          endforeach;
+          }
 
           echo '</div>';
-        endif;
+        }
         ?>
       </main>
       <?php require REQUIRE_PATH . '/inc/sidebar.php'; ?>
     </div>
   </div>
 </section>
-

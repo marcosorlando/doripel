@@ -1,9 +1,17 @@
 <?php
 
-    $Read->ExeRead(DB_CTAS, "WHERE cta_status = 1 AND cta_start <= NOW() AND (cta_end >= NOW() OR cta_end IS NULL) ORDER BY cta_date DESC LIMIT 1");
+use App\Conn\Read;
 
-    if ($Read->getResult()):
-        extract($Read->getResult()['0']);
+
+    if (empty($Read)) {
+        $Read = new Read;
+    }
+
+    $Read->exeRead(DB_CTAS, "WHERE cta_status = 1 AND cta_start <= NOW() AND (cta_end >= NOW() OR cta_end IS NULL) ORDER BY cta_date DESC LIMIT 1");
+    $CtaResult = $Read->getResult();
+
+    if ($CtaResult) {
+        extract($CtaResult[0]);
 
     $cta_btn_rounded = (!empty($cta_btn_rounded) ? 'btn-rounded' : null);
         ?>
@@ -44,6 +52,6 @@
         </div>
 
     <?php
-    endif;
+    }
 
 ?>

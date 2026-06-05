@@ -1,3 +1,7 @@
+<?php
+
+use App\Helpers\Check;
+?>
 <footer class="footer-classic-dark bg-dark-blue padding-five-bottom xs-padding-30px-bottom text-white">
     <div class="bg-dark-footer padding-50px-tb xs-padding-30px-tb">
         <div class="container">
@@ -59,13 +63,13 @@
                     <ul class="latest-post position-relative top-3">
                         <?php
 
-                            $Read->FullRead("SELECT p.post_title, p.post_subtitle, p.post_name, p.post_cover, p.post_date, p.post_author, u.user_name, u.user_lastname, u.user_genre FROM " . DB_POSTS . " p, " . DB_USERS . " u WHERE post_status = 1 AND post_date <= NOW() AND post_author = user_id ORDER BY post_date DESC LIMIT :limit", "limit=3");
+                            $Read->fullRead("SELECT p.post_title, p.post_subtitle, p.post_name, p.post_cover, p.post_date, p.post_author, u.user_name, u.user_lastname, u.user_genre FROM " . DB_POSTS . " p, " . DB_USERS . " u WHERE post_status = 1 AND post_date <= NOW() AND post_author = user_id ORDER BY post_date DESC LIMIT :limit", "limit=3");
 
-                            if (!$Read->getResult()):
-                                //              $Pager->ReturnPage();
-                                echo Erro("Ainda Não existe posts cadastrados nesta secão. Favor volte mais tarde :)", E_USER_NOTICE);
-                            else:
-                                foreach ($Read->getResult() as $Post):
+                            if (!$Read->getResult()) {
+                                //              $Pager->returnPage();
+                                echo Check::erro("Ainda Não existe posts cadastrados nesta secão. Favor volte mais tarde :)", E_USER_NOTICE);
+                            } else {
+                                foreach ($Read->getResult() as $Post) {
                                     extract($Post);
                                     ?>
 
@@ -81,8 +85,8 @@
                                     </li>
 
                                 <?php
-                                endforeach;
-                            endif;
+                                }
+                            }
                         ?>
 
                     </ul>
@@ -139,4 +143,3 @@
     </div>
 </footer>
 <!-- end footer -->
-

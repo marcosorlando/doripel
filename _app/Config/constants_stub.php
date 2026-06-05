@@ -245,10 +245,6 @@ if (!defined('COMMENT_SEND_EMAIL')) {
     define('COMMENT_SEND_EMAIL', 1);
 }
 
-if (!defined('E_PDT_SIZE')) {
-    define('E_PDT_SIZE', 'default');
-}
-
 if (!defined('DB_ALBUMS')) {
     define('DB_ALBUMS', 'ws_albums');
 }
@@ -285,12 +281,12 @@ if (!defined('DB_COMMENTS_LIKES')) {
     define('DB_COMMENTS_LIKES', 'ws_comments_likes');
 }
 
-if (!defined('DB_ORDERS_ITEMS')) {
-    define('DB_ORDERS_ITEMS', 'ws_orders_items');
-}
-
 if (!defined('DB_CONF')) {
     define('DB_CONF', 'ws_config');
+}
+
+if (!defined('DB_CTAS')) {
+    define('DB_CTAS', 'ws_ctas');
 }
 
 if (!defined('DB_CURIOSITIES')) {
@@ -327,6 +323,10 @@ if (!defined('DB_MATCATEGORIES')) {
 
 if (!defined('DB_MATERIAIS')) {
     define('DB_MATERIAIS', 'ws_materiais');
+}
+
+if (!defined('DB_ORDERS_ITEMS')) {
+    define('DB_ORDERS_ITEMS', 'ws_orders_items');
 }
 
 if (!defined('DB_OUVIDORIA')) {
@@ -447,6 +447,10 @@ if (!defined('DB_WC_CODE')) {
 
 if (!defined('DB_YOUTUBE')) {
     define('DB_YOUTUBE', 'ws_youtube');
+}
+
+if (!defined('E_PDT_SIZE')) {
+    define('E_PDT_SIZE', 'default');
 }
 
 if (!defined('IMAGE_H')) {
@@ -574,7 +578,7 @@ if (!defined('LEVEL_WC_VIDEOS')) {
 }
 
 if (!defined('MAIL_HOST')) {
-    define('MAIL_HOST', 'mail.seu-dominio.com.br');
+    define('MAIL_HOST', 'mail.doripel.com.br');
 }
 
 if (!defined('MAIL_MODE')) {
@@ -626,7 +630,7 @@ if (!defined('SEGMENT_GL_ADWORDS_LABEL')) {
 }
 
 if (!defined('SEGMENT_GL_ANALYTICS')) {
-    define('SEGMENT_GL_ANALYTICS', 'G-R5E6VNDD81');
+    define('SEGMENT_GL_ANALYTICS', '');
 }
 
 if (!defined('SEGMENT_GL_TAGMANAGER')) {
