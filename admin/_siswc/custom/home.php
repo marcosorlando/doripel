@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\Check;
+
     use App\Conn\Read;
 
     $AdminLevel = 10;

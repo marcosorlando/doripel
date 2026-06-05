@@ -179,3 +179,36 @@
     background: #eee;
 }
 
+
+/***********************************
+###### ADMIN UX REFRESH 2026 #######
+***********************************/
+.dashboard_header {
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+}
+
+.dashboard_header .flex {
+    justify-content: center;
+}
+
+.dashboard_content {
+    padding: 22px 18px 34px;
+}
+
+.dashboard_nav_menu_sub {
+    width: 100%;
+    padding: 0 0 8px 10px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.dashboard_nav_menu_li > a,
+.dashboard_nav_menu_sub_li a {
+    border-radius: 10px;
+}
+
+.box {
+    padding: 10px;
+}

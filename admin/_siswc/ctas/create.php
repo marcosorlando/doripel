@@ -1,38 +1,58 @@
 <?php
 
+    use App\Conn\Create;
+    use App\Conn\Read;
+    use App\Helpers\Check;
+
     $AdminLevel = LEVEL_WC_CTAS;
-    if (!APP_CTAS || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
-        die('<div style="text-align: center; margin: 5% 0; color: #C54550; font-size: 1.6em; font-weight: 400; background: #fff; float: left; width: 100%; padding: 30px 0;"><b>ACESSO NEGADO:</b> Você não esta logado<br>ou não tem permissão para acessar essa página!</div>');
-    endif;
+    if (!APP_CTAS || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
+        Check::accessBlocked();
+    }
     // AUTO INSTANCE OBJECT READ
-    if (empty($Read)):
-        $Read = new Read;
-    endif;
+    if (empty($Read)) {
+        $Read = new Read();
+    }
     // AUTO INSTANCE OBJECT CREATE
-    if (empty($Create)):
-        $Create = new Create;
-    endif;
+    if (empty($Create)) {
+        $Create = new Create();
+    }
 
     $CtaId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-    if ($CtaId):
-        $Read->ExeRead(DB_CTAS, "WHERE cta_id = :id", "id={$CtaId}");
-        if ($Read->getResult()):
-            $FormData = array_map('htmlspecialchars', $Read->getResult()[0]);
+    if ($CtaId) {
+        $Read->exeRead(DB_CTAS, "WHERE cta_id = :id", "id={$CtaId}");
+        if ($Read->getResult()) {
+            $FormData = array_map(
+                static fn ($value): string => htmlspecialchars((string) ($value ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+                $Read->getResult()[0]
+            );
             extract($FormData);
-        else:
+        } else {
             $_SESSION['trigger_controll'] = "<b>OPPSS {$Admin['user_name']}</b>, você tentou editar um CTA que não existe ou que foi removido recentemente!";
             header('Location: dashboard.php?wc=ctas/home');
-        endif;
-    else:
+            exit;
+        }
+    } else {
         $CtaCreate = ['cta_date' => date('Y-m-d H:i:s')];
-        $Create->ExeCreate(DB_CTAS, $CtaCreate);
+        $Create->exeCreate(DB_CTAS, $CtaCreate);
         header('Location: dashboard.php?wc=ctas/create&id=' . $Create->getResult());
-    endif;
+        exit;
+    }
+
+    $cta_title = $cta_title ?? '';
+    $cta_text = $cta_text ?? '';
+    $cta_bg_color = $cta_bg_color ?? '';
+    $cta_btn_color = $cta_btn_color ?? '';
+    $cta_btn_rounded = $cta_btn_rounded ?? '';
+    $cta_url = $cta_url ?? '';
+    $cta_start = $cta_start ?? '';
+    $cta_end = $cta_end ?? '';
+    $cta_image = $cta_image ?? '';
+    $cta_status = $cta_status ?? 0;
 ?>
 
 <header class="dashboard_header">
     <div class="dashboard_header_title">
-        <h1 class="icon-pen"><?= $cta_title ? $cta_title : 'Novo Call to action'; ?></h1>
+        <h1 class="icon-pen"><?= !empty($cta_title) ? $cta_title : 'Novo Call to action'; ?></h1>
         <p class="dashboard_header_breadcrumbs">
             &raquo; <?= ADMIN_NAME; ?>
             <span class="crumb">/</span>
@@ -78,9 +98,9 @@
                         <select name="cta_btn_color" required>
                             <option value="" disabled="disabled" selected="selected">Selecione o tipo do botão:</option>
                             <?php
-                                foreach (getWcBtnCta() as $BtnClass => $Option):
+                                foreach (getWcBtnCta() as $BtnClass => $Option) {
                                     echo "<option " . ($cta_btn_color == $BtnClass ? "selected='selected'" : null) . " value='{$BtnClass}'>{$Option}</option>";
-                                endforeach;
+                                }
                             ?>
                         </select>
                     </label>
@@ -89,9 +109,9 @@
                         <select name="cta_btn_rounded">
                             <option value="" disabled="disabled" selected="selected">Selecione:</option>
                              <?php
-                                foreach (getWcBtnRounded() as $BtnRounded => $Rounded):
+                                foreach (getWcBtnRounded() as $BtnRounded => $Rounded) {
                                     echo "<option " . ($cta_btn_rounded == $BtnRounded ? "selected='selected'" : null) . " value='{$BtnRounded}'>{$Rounded}</option>";
-                                endforeach;
+                                }
                             ?>
                         </select>
                     </label>

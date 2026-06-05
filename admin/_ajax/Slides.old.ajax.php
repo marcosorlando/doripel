@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Upload;
+
 use App\Conn\Create;
 use App\Conn\Delete;
 use App\Conn\Read;

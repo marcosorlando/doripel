@@ -1,4 +1,6 @@
 <?php
+
+use App\Helpers\Check;
 use App\Conn\Create;
 use App\Conn\Read;
 

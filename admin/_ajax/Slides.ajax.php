@@ -1,7 +1,15 @@
 <?php
 
+use App\Helpers\Check;
+use App\Conn\Create;
+use App\Conn\Delete;
+use App\Conn\Read;
+use App\Conn\Update;
+use App\Models\Upload;
+
 session_start();
-require '../../_app/Config.inc.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../_app/Config.inc.php';
 $NivelAcess = LEVEL_WC_SLIDES;
 
 if (!APP_SLIDE || empty($_SESSION['userLogin']) || empty($_SESSION['userLogin']['user_level']) || $_SESSION['userLogin']['user_level'] < $NivelAcess):

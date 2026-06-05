@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\Check;
+
 use App\Conn\Delete;
 use App\Conn\Read;
 

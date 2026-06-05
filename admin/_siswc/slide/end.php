@@ -1,4 +1,8 @@
 <?php
+
+use App\Conn\Delete;
+use App\Models\Pager;
+use App\Conn\Read;
 $AdminLevel = LEVEL_WC_SLIDES;
 if (!APP_SLIDE || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
     die('<div style="text-align: center; margin: 5% 0; color: #C54550; font-size: 1.6em; font-weight: 400; background: #fff; float: left; width: 100%; padding: 30px 0;"><b>ACESSO NEGADO:</b> Você não esta logado<br>ou não tem permissão para acessar essa página!</div>');
