@@ -1,0 +1,527 @@
+doripel
+├── .git
+├── .github
+│   ├── agents
+│   │   ├── php-legacy-modernizer.agent.md
+│   │   └── workcontrol-psr-reviewer.agent.md
+│   ├── instructions
+│   │   ├── php-modernization.instructions.md
+│   │   ├── psr-standards.instructions.md
+│   │   └── workcontrol-conventions.instructions.md
+│   ├── prompts
+│   │   ├── extract-php-service.prompt.md
+│   │   ├── migrate-legacy-php-file.prompt.md
+│   │   └── review-legacy-module.prompt.md
+│   ├── skills
+│   │   ├── php-legacy-modernizer
+│   │   │   ├── references
+│   │   │   │   └── patterns.md
+│   │   │   ├── scripts
+│   │   │   │   └── fix_php_legacy_generic.sh
+│   │   │   ├── _MANUAL.md
+│   │   │   └── SKILL.md
+│   │   └── workcontrol-legacy-fixer
+│   │       ├── references
+│   │       │   └── patterns.md
+│   │       ├── scripts
+│   │       │   └── fix_php_legacy.sh
+│   │       ├── _MANUAL.md
+│   │       └── SKILL.md
+│   ├── .DS_Store
+│   ├── copilot-instructions.md
+│   └── REFATORACAO_PHP_LEGADO.md
+├── .idea
+├── _api
+├── _app
+│   ├── Bootstrap
+│   │   └── ErrorHandler.php
+│   ├── Config
+│   │   ├── .env
+│   │   ├── .env.example
+│   │   ├── .htaccess
+│   │   ├── Agency.inc.php
+│   │   ├── bootstrap.php
+│   │   ├── Client.inc.php
+│   │   ├── ConfigLoader.php
+│   │   └── constants_stub.php
+│   ├── Conn
+│   │   ├── Conn.php
+│   │   ├── Create.php
+│   │   ├── Delete.php
+│   │   ├── Read.php
+│   │   └── Update.php
+│   ├── Helpers
+│   │   ├── Arr.php
+│   │   ├── Check.php
+│   │   ├── DateHelper.php
+│   │   ├── Googl.php
+│   │   ├── Instagram.php
+│   │   └── Sitemap.php
+│   ├── Models
+│   │   ├── Email.php
+│   │   ├── InstantArticles.php
+│   │   ├── Pager.php
+│   │   ├── Seo.php
+│   │   ├── Session.php
+│   │   └── Upload.php
+│   ├── View
+│   │   ├── Template.php
+│   │   └── View.php
+│   ├── .DS_Store
+│   └── Config.inc.php
+├── admin
+│   ├── _ajax
+│   │   ├── Albums.ajax.php
+│   │   ├── Api.ajax.php
+│   │   ├── Certifications.ajax.php
+│   │   ├── Codes.ajax.php
+│   │   ├── Comments.ajax.php
+│   │   ├── Config.ajax.php
+│   │   ├── Ctas.ajax.php
+│   │   ├── Curiosities.ajax.php
+│   │   ├── Curriculos.ajax.php
+│   │   ├── Custom.ajax.php
+│   │   ├── Dashboard.ajax.php
+│   │   ├── Depositions.ajax.php
+│   │   ├── Landingpages.ajax.php
+│   │   ├── Leads.ajax.php
+│   │   ├── Linktree.ajax.php
+│   │   ├── Login.ajax.php
+│   │   ├── Mats.ajax.php
+│   │   ├── Ouvidoria.ajax.php
+│   │   ├── Pages.ajax.php
+│   │   ├── Partners.ajax.php
+│   │   ├── Portfolio.ajax.php
+│   │   ├── Posts.ajax.php
+│   │   ├── ProductsDoripel.ajax.php
+│   │   ├── Reports.ajax.php
+│   │   ├── Representatives.ajax.php
+│   │   ├── Search.ajax.php
+│   │   ├── Segments.ajax.php
+│   │   ├── Services.ajax.php
+│   │   ├── Slides.ajax.php
+│   │   ├── Slides.old.ajax.php
+│   │   ├── Thankyoupages.ajax.php
+│   │   ├── Users.ajax.php
+│   │   └── Videos.ajax.php
+│   ├── _css
+│   │   ├── reset.css
+│   │   ├── reset.min.css
+│   │   ├── tinyMCE.css
+│   │   ├── tinyMCE.min.css
+│   │   ├── workcontrol-480.css
+│   │   ├── workcontrol-480.min.css
+│   │   ├── workcontrol-860.css
+│   │   ├── workcontrol-860.min.css
+│   │   ├── workcontrol.css
+│   │   └── workcontrol.min.css
+│   ├── _img
+│   │   ├── icons
+│   │   │   ├── facebook.png
+│   │   │   ├── googleplus.png
+│   │   │   └── twitter.png
+│   │   ├── boby_bg.jpg
+│   │   ├── bussbio.png
+│   │   ├── default.jpg
+│   │   ├── ead_certification.png
+│   │   ├── ead_certification_mockup.zip
+│   │   ├── favicon.png
+│   │   ├── load.gif
+│   │   ├── load_w.gif
+│   │   ├── mail.jpg
+│   │   ├── mail.png
+│   │   ├── maintenance.gif
+│   │   ├── no_avatar.jpg
+│   │   ├── no_image.jpg
+│   │   ├── select.png
+│   │   ├── wc_login_bg.jpg
+│   │   ├── website-maintenance.png
+│   │   ├── work_icon.png
+│   │   ├── work_logo_h.png
+│   │   └── work_logo_v.png
+│   ├── _js
+│   ├── _sis
+│   │   ├── comments
+│   │   │   ├── comment_response.php
+│   │   │   └── home.php
+│   │   ├── config
+│   │   │   ├── codes.php
+│   │   │   ├── home.php
+│   │   │   ├── license.php
+│   │   │   ├── samples.php
+│   │   │   └── wcapi.php
+│   │   ├── pages
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── pages.old
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── posts
+│   │   │   ├── categories.php
+│   │   │   ├── category.php
+│   │   │   ├── create.php
+│   │   │   ├── home.php
+│   │   │   └── update.php
+│   │   ├── reports
+│   │   │   └── home.php
+│   │   ├── slide
+│   │   │   ├── create.php
+│   │   │   ├── end.php
+│   │   │   └── home.php
+│   │   ├── users
+│   │   │   ├── address.php
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── home1.php
+│   │   ├── onlinenow.php
+│   │   ├── searchnow-products.php
+│   │   └── searchnow.php
+│   ├── _siswc
+│   │   ├── albums
+│   │   │   ├── brand.php
+│   │   │   ├── brands.php
+│   │   │   ├── categories.php
+│   │   │   ├── category.php
+│   │   │   ├── coupon.php
+│   │   │   ├── coupons.php
+│   │   │   ├── create.php
+│   │   │   ├── home.php
+│   │   │   └── reply.php
+│   │   ├── certifications
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── ctas
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── curiosities
+│   │   │   └── create.php
+│   │   ├── curriculos
+│   │   │   └── home.php
+│   │   ├── custom
+│   │   │   └── home.php
+│   │   ├── depositions
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── hello
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── landingpages
+│   │   │   ├── create.php
+│   │   │   ├── home.php
+│   │   │   └── reply.php
+│   │   ├── leads
+│   │   │   ├── create.php
+│   │   │   ├── export.php
+│   │   │   └── home.php
+│   │   ├── linktree
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── materiais
+│   │   │   ├── categories.php
+│   │   │   ├── category.php
+│   │   │   ├── create.php
+│   │   │   ├── home.php
+│   │   │   └── search.php
+│   │   ├── ouvidoria
+│   │   │   └── home.php
+│   │   ├── partners
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── portfolio
+│   │   │   ├── categories.php
+│   │   │   ├── category.php
+│   │   │   ├── create.php
+│   │   │   ├── home.php
+│   │   │   └── search.php
+│   │   ├── products
+│   │   │   ├── brand.php
+│   │   │   ├── brands.php
+│   │   │   ├── categories.php
+│   │   │   ├── category.php
+│   │   │   ├── color.php
+│   │   │   ├── colors.php
+│   │   │   ├── create.php
+│   │   │   ├── home.php
+│   │   │   ├── import.php
+│   │   │   └── reply.php
+│   │   ├── representatives
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── segments
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── services
+│   │   │   ├── create.php
+│   │   │   └── home.php
+│   │   ├── slide
+│   │   │   ├── create.php
+│   │   │   ├── end.php
+│   │   │   └── home.php
+│   │   ├── thankyoupages
+│   │   │   ├── create.php
+│   │   │   ├── home.php
+│   │   │   └── reply.php
+│   │   ├── videos
+│   │   │   ├── create.php
+│   │   │   ├── end.php
+│   │   │   └── home.php
+│   │   └── wc_menu.php
+│   ├── _tpl
+│   │   ├── Client.email.php
+│   │   ├── Mail.email.php
+│   │   └── share.wc.php
+│   ├── .DS_Store
+│   ├── dashboard.php
+│   ├── index.php
+│   ├── newpass.php
+│   ├── recover.php
+│   └── sitemap.txt
+├── assets
+│   ├── _tpl
+│   │   └── mail_default.tpl.html
+│   ├── bootcss
+│   │   ├── fonts
+│   │   │   ├── icomoon.eot
+│   │   │   ├── icomoon.svg
+│   │   │   ├── icomoon.ttf
+│   │   │   └── icomoon.woff
+│   │   ├── icomoon
+│   │   │   ├── demo-files
+│   │   │   │   ├── demo.css
+│   │   │   │   ├── demo.js
+│   │   │   │   ├── demo.min.css
+│   │   │   │   └── demo.min.js
+│   │   │   ├── liga.js
+│   │   │   ├── liga.min.js
+│   │   │   ├── selection.json
+│   │   │   ├── style.css
+│   │   │   └── style.min.css
+│   │   ├── fonticon.css
+│   │   ├── fonticon.min.css
+│   │   ├── reset.css
+│   │   └── reset.min.css
+│   ├── css
+│   │   └── highlight.min.css
+│   ├── datepicker
+│   │   ├── datepicker.min.css
+│   │   ├── datepicker.min.js
+│   │   ├── datepicker.pt-BR.js
+│   │   └── datepicker.pt-BR.min.js
+│   ├── js
+│   ├── shadowbox
+│   │   ├── close.png
+│   │   ├── expressInstall.swf
+│   │   ├── LICENSE
+│   │   ├── loading.gif
+│   │   ├── next.png
+│   │   ├── pause.png
+│   │   ├── play.png
+│   │   ├── player.swf
+│   │   ├── previous.png
+│   │   ├── README
+│   │   ├── shadowbox.css
+│   │   ├── shadowbox.js
+│   │   ├── shadowbox.min.css
+│   │   └── shadowbox.min.js
+│   ├── share
+│   │   ├── icons
+│   │   │   ├── envelope.svg
+│   │   │   ├── facebook.svg
+│   │   │   ├── linkedin.svg
+│   │   │   ├── pinterest.svg
+│   │   │   ├── twitter.svg
+│   │   │   └── whatsapp.svg
+│   │   ├── share.wc.css
+│   │   ├── share.wc.min.css
+│   │   └── share.wc.php
+│   ├── widgets
+│   │   ├── accessibility
+│   │   │   ├── css
+│   │   │   │   ├── buttons.css
+│   │   │   │   ├── buttons.min.css
+│   │   │   │   ├── daltonism.css
+│   │   │   │   ├── daltonism.min.css
+│   │   │   │   ├── highcontrast.css
+│   │   │   │   └── highcontrast.min.css
+│   │   │   ├── js
+│   │   │   ├── js-cookie-latest
+│   │   │   │   ├── src
+│   │   │   │   │   ├── .eslintrc
+│   │   │   │   │   ├── js.cookie.js
+│   │   │   │   │   └── js.cookie.min.js
+│   │   │   │   ├── test
+│   │   │   │   │   ├── .eslintrc
+│   │   │   │   │   ├── amd-config.js
+│   │   │   │   │   ├── amd-config.min.js
+│   │   │   │   │   ├── amd.html
+│   │   │   │   │   ├── amd.js
+│   │   │   │   │   ├── amd.min.js
+│   │   │   │   │   ├── encoding.html
+│   │   │   │   │   ├── encoding.js
+│   │   │   │   │   ├── encoding.min.js
+│   │   │   │   │   ├── environment-with-amd-and-umd.html
+│   │   │   │   │   ├── environment-with-amd-and-umd.js
+│   │   │   │   │   ├── environment-with-amd-and-umd.min.js
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   ├── malformed_cookie.html
+│   │   │   │   │   ├── missing_semicolon.html
+│   │   │   │   │   ├── node.js
+│   │   │   │   │   ├── node.min.js
+│   │   │   │   │   ├── polyfill.js
+│   │   │   │   │   ├── polyfill.min.js
+│   │   │   │   │   ├── tests.js
+│   │   │   │   │   ├── tests.min.js
+│   │   │   │   │   ├── utils.js
+│   │   │   │   │   └── utils.min.js
+│   │   │   │   ├── .eslintignore
+│   │   │   │   ├── .eslintrc
+│   │   │   │   ├── .gitignore
+│   │   │   │   ├── .tm_properties
+│   │   │   │   ├── .travis.yml
+│   │   │   │   ├── bower.json
+│   │   │   │   ├── CONTRIBUTING.md
+│   │   │   │   ├── Gruntfile.js
+│   │   │   │   ├── Gruntfile.min.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── SERVER_SIDE.md
+│   │   │   ├── vlibras
+│   │   │   │   ├── vlibras-plugin-version.js
+│   │   │   │   ├── vlibras-plugin-version.min.js
+│   │   │   │   ├── vlibras-plugin.js
+│   │   │   │   └── vlibras-plugin.min.js
+│   │   │   └── accessibility.inc.php
+│   │   ├── account
+│   │   │   ├── views
+│   │   │   │   ├── dados.wc.php
+│   │   │   │   ├── home.wc.php
+│   │   │   │   ├── pedido.wc.php
+│   │   │   │   └── pedidos.wc.php
+│   │   │   ├── account.ajax.php
+│   │   │   ├── account.bar.php
+│   │   │   ├── account.css
+│   │   │   ├── account.email.php
+│   │   │   ├── account.js
+│   │   │   ├── account.min.css
+│   │   │   ├── account.min.js
+│   │   │   ├── account.php
+│   │   │   ├── account.sidebar.php
+│   │   │   ├── create.form.php
+│   │   │   ├── load.gif
+│   │   │   ├── login.form.php
+│   │   │   ├── newpass.form.php
+│   │   │   └── recover.form.php
+│   │   ├── comments
+│   │   │   ├── comment.email.php
+│   │   │   ├── comment.form.php
+│   │   │   ├── comment.modal.php
+│   │   │   ├── comments.ajax.php
+│   │   │   ├── comments.css
+│   │   │   ├── comments.js
+│   │   │   ├── comments.min.css
+│   │   │   ├── comments.min.js
+│   │   │   ├── comments.php
+│   │   │   ├── load.gif
+│   │   │   └── load_g.gif
+│   │   ├── contact
+│   │   │   ├── images
+│   │   │   │   ├── load.gif
+│   │   │   │   └── load_w.gif
+│   │   │   ├── contact.ajax.php
+│   │   │   ├── contact.email.php
+│   │   │   ├── contact.wc.css
+│   │   │   ├── contact.wc.js
+│   │   │   ├── contact.wc.min.css
+│   │   │   ├── contact.wc.min.js
+│   │   │   └── contact.wc.php
+│   │   ├── gtranslate
+│   │   │   ├── country-flags-main
+│   │   │   ├── 32.png
+│   │   │   ├── flags.png
+│   │   │   ├── gtranslate.php
+│   │   │   └── readme.md
+│   │   ├── hellobar
+│   │   │   ├── hellobar.ajax.php
+│   │   │   ├── hellobar.wc.css
+│   │   │   ├── hellobar.wc.js
+│   │   │   ├── hellobar.wc.min.css
+│   │   │   └── hellobar.wc.min.js
+│   │   ├── imobi
+│   │   │   ├── images
+│   │   │   │   └── wc_arrow.png
+│   │   │   ├── filter.ajax.php
+│   │   │   ├── filter.wc.css
+│   │   │   ├── filter.wc.js
+│   │   │   ├── filter.wc.min.css
+│   │   │   ├── filter.wc.min.js
+│   │   │   ├── filter.wc.php
+│   │   │   └── list.wc.php
+│   │   ├── share
+│   │   │   ├── icons
+│   │   │   │   ├── envelope.svg
+│   │   │   │   ├── facebook.svg
+│   │   │   │   ├── linkedin.svg
+│   │   │   │   ├── pinterest.svg
+│   │   │   │   ├── twitter.svg
+│   │   │   │   └── whatsapp.svg
+│   │   │   ├── share.wc.css
+│   │   │   ├── share.wc.js
+│   │   │   ├── share.wc.min.css
+│   │   │   ├── share.wc.min.js
+│   │   │   └── share.wc.php
+│   │   └── slide
+│   │       ├── slide.wc.css
+│   │       ├── slide.wc.js
+│   │       ├── slide.wc.min.css
+│   │       ├── slide.wc.min.js
+│   │       └── slide.wc.php
+│   ├── .DS_Store
+│   ├── cronjob.php
+│   ├── wc_track.php
+│   └── whatsapp.button.php
+├── bin
+│   └── generate-constants-stub.php
+├── cache
+├── mail
+│   ├── assinatura-zen.gif
+│   ├── facebook.png
+│   ├── instagram.png
+│   ├── linkedin.png
+│   ├── meio.png
+│   ├── whats.png
+│   ├── x.png
+│   └── youtube.png
+├── reports
+│   └── themes-zen-modernizer.txt
+├── themes
+├── uploads
+├── vendor
+├── .DS_Store
+├── .gitignore
+├── .htaccess
+├── .php-cs-fixer.cache
+├── .php-cs-fixer.dist.php
+├── arvore.txt
+├── CHANGELOG.md
+├── composer.json
+├── composer.lock
+├── composer.md
+├── composer.phar
+├── composerDEV.json
+├── DATABASELOG.md
+├── deploy-ftp.env
+├── index.php
+├── LICENSE
+├── license.txt
+├── maintenance.php
+├── phpinfo.php
+├── project-tree.php
+├── README.md
+├── rector.php
+├── robots.txt
+├── rss.php
+├── sitemap.xml
+├── sitemap.xml.gz
+├── sitemap.xsl
+└── tim.php

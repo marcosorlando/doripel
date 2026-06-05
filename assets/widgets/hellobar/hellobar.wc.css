@@ -1,0 +1,144 @@
+.wc_hellobar{
+ z-index: 9999 !important;
+}
+
+.wc_hellobar_box{
+    position: relative;
+    box-shadow: 0 0 8px #000033;
+}
+
+.wc_hellobar_close{
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 1px 8px;
+    background: rgba(0,0,0,0.2);
+    color: #fff;
+    font-size: 0.8em;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.wc_hellobar_close:hover{
+    background: #ff0033;
+}
+
+.wc_hellobar_box_content{
+    padding: 40px 20px 20px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.wc_hellobar_box_content_btn{
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+}
+.wc_hellobar_center{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: none;
+}
+
+.wc_hellobar_center .wc_hellobar_box{
+    display: block;
+    background: #fff;
+    width: 500px;
+    max-width: 90%;
+    margin: auto;
+    top: -100px;
+    opacity: 0.5;
+}
+
+.wc_hellobar_right_top,
+.wc_hellobar_right_bottom{
+    position: fixed;
+    right: -360px;
+    bottom: 20px;
+    z-index: 9999;
+    width: 360px;
+    max-width: calc(100% - 40px);
+    opacity: 0;
+}
+
+.wc_hellobar_right_top .wc_hellobar_box,
+.wc_hellobar_right_bottom .wc_hellobar_box{
+    background: #fff;
+}
+
+.wc_hellobar_right_top{
+    bottom: auto;
+    top: 20px;
+}
+
+.wc_hellobar_cta{
+    border-radius: 3px;
+    color: #FFFFFF !important; ;
+}
+
+.btn_cta_blue{
+  padding: 15px 30px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #0E96E5;
+  border-bottom: 5px solid #096397;
+}
+
+.btn_cta_blue:hover{
+  background-color: #096397;
+  border-color: #0A537D;
+}
+
+.btn_cta_green{
+  padding: 15px 30px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #00B494;
+  border-bottom: 5px solid #008068;
+}
+
+.btn_cta_green:hover{
+  background-color: #008068;
+  border-color: #0B5747;
+}
+
+.btn_cta_yellow{
+  padding: 15px 30px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #FAAD50;
+  border-bottom: 5px solid #CC8D41;
+}
+
+.btn_cta_yellow:hover{
+  background-color: #CC8D41;
+  border-color: #A67436;
+}
+
+.btn_cta_red{
+  padding: 15px 30px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #F45563;
+  border-bottom: 5px solid #C54550;
+}
+
+.btn_cta_red:hover{
+  background-color: #C54550;
+  border-color: #93343C;
+}

@@ -1,0 +1,47 @@
+{
+  "name": "localhost/zen",
+  "description": "Website da Zen Agência Web",
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "App\\": "_app/"
+    },
+    "files": [
+      "_app/Config/bootstrap.php"
+    ]
+  },
+  "require": {
+    "league/glide": "^3.0.1",
+    "phpmailer/phpmailer": "^6.10",
+    "vlucas/phpdotenv": "^5.6",
+    "php": "^8.5",
+    "ext-fileinfo": "*"
+  },
+  "suggest": {
+    "ext-gd": "One of ext-gd or ext-imagick is required for image manipulation with Glide.",
+    "ext-imagick": "One of ext-imagick or ext-gd is required for image manipulation with Glide."
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "platform": {
+      "php": "8.5.3"
+    }
+  },
+  "scripts": {
+    "stub": "/opt/homebrew/opt/php@8.5/bin/php bin/generate-constants-stub.php",
+    "clean:minmin:check": "find . -type f -name '*.min.min*' -not -path './vendor/*' -print",
+    "clean:minmin": "find . -type f -name '*.min.min*' -not -path './vendor/*' -print -delete",
+    "cs:fix": "/opt/homebrew/opt/php@8.5/bin/php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --using-cache=yes --sequential",
+    "cs:check": "/opt/homebrew/opt/php@8.5/bin/php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --using-cache=yes --sequential --dry-run --diff",
+    "wc:legacy-dr": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --dry-run `seu-diretorio-alvo`",
+    "wc:legacy-apply": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo`",
+    "wc:legacy-apply-report": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo` --report `caminho/para/o/arquivo/de/relatorio`",
+      "wc:legacy-apply-backup": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo` --report `caminho/para/o/arquivo/de/relatorio`"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.94"
+  }
+}

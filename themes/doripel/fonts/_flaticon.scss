@@ -1,0 +1,53 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 06/12/2018 21:22
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-closet:before { content: "\f100"; }
+.flaticon-cabinet:before { content: "\f101"; }
+.flaticon-closet-1:before { content: "\f102"; }
+.flaticon-cabinet-1:before { content: "\f103"; }
+.flaticon-bed:before { content: "\f104"; }
+.flaticon-rack:before { content: "\f105"; }
+.flaticon-desk:before { content: "\f106"; }
+    
+    $font-Flaticon-closet: "\f100";
+    $font-Flaticon-cabinet: "\f101";
+    $font-Flaticon-closet-1: "\f102";
+    $font-Flaticon-cabinet-1: "\f103";
+    $font-Flaticon-bed: "\f104";
+    $font-Flaticon-rack: "\f105";
+    $font-Flaticon-desk: "\f106";

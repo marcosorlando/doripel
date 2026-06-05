@@ -1,0 +1,232 @@
+html {
+    font-size: 16px !important;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif !important;
+    line-height: 1.2rem !important;
+    background: #fcfcfc;
+    padding: 0 15px;
+    margin: 0;
+    color: #333;
+    font-size: 1rem;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+pre {
+    font-size: 1em !important;
+    padding: 10px;
+    background: #f8f9fa;
+    font-family: 'Source Code Pro', serif !important;
+}
+
+
+img {
+    max-width: 100% !important;
+}
+
+video {width: 100%; height: auto}
+
+h3 {
+    font-size: 1.4em;
+    font-weight: 700;
+    margin: 20px 0 10px 0
+}
+
+h4 {
+    font-size: 1.3em;
+    font-weight: 500;
+    margin: 20px 0 10px 0
+}
+
+h5 {
+    font-size: 1.1em;
+    font-weight: 400;
+    line-height: 22px;
+    padding: 0 0 0 5px;
+    margin: 10px 0 0 10px;
+}
+
+h5:before {
+    content: '\2713';
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #007bff;
+    margin-right: 4px
+}
+
+h6 {
+    font-size: 1.25em;
+    font-weight: 400;
+    font-family: 'Ubuntu', sans-serif;
+    border-left: 2px solid var(--color-background-two);
+    width: 100%;
+    padding: 50px;
+    margin: 0 auto;
+    line-height: 30px;
+}
+
+h6:before {
+    content: '" ';
+    font-family: 'Ubuntu';
+    color: var(--color-background-two);
+    font-size: 1.35em;
+    font-weight: 600;
+}
+
+h6:after {
+    content: ' "';
+    font-family: 'Ubuntu';
+    color: var(--color-background-two);
+    font-size: 1.35em;
+    font-weight: 600;
+}
+
+p {
+    font-size: 1.1em !important;
+    margin: 15px 0 0 0;
+    font-weight: 400;
+}
+
+iframe {
+    width: 90%;
+    height: 83vh;
+}
+
+
+.btn {
+    display: block;
+    cursor: pointer;
+    padding: 8px 12px;
+    margin-top: 2px;
+    background: #888;
+    font-size: 1.2em;
+    color: #fff;
+    text-decoration: none !important;
+    text-align: center;
+    border: none;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn_cta_blue {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #0E96E5;
+    border-bottom: 5px solid #096397;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn_cta_blue:hover {
+    background-color: #096397;
+    border-color: #0A537D;
+}
+
+.btn_cta_green {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #00B494;
+    border-bottom: 5px solid #008068;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn_cta_green:hover {
+    background-color: #008068;
+    border-color: #0B5747;
+}
+
+.btn_cta_yellow {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #FAAD50;
+    border-bottom: 5px solid #CC8D41;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn_cta_yellow:hover {
+    background-color: #CC8D41;
+    border-color: #A67436;
+}
+
+.btn_cta_red {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #F45563;
+    border-bottom: 5px solid #C54550;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn_cta_red:hover {
+    background-color: #C54550;
+    border-color: #93343C;
+}
+
+form {
+    padding: 30px;
+    text-align: center;
+    background: #eee;
+    margin: 20px 0;
+    text-align: center;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+form label {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+form input,
+form textarea {
+    border: 1px solid #ccc;
+    display: block;
+    width: calc(100% - 30px);
+    max-width: 100%;
+    margin-top: 15px;
+    font-size: 1em;
+    padding: 10px 15px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+form button,
+form input[type="submit"] {
+    display: block;
+    width: 100%;
+    border: 0;
+    color: #fff;
+    text-shadow: 0 1px #000;
+    cursor: pointer;
+    padding: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #00B494;
+    border-bottom: 5px solid #008068;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+form button:hover,
+form input[type="submit"]:hover {
+    background-color: #008068;
+    border-color: #0B5747;
+}

@@ -1,0 +1,350 @@
+.daltonism,
+.daltonism nav,
+.daltonism div,
+.daltonism ul,
+.daltonism ol,
+    /*.daltonism header,*/
+.daltonism footer,
+.daltonism section,
+.daltonism main,
+.daltonism aside,
+.daltonism article,
+.daltonism form,
+.daltonism .workcontrol_socialsharer,
+.daltonism .new_product p {
+    background-color: gray !important;
+    color: black !important;
+}
+
+.daltonism .login_box header,
+.daltonism .workcontrol_account_sidebar_nav li a:hover {
+    background-color: #111 !important;}
+
+/*PERSONALIZACAO THEME*/
+.daltonism .header_mobile_nav, .daltonism .header_mobile_nav div ul, .daltonism > #acc h1,
+.daltonism .workcontrol_account_sidebar header,
+.daltonism .j_account_tab {
+    background-color: #1a1a1a !important;
+    margin-top: -1px;
+    font-size: 1rem;
+}
+
+.daltonism .j_account_tab {font-size: 0.85em}
+
+.daltonism .header, .daltonism .header .header_mobile, .daltonism .header_mobile_categories {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.daltonism .header_mobile_categories_ul {background-color: #000; border: 5px solid #222222;}
+
+.daltonism .account_form_item {background-color: #000 !important; border: 1px solid #2a2a2a !important;}
+
+.daltonism .size  .workcontrol_filter_form_item_options label {background-color: #000 !important; border: 1px solid #2a2a2a !important; color: white !important;}
+.daltonism .size  .workcontrol_filter_form_item_options label.active  {background-color: white !important; color: #1a1a1a !important; }
+
+.daltonism .workcontrol_account_sidebar_nav li {border-bottom: 1px solid #1a1a1a;}
+
+.daltonism .workcontrol_account_sidebar_nav li a {color: #fff;}
+
+.daltonism .workcontrol_account_sidebar_nav li .logoff,
+.daltonism .account_form_actions a {color: black;}
+
+.daltonism .quality_item span[class~='fa'],
+.daltonism .header_desktop_categories_ul > li > a,
+.daltonism .header_mobile_categories_ul > li a,
+.daltonism .footer a {
+    color: black !important;
+}
+
+.daltonism .header_desktop_categories_ul > li > a:hover,
+.daltonism .action_purchase a:hover,
+.daltonism .action_view a:hover,
+.daltonism .action_wishlist a:hover,
+.daltonism .wc_contact_close,
+.daltonism .workcontrol_filter_form_item p,
+.daltonism .browsing_history_remove span,
+.daltonism .j_cat_open_end_close {color: black !important;background-color: white !important;}
+
+.daltonism .action_purchase a:hover span,
+.daltonism .action_view a:hover span,
+.daltonism .action_wishlist a:hover span,
+.daltonism .j_cat_open_end_close span {color: black !important;}
+
+.daltonism .workcontrol_filter_form_item.brand, .daltonism .workcontrol_filter_form_item.department, .daltonism .workcontrol_filter_form_item.discount {
+    border-bottom: 10px solid black;
+}
+
+.daltonism #slider_price span {background: black !important}
+
+.daltonism .products_item_title h1 a {color: black !important}
+
+.daltonism > div.daltonism-contrast,
+.daltonism > div.higth-contrast,
+.daltonism .daltonism-default,
+.daltonism .access-font-size-a-plus,
+.daltonism .access-font-size-a-minus,
+.daltonism .access-font-size-a-reset,
+.daltonism .actions_wishlist,
+.daltonism #wh-widget-send-button {
+    background-color: transparent !important;
+}
+
+.daltonism .div_gray {
+    position: relative !important;
+    background-size: cover !important;
+    overflow: hidden !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    filter: grayscale(100%) contrast(120%) !important;
+    -webkit-filter: grayscale(100%) contrast(120%) !important;
+}
+
+.daltonism video {
+    filter: grayscale(100%) contrast(120%) !important;
+    -webkit-filter: grayscale(100%) contrast(120%) !important;
+}
+
+.daltonism .div_gray p,
+.daltonism .div_gray a,
+.daltonism .div_gray h1,
+.daltonism .div_gray h2,
+.daltonism .div_gray h3,
+.daltonism .div_gray h4,
+.daltonism .div_gray h5,
+.daltonism .div_gray h6 {
+    background: transparent !important;
+    width: auto !important;
+    text-shadow: 0 0 5px #1a1a1a, 0 0 5px #000; !important
+}
+
+.daltonism .div_gray * {
+    background: transparent !important;
+}
+
+.daltonism div.container:before {
+    background: transparent !important
+}
+
+.daltonism .callback_return { background: none !important; border: none !important;}
+
+/* PANEL HEADER DEFAULT WHITE */
+.daltonism .panel_header.default,
+.daltonism .panel_header.success,
+.daltonism .panel_header.alert,
+.daltonism .panel_header.info,
+.daltonism .panel_header.warning {background: black !important; border-top: 5px solid #ebebeb !important; border-bottom: 1px solid #eee !important; color: #555;}
+
+.daltonism h1,
+.daltonism h2,
+.daltonism h3,
+.daltonism h4,
+.daltonism h5,
+.daltonism h6,
+.daltonism p,
+.daltonism label,
+.daltonism strong,
+.daltonism em,
+.daltonism cite,
+.daltonism q,
+.daltonism i,
+.daltonism span,
+.daltonism b,
+.daltonism u,
+.daltonism .dashboard_stats h3 {
+    color: inherit !important;
+}
+
+.daltonism .list-style-4.list-style-color li:before {color: white}
+
+.daltonism .icon-round-medium {color: black !important; background: white}
+
+.daltonism .blog-hover-icon {color: white !important; background: RGBA(0, 0, 0, 0.5) !important}
+
+.daltonism .btn-lat-rigth {color: black !important; background: white !important; border-color: white !important}
+
+.daltonism .btn-lat-rigth span {color: black !important;}
+
+.daltonism .bar_white, .daltonism .workcontrol_pay_tabs li {
+    background: #ffffff !important;
+    color: black !important;
+    text-shadow: none;
+}
+
+.daltonism header {
+    border-color: #ffffff !important;
+}
+
+.daltonism svg,
+.daltonism a,
+.daltonism :not(.header_desktop_buttons a) {
+    color: white !important;
+    background: black !important;
+}
+
+.daltonism a:hover,
+.daltonism .wc_contact_close,
+.daltonism :not(.header_desktop_buttons a:hover),
+.daltonism .actions_wishlist {
+    color: #dddddd !important;
+    background-color: transparent !important;
+}
+
+.daltonism .header_desktop_buttons_account.active,
+.daltonism .header_desktop_buttons_account:hover,
+.daltonism .header_desktop_buttons_wishlist.active,
+.daltonism .header_desktop_buttons_wishlist:hover,
+.daltonism .header_desktop_buttons_cart.active,
+.daltonism .header_desktop_buttons_cart:hover {
+    background-color: #555 !important
+}
+
+.daltonism a.atalho, .daltonism a.wc_tab, .daltonism .footer_about_social > a {
+    color: white !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border: 1px solid white
+}
+
+.daltonism a.wc_active, .daltonism .wc_tab:hover {
+    color: #fff !important;
+    border: 1px solid #fff !important
+}
+.daltonism .workcontrol_socialshare_item a,
+.daltonism .workcontrol_pay_tabs .active:hover,
+.daltonism .workcontrol_pay_tabs .active{
+    border-color:  white !important;
+    color: white !important;
+    background-color: #1a1a1a !important;
+}
+
+.daltonism .workcontrol_socialshare_item a:hover {color: #ffffff !important;}
+
+.daltonism button,
+.daltonism .btn,
+.daltonism input[type='button'],
+.daltonism input[type='reset'],
+.daltonism input[type='submit'] {
+    background: black !important;
+    color: white !important;
+    border: 2px solid white !important;
+}
+.daltonism button:hover,
+.daltonism .btn:hover,
+.daltonism input[type='button']:hover,
+.daltonism input[type='reset']:hover,
+.daltonism input[type='submit']:hover {
+    background: white !important;
+    color: black !important;
+    transition: all ease-in-out .6s;
+}
+
+.daltonism button:hover > span,
+.daltonism .one_input_button:hover > span,
+.daltonism .btn:hover > span,
+.daltonism input[type='button']:hover > span,
+.daltonism input[type='reset']:hover > span,
+.daltonism input[type='submit']:hover > span {color: black !important; transition: ease .3s }
+
+.daltonism .enabled, .daltonism .active {
+    background-color: transparent !important;
+}
+
+.daltonism .enabled > span, .daltonism .active > span {background-color: #555 !important}
+
+.daltonism .products_item_price p a, .daltonism .workcontrol_cart_list_item a {color: white !important;}
+
+
+.daltonism .products_item_price p a .installment,
+.daltonism .wc_cart_tag,
+.daltonism .worcontrol_useraddr,
+.daltonism .workcontrol_shipment .shiptag
+{background-color: black !important}
+
+.daltonism img.on-contrast-force-gray, .daltonism .zoomImg, .daltonism iframe {
+    filter: grayscale(100%) contrast(120%);
+}
+
+.daltonism .active img {
+    filter: grayscale(100%) contrast(120%);
+}
+
+.daltonism img.on-contrast-force-white {
+    filter: brightness(0) invert(1);
+}
+
+.daltonism .swiper-container * {
+    background: none !important;
+}
+
+.daltonism input[type='text'],
+.daltonism input[type='password'],
+.daltonism input[type='url'],
+.daltonism input[type='search'],
+.daltonism input[type='email'],
+.daltonism input[type='tel'],
+.daltonism input[type='date'],
+.daltonism input[type='month'],
+.daltonism input[type='week'],
+.daltonism input[type='datetime'],
+.daltonism input[type='datetime-local'],
+.daltonism textarea,
+.daltonism select,
+.daltonism input[type='number'] {
+    background: black !important;
+    border: 1px solid white !important;
+    color: white !important;
+}
+
+.daltonism .account_form_item input {
+    border: none !important;
+}
+
+.daltonism #s {border: none !important; background: none !important;}
+
+.daltonism input:disabled {
+    color: white;
+    border-color: white;
+}
+
+.daltonism td span {
+    border-color: white;
+}
+
+.daltonism table th {
+    background-color: black;
+    color: white;
+}
+
+.daltonism table td {
+    color: white;
+}
+
+.daltonism table td::before, .daltonism .breadcrumb li {
+    color: white;
+}
+
+/*BLOG*/
+.daltonism .blog-categories .blog-sidebar .search button{border:none !important; text-shadow: none !important;}
+.daltonism .blog-categories .blog-sidebar .search button > span{color: black}
+.daltonism .blog-categories .blog-sidebar .search button, .daltonism .blog_tags a, .daltonism .single_blog .blog_author a{background-color: white !important; color: black !important;}
+.daltonism .blog-categories .blog-sidebar .search button:hover, .daltonism .blog_tags a:hover,
+.daltonism .blog-categories .blog-sidebar .panel .aside-title:after {background-color: white !important;}
+.daltonism .blog-categories .blog-sidebar .list-cats a,
+.daltonism .blog_post .post_details a{color: black !important;}
+.daltonism .blog-categories .blog-sidebar .social-icon ul li a,
+.daltonism .latest-post a, .daltonism .breadcrumb li a:hover, .daltonism .breadcrumb li.active{
+    color: black; !important;
+    text-decoration: none;
+}
+.daltonism .blog-categories .blog-sidebar .list-cats a:hover,.daltonism .latest-post a:hover  {color: white !important; font-weight: 400}
+.daltonism .social-icon li a:hover,
+.daltonism .footer_about_social a:hover{
+    transition: all ease 0.5s !important;
+    background-color: white !important;
+    color: black !important;
+}
+.daltonism .workcontrol_socialshare_item a:hover{
+    transition: all ease 0.5s !important;
+    background-color: black;
+    border: 1px inset white;
+}
+
