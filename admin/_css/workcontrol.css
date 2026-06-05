@@ -1607,6 +1607,15 @@ div.mce-fullscreen {
     vertical-align: middle;
 }
 
+.pdt_volume_actions {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0 20px;
+    background: #eee;
+    padding: 8px;
+    border-radius: 4px;
+}
+
 .workcontrol_pdt_size form .btn {
     display: inline-block;
     margin-top: 15px;

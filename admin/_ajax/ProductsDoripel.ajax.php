@@ -20,6 +20,136 @@ endif;
 
 usleep(50000);
 
+if (!function_exists('productsDoripelNormalizeDecimal')) {
+    function productsDoripelNormalizeDecimal(mixed $value): string
+    {
+        if (is_array($value)) {
+            return '0.0000';
+        }
+
+        $value = str_replace(',', '.', trim((string)$value));
+
+        if (!is_numeric($value)) {
+            return '0.0000';
+        }
+
+        return number_format((float)$value, 4, '.', '');
+    }
+}
+
+if (!function_exists('productsDoripelLegacyVolumes')) {
+    /**
+     * @param array<string, mixed> $product
+     * @return list<array{weight: string, depth: string, width: string, height: string}>
+     */
+    function productsDoripelLegacyVolumes(array $product): array
+    {
+        $volumes = [
+          [
+            'weight' => productsDoripelNormalizeDecimal($product['pdt_dimension_weight'] ?? 0),
+            'depth' => productsDoripelNormalizeDecimal($product['pdt_dimension_depth'] ?? 0),
+            'width' => productsDoripelNormalizeDecimal($product['pdt_dimension_width'] ?? 0),
+            'height' => productsDoripelNormalizeDecimal($product['pdt_dimension_heigth'] ?? 0),
+          ],
+        ];
+
+        $secondVolume = [
+          'weight' => productsDoripelNormalizeDecimal($product['pdt_dimension_weight_cx2'] ?? 0),
+          'depth' => productsDoripelNormalizeDecimal($product['pdt_dimension_depth_cx2'] ?? 0),
+          'width' => productsDoripelNormalizeDecimal($product['pdt_dimension_width_cx2'] ?? 0),
+          'height' => productsDoripelNormalizeDecimal($product['pdt_dimension_heigth_cx2'] ?? 0),
+        ];
+
+        if (array_filter($secondVolume, static fn($value) => (float)$value > 0)) {
+            $volumes[] = $secondVolume;
+        }
+
+        return $volumes;
+    }
+}
+
+if (!function_exists('productsDoripelNormalizeVolumes')) {
+    /**
+     * @param mixed $rawVolumes
+     * @param array<string, mixed> $legacyProduct
+     * @return list<array{weight: string, depth: string, width: string, height: string}>
+     */
+    function productsDoripelNormalizeVolumes(mixed $rawVolumes, array $legacyProduct): array
+    {
+        if (!is_array($rawVolumes)) {
+            return productsDoripelLegacyVolumes($legacyProduct);
+        }
+
+        $volumes = [];
+        foreach ($rawVolumes as $volume) {
+            if (!is_array($volume)) {
+                continue;
+            }
+
+            $normalizedVolume = [
+              'weight' => productsDoripelNormalizeDecimal($volume['weight'] ?? 0),
+              'depth' => productsDoripelNormalizeDecimal($volume['depth'] ?? 0),
+              'width' => productsDoripelNormalizeDecimal($volume['width'] ?? 0),
+              'height' => productsDoripelNormalizeDecimal($volume['height'] ?? 0),
+            ];
+
+            if (!array_filter($normalizedVolume, static fn($value) => (float)$value > 0)) {
+                continue;
+            }
+
+            $volumes[] = $normalizedVolume;
+        }
+
+        return $volumes ?: productsDoripelLegacyVolumes($legacyProduct);
+    }
+}
+
+if (!function_exists('productsDoripelSyncLegacyVolumeFields')) {
+    /**
+     * @param array<string, mixed> $postData
+     * @param list<array{weight: string, depth: string, width: string, height: string}> $volumes
+     */
+    function productsDoripelSyncLegacyVolumeFields(array &$postData, array $volumes): void
+    {
+        $firstVolume = $volumes[0] ?? ['weight' => '0.0000', 'depth' => '0.0000', 'width' => '0.0000', 'height' => '0.0000'];
+        $secondVolume = $volumes[1] ?? ['weight' => '0.0000', 'depth' => '0.0000', 'width' => '0.0000', 'height' => '0.0000'];
+
+        $postData['pdt_dimension_weight'] = $firstVolume['weight'];
+        $postData['pdt_dimension_depth'] = $firstVolume['depth'];
+        $postData['pdt_dimension_width'] = $firstVolume['width'];
+        $postData['pdt_dimension_heigth'] = $firstVolume['height'];
+        $postData['pdt_dimension_weight_cx2'] = $secondVolume['weight'];
+        $postData['pdt_dimension_depth_cx2'] = $secondVolume['depth'];
+        $postData['pdt_dimension_width_cx2'] = $secondVolume['width'];
+        $postData['pdt_dimension_heigth_cx2'] = $secondVolume['height'];
+    }
+}
+
+if (!function_exists('productsDoripelSaveVolumes')) {
+    /**
+     * @param list<array{weight: string, depth: string, width: string, height: string}> $volumes
+     */
+    function productsDoripelSaveVolumes(int $productId, array $volumes, Read $read, Delete $delete, Create $create): bool
+    {
+        $read->fullRead("SELECT 1 FROM " . DB_PDT_VOLUMES_DORIPEL . " LIMIT 1");
+        $delete->exeDelete(DB_PDT_VOLUMES_DORIPEL, "WHERE pdt_id = :id", "id={$productId}");
+
+        foreach ($volumes as $index => $volume) {
+            $create->exeCreate(DB_PDT_VOLUMES_DORIPEL, [
+              'pdt_id' => $productId,
+              'volume_order' => $index + 1,
+              'volume_weight' => $volume['weight'],
+              'volume_depth' => $volume['depth'],
+              'volume_width' => $volume['width'],
+              'volume_height' => $volume['height'],
+              'volume_created' => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        return true;
+    }
+}
+
 //DEFINE O CALLBACK E RECUPERA O POST
 $jSON = null;
 $CallBack = 'ProductsDoripel';
@@ -67,8 +197,10 @@ if ($PostData && isset($PostData['callback_action'], $PostData['callback']) && $
                   E_USER_WARNING);
             else:
                 $Product = $Read->getResult()[0];
+                $ProductVolumes = productsDoripelNormalizeVolumes($PostData['volumes'] ?? null, $Product);
 
-                unset($PostData['pdt_id'], $PostData['pdt_cover'], $PostData['pdt_scene'], $PostData['image'], $PostData['pdt_instrutions']);
+                unset($PostData['pdt_id'], $PostData['pdt_cover'], $PostData['pdt_scene'], $PostData['image'], $PostData['pdt_instrutions'], $PostData['volumes']);
+                productsDoripelSyncLegacyVolumeFields($PostData, $ProductVolumes);
 
                 $PostData['pdt_name'] = (!empty($PostData['pdt_name']) ? Check::name($PostData['pdt_name']) : Check::name($PostData['pdt_title'])) . $Ref;
 
@@ -207,6 +339,12 @@ if ($PostData && isset($PostData['callback_action'], $PostData['callback']) && $
                 $PostData['pdt_inventory'] = (!empty($Read->getResult()[0]['amount']) ? $Read->getResult()[0]['amount'] : 0);
 
                 $Update->exeUpdate(DB_PDT_DORIPEL, $PostData, "WHERE pdt_id = :id", "id={$PdtId}");
+                try {
+                    productsDoripelSaveVolumes((int)$PdtId, $ProductVolumes, $Read, $Delete, $Create);
+                } catch (Throwable) {
+                    $jSON['trigger'] .= Check::ajaxErro("<span class='icon-warning'><b>ATENÇÃO:</b> O produto foi atualizado, mas os volumes não foram salvos na tabela auxiliar. Crie a tabela " . DB_PDT_VOLUMES_DORIPEL . " antes de usar volumes ilimitados.</span>",
+                      E_USER_WARNING);
+                }
                 $jSON['view'] = BASE . '/movel/' . $PostData['pdt_name'];
             endif;
             break;
@@ -280,6 +418,11 @@ if ($PostData && isset($PostData['callback_action'], $PostData['callback']) && $
                 $Delete->exeDelete(DB_PDT_DORIPEL, "WHERE pdt_id = :id", "id={$Product['pdt_id']}");
                 $Delete->exeDelete(DB_COMMENTS, "WHERE pdt_id = :id", "id={$Product['pdt_id']}");
                 $Delete->exeDelete(DB_PDT_STOCK_DORIPEL, "WHERE pdt_id = :id", "id={$Product['pdt_id']}");
+                try {
+                    $Delete->exeDelete(DB_PDT_VOLUMES_DORIPEL, "WHERE pdt_id = :id", "id={$Product['pdt_id']}");
+                } catch (Throwable) {
+                    // A tabela de volumes pode ainda não existir em ambientes sem a migração.
+                }
                 $jSON['success'] = true;
             endif;
             break;

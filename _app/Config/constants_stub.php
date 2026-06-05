@@ -377,6 +377,10 @@ if (!defined('DB_PDT_STOCK_DORIPEL')) {
     define('DB_PDT_STOCK_DORIPEL', 'ws_products_stock_doripel');
 }
 
+if (!defined('DB_PDT_VOLUMES_DORIPEL')) {
+    define('DB_PDT_VOLUMES_DORIPEL', 'ws_products_volumes_doripel');
+}
+
 if (!defined('DB_PORTFOLIO')) {
     define('DB_PORTFOLIO', 'portfolio');
 }
