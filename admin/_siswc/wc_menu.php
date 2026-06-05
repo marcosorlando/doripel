@@ -275,7 +275,7 @@
 
     if (APP_PRODUCTS_DORIPEL && $_SESSION['userLogin']['user_level'] >= LEVEL_WC_PRODUCTS_DORIPEL) {
         $wc_pdt_alerts = null;
-        $Read->FullRead('SELECT count(pdt_id) as total FROM ' . DB_PDT_DORIPEL . ' WHERE pdt_status != 1');
+        $Read->fullRead('SELECT count(pdt_id) as total FROM ' . DB_PDT_DORIPEL . ' WHERE pdt_status != 1');
         if ($Read->getResult() && $Read->getResult()[0]['total'] >= 1) {
             $wc_pdt_alerts .= "<span class='wc_alert bar_yellow'>{$Read->getResult()[0]['total']}</span>";
         }
@@ -331,7 +331,7 @@
     }
     if (APP_LEADS && $Admin['user_level'] >= LEVEL_WC_LEADS) {
         $wc_leads = null;
-        $Read->FullRead('SELECT count(lead_id) as total FROM ' . DB_LEADS . ' WHERE lead_status != 1');
+        $Read->fullRead('SELECT count(lead_id) as total FROM ' . DB_LEADS . ' WHERE lead_status != 1');
         if ($Read->getResult() && $Read->getResult()[0]['total'] >= 1) {
             $wc_leads .= "<span class='wc_alert bar_yellow'>{$Read->getResult()[0]['total']}</span>";
         }

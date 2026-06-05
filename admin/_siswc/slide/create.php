@@ -2,10 +2,11 @@
 
 use App\Conn\Create;
 use App\Conn\Read;
+use App\Helpers\Check;
 
 $AdminLevel = LEVEL_WC_SLIDES;
 if (!APP_SLIDE || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
-    die('<div style="text-align: center; margin: 5% 0; color: #C54550; font-size: 1.6em; font-weight: 400; background: #fff; float: left; width: 100%; padding: 30px 0;"><b>ACESSO NEGADO:</b> Você não esta logado<br>ou não tem permissão para acessar essa página!</div>');
+    Check::accessBlocked();
 endif;
 
 // AUTO INSTANCE OBJECT READ
@@ -20,22 +21,39 @@ endif;
 
 $SlideId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if ($SlideId):
-    $Read->ExeRead(DB_SLIDES, "WHERE slide_id = :id", "id={$SlideId}");
+    $Read->exeRead(DB_SLIDES, "WHERE slide_id = :id", "id={$SlideId}");
     if ($Read->getResult()):
-        $FormData = array_map('htmlspecialchars', $Read->getResult()[0]);
+        $FormData = array_map(static fn($value) => Check::safeHtmlChars($value), $Read->getResult()[0]);
         extract($FormData);
     else:
         $_SESSION['trigger_controll'] = "<b>OPPSS {$Admin['user_name']}</b>, você tentou editar um slide que não existe ou que foi removido recentemente!";
         header('Location: dashboard.php?wc=slide/home');
+        exit;
     endif;
 else:
     $SlideCreate = [
         'slide_date' => date('Y-m-d H:i:s'),
         'slide_start' => date('Y-m-d H:i:s')
     ];
-    $Create->ExeCreate(DB_SLIDES, $SlideCreate);
+    $Create->exeCreate(DB_SLIDES, $SlideCreate);
     header('Location: dashboard.php?wc=slide/create&id=' . $Create->getResult());
+    exit;
 endif;
+
+$slide_title ??= '';
+$slide_opacity ??= '';
+$slide_image ??= '';
+$mobile_image ??= '';
+$slide_desc ??= '';
+$slide_content ??= '';
+$slide_registration ??= '';
+$slide_start ??= '';
+$slide_end ??= '';
+$show_title ??= '0';
+$show_desc ??= '0';
+$slide_purchase ??= '0';
+$slide_information ??= '0';
+$slide_status ??= '0';
 ?>
 
 <header class="dashboard_header">

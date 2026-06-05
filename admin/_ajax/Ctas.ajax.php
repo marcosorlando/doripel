@@ -1,6 +1,5 @@
 <?php
 
-use App\Conn\Create;
 use App\Conn\Delete;
 use App\Conn\Read;
 use App\Conn\Update;
@@ -33,7 +32,6 @@ if (isset($PostData['callback'], $PostData['callback_action']) && $PostData['cal
     unset($PostData['callback'], $PostData['callback_action']);
 
     $Read = new Read();
-    $Create = new Create();
     $Update = new Update();
     $Delete = new Delete();
 
@@ -45,7 +43,10 @@ if (isset($PostData['callback'], $PostData['callback_action']) && $PostData['cal
                 break;
             }
 
-            $Image = (!empty($_FILES['cta_image']) ? $_FILES['cta_image'] : null);
+            $Image = (
+                isset($_FILES['cta_image']['error']) &&
+                $_FILES['cta_image']['error'] === UPLOAD_ERR_OK
+            ) ? $_FILES['cta_image'] : null;
             unset($PostData['cta_id'], $PostData['cta_image']);
 
             $Read->fullRead("SELECT cta_image FROM " . DB_CTAS . " WHERE cta_id = :id", "id={$CtaId}");
@@ -56,7 +57,16 @@ if (isset($PostData['callback'], $PostData['callback_action']) && $PostData['cal
                 break;
             }
 
-            if (in_array('', $PostData, true)) {
+            $RequiredFields = ['cta_title', 'cta_text', 'cta_bg_color', 'cta_btn_color', 'cta_btn_rounded', 'cta_url', 'cta_start'];
+            foreach ($RequiredFields as $Field) {
+                if (trim((string) ($PostData[$Field] ?? '')) === '') {
+                    $jSON['trigger'] = Check::ajaxErro('<b class="icon-warning">ERRO AO CADASTRAR:</b> Para atualizar o CTA, favor preencha todos os campos obrigatórios!', E_USER_WARNING);
+                    $jSON['error'] = true;
+                    break 2;
+                }
+            }
+
+            if (isset($_FILES['cta_image']['error']) && !in_array($_FILES['cta_image']['error'], [UPLOAD_ERR_OK, UPLOAD_ERR_NO_FILE], true)) {
                 $jSON['trigger'] = Check::ajaxErro('<b class="icon-warning">ERRO AO CADASTRAR:</b> Para atualizar o CTA, favor preencha todos os campos!', E_USER_WARNING);
                 $jSON['error'] = true;
                 break;
@@ -68,13 +78,21 @@ if (isset($PostData['callback'], $PostData['callback_action']) && $PostData['cal
             $PostData['cta_end'] = (!empty($PostData['cta_end']) ? Check::data((string) $PostData['cta_end']) : null);
 
             if (!empty($Image)) {
+                $Upload = new Upload('../../uploads/');
+                $Upload->image($Image, Check::name((string) $PostData['cta_title']), AVATAR_W, 'ctas');
+                $UploadedImage = $Upload->getResult();
+
+                if (!is_string($UploadedImage) || $UploadedImage === '') {
+                    $jSON['trigger'] = Check::ajaxErro('<b class="icon-warning">ERRO AO CADASTRAR:</b> Não foi possível enviar a imagem do CTA!', E_USER_WARNING);
+                    $jSON['error'] = true;
+                    break;
+                }
+
+                $PostData['cta_image'] = $UploadedImage;
+
                 if ($CurrentImage && file_exists("../../uploads/ctas/{$CurrentImage}") && !is_dir("../../uploads/ctas/{$CurrentImage}")) {
                     unlink("../../uploads/ctas/{$CurrentImage}");
                 }
-
-                $Upload = new Upload('../../uploads/');
-                $Upload->image($Image, Check::name((string) $PostData['cta_title']), AVATAR_W, 'ctas');
-                $PostData['cta_image'] = $Upload->getResult();
             }
 
             $Update->exeUpdate(DB_CTAS, $PostData, "WHERE cta_id = :id", "id={$CtaId}");

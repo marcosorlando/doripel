@@ -1,11 +1,13 @@
 <?php
 
 use App\Conn\Delete;
-use App\Models\Pager;
 use App\Conn\Read;
+use App\Helpers\Check;
+use App\Models\Pager;
+
 $AdminLevel = LEVEL_WC_SLIDES;
 if (!APP_SLIDE || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
-    die('<div style="text-align: center; margin: 5% 0; color: #C54550; font-size: 1.6em; font-weight: 400; background: #fff; float: left; width: 100%; padding: 30px 0;"><b>ACESSO NEGADO:</b> Você não esta logado<br>ou não tem permissão para acessar essa página!</div>');
+    Check::accessBlocked();
 endif;
 
 // AUTO INSTANCE OBJECT READ
@@ -16,7 +18,7 @@ endif;
 //AUTO DELETE POST TRASH
 if (DB_AUTO_TRASH):
     $Delete = new Delete;
-    $Delete->ExeDelete(DB_SLIDES, "WHERE slide_image IS NULL AND slide_title IS NULL AND slide_id >= :st", "st=1");
+    $Delete->exeDelete(DB_SLIDES, "WHERE slide_image IS NULL AND slide_title IS NULL AND slide_id >= :st", "st=1");
 endif;
 ?>
 
@@ -43,11 +45,11 @@ endif;
     $getPage = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
     $Page = ($getPage ? $getPage : 0);
     $Pager = new Pager('dashboard.php?wc=slide/home&page=', "<<", ">>", 3);
-    $Pager->ExePager($Page, 5);
-    $Read->ExeRead(DB_SLIDES, "WHERE slide_status != 1 OR (slide_start >= NOW() OR slide_end <= NOW()) ORDER BY slide_date DESC LIMIT :limit OFFSET :offset", "limit={$Pager->getLimit()}&offset={$Pager->getOffset()}");
+    $Pager->exePager($Page, 5);
+    $Read->exeRead(DB_SLIDES, "WHERE slide_status != 1 OR (slide_start >= NOW() OR slide_end <= NOW()) ORDER BY slide_date DESC LIMIT :limit OFFSET :offset", "limit={$Pager->getLimit()}&offset={$Pager->getOffset()}");
     if (!$Read->getResult()):
-        $Pager->ReturnPage();
-        Erro("<span class='al_center icon-notification'>Não existe conteúdo em destaque inativos em seu site. Os destaques expirados ou fora de data são apresentados aqui!</span>", E_USER_NOTICE);
+        $Pager->returnPage();
+        echo Check::erro("<span class='al_center icon-notification'>Não existe conteúdo em destaque inativos em seu site. Os destaques expirados ou fora de data são apresentados aqui!</span>", E_USER_NOTICE);
     else:
         foreach ($Read->getResult() as $Slide):
             extract($Slide);
@@ -65,7 +67,7 @@ endif;
                 </article>";
         endforeach;
 
-        $Pager->ExePaginator(DB_SLIDES, "WHERE slide_start <= NOW() AND (slide_end >= NOW() OR slide_end IS NULL)");
+        $Pager->exePaginator(DB_SLIDES, "WHERE slide_start <= NOW() AND (slide_end >= NOW() OR slide_end IS NULL)");
         echo $Pager->getPaginator();
 
     endif;
