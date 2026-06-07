@@ -194,17 +194,17 @@
                 $post_title = (empty($post_title) ? 'Edite esse rascunho para poder exibir como artigo em seu site!' : $post_title);
 
                 $postTags = null;
-                if ($post_tags) {
-                    foreach (\explode(',', (string)$post_tags) as $tags) {
-                        $tag = \ltrim(\rtrim($tags));
-                        $postTags .= \sprintf(
-                                "<a class='icon-price-tag radius' title='Artigos marcados com %s' href='dashboard.php?wc=posts/home&s=%s&cat=%s&tag=",
-                                $tag,
-                                $S,
-                                $C
-                            ) . Check::safeUrlEncode($tag) . \sprintf("'>%s</a>", $tag);
-                    }
-                }
+                /*   if ($post_tags) {
+                       foreach (\explode(',', (string)$post_tags) as $tags) {
+                           $tag = \ltrim(\rtrim($tags));
+                           $postTags .= \sprintf(
+                                   "<a class='icon-price-tag radius' title='Artigos marcados com %s' href='dashboard.php?wc=posts/home&s=%s&cat=%s&tag=",
+                                   $tag,
+                                   $S,
+                                   $C
+                               ) . Check::safeUrlEncode($tag) . \sprintf("'>%s</a>", $tag);
+                       }
+                   }*/
 
                 $Category = null;
                 if (!empty($post_category)) {

@@ -93,7 +93,7 @@
 
 <header class="dashboard_header">
 	<div class="dashboard_header_title">
-		<h1 class="icon-new-tab"><?= $pdt_title ? $pdt_title : 'Novo Produto'; ?></h1>
+		<h1 class="icon-new-tab"><?= $pdt_title ?: 'Novo Produto'; ?></h1>
 		<p class="dashboard_header_breadcrumbs">
 			&raquo; <?= ADMIN_NAME; ?>
 			<span class="crumb">/</span>
@@ -107,7 +107,7 @@
 
 	<div class="dashboard_header_search">
 		<a title="Criar Variação Deste Produto"
-		   href="dashboard.php?wc=products/reply&id=<?= ($pdt_parent ? $pdt_parent : $PdtId); ?>"
+		   href="dashboard.php?wc=products/reply&id=<?= ($pdt_parent ?: $PdtId); ?>"
 		   class="btn btn_blue icon-copy">Criar
 			Variação!</a>
 		<a target="_blank" title="Ver no site" href="<?= BASE; ?>/movel/<?= $pdt_name; ?>"
@@ -202,23 +202,29 @@
 		<input type="hidden" name="callback_action" value="manager"/>
 		<input type="hidden" name="pdt_id" value="<?= $PdtId; ?>"/>
 
-		<div class="box box70">
-			<div class="box_content">
+		<main class="box box70">
+
+			<div class="panel_header default">
+				<h2 class='icon-newspaper'>Dados do Produto:</h2>
+			</div>
+
+			<div class="panel">
+
 				<label class="label">
 					<span class="legend">Produto:</span>
-					<input style="font-size: 1.4em;" type="text" name="pdt_title" value="<?= $pdt_title; ?>"
+					<input class="font_large" type="text" name="pdt_title" value="<?= $pdt_title; ?>"
 					       placeholder="Nome do Produto:" required/>
 				</label>
 
 				<label class="label">
 					<span class="legend">Breve Descrição:</span>
-					<textarea style="font-size: 1.2em;" name="pdt_subtitle" rows="3"
+					<textarea class="font_medium" name="pdt_subtitle" rows="3"
 					          required><?= $pdt_subtitle; ?></textarea>
 				</label>
 
 				<label class="label">
 					<span class="legend">TAGS (palavras-chave separadas por vírgula:</span>
-					<input style="font-size: 1.2em;" type="text" name="pdt_tags" value="<?= $pdt_tags; ?>" list="tags"/>
+					<input class='font_medium' type="text" name="pdt_tags" value="<?= $pdt_tags; ?>" list="tags"/>
 
 					<datalist id="tags">
                         <?php
@@ -231,18 +237,6 @@
                         ?>
 					</datalist>
 				</label>
-
-				<div class="label_50">
-					<label class="label">
-						<span class="legend">Imagem principal (JPG <?= THUMB_W; ?>x<?= THUMB_H; ?>px):</span>
-						<input type="file" class="wc_loadimage" name="pdt_cover"/>
-					</label>
-					<label class="label">
-						<span class="legend">Gabarito de Montagem (PDF):</span>
-						<input type="file" value="<?= ($pdt_instrutions ? $pdt_instrutions : ''); ?>"
-						       name="pdt_instrutions"/>
-					</label>
-				</div>
 
 				<div class="label_33">
 					<label class="label">
@@ -374,34 +368,14 @@
 					<textarea name="pdt_content" class="work_mce" rows="10"><?= $pdt_content; ?></textarea>
 				</label>
 
-				<!--<div class="label_50">
-                  <label class="label">
-                    <span class="legend">Preço R$ (1.000,00):</span>
-                    <input style="font-size: 1.4em;" type="text" name="pdt_price" value="<= $pdt_price ? number_format($pdt_price,
-                      '2', ',', '.') : "0,00"; ?>" placeholder="Preço do Produto:" required/>
-                  </label>
+			</div>
 
-                  <label class="label">
-                      <php
-                      if (E_PDT_SIZE):
-                          ?>
-                        <span class="legend">Estoque por variação:</span>
-                        <span class="wc_pdt_stock btn btn_blue" id="<= $PdtId; ?>"><span class="j_content"><= $pdt_inventory; ?></span> EM ESTOQUE!</span>
-                      <php
-                      else:
-                          ?>
-                        <span class="legend">Estoque:</span>
-                        <input style="font-size: 1.4em;" type="number" name="pdt_inventory" value="<= $pdt_inventory; ?>" placeholder="Quantidade em Estoque:" required/>
-                      <php
-                      endif;
-                      ?>
-                  </label>
 
-                  <div class="clear"></div>
-                </div>
-        -->
-				<span class="section icon-box-remove">VOLUMES DO PRODUTO:</span>
-				<div class="j_pdt_volumes" data-next-volume="<?= count($ProductVolumes); ?>">
+			<div class="panel_header default">
+				<h2 class="icon-box-add">VOLUMES DO PRODUTO:</h2>
+			</div>
+			<div class='panel'>
+				<div class='j_pdt_volumes' data-next-volume="<?= count($ProductVolumes); ?>">
                     <?php
                         foreach ($ProductVolumes as $VolumeIndex => $Volume): ?>
 							<div class="j_pdt_volume_item" data-volume-index="<?= $VolumeIndex; ?>">
@@ -411,7 +385,8 @@
 										<span class="legend">Peso Bruto Em KG:</span>
 										<input type="number" step="0.0001" min="0"
 										       name="volumes[<?= $VolumeIndex; ?>][weight]"
-										       value="<?= $Volume['volume_weight']; ?>" placeholder="Peso em KG:"
+										       value="<?= $Volume['volume_weight']; ?>"
+										       placeholder="Peso em KG:"
 										       required/>
 									</label>
 									<label class="label">
@@ -429,14 +404,16 @@
 										<span class="legend">Largura Em Metros:</span>
 										<input type="number" step="0.0001" min="0"
 										       name="volumes[<?= $VolumeIndex; ?>][width]"
-										       value="<?= $Volume['volume_width']; ?>" placeholder="Largura em Metros:"
+										       value="<?= $Volume['volume_width']; ?>"
+										       placeholder="Largura em Metros:"
 										       required/>
 									</label>
 									<label class="label">
 										<span class="legend">Altura Em Metros:</span>
 										<input type="number" step="0.0001" min="0"
 										       name="volumes[<?= $VolumeIndex; ?>][height]"
-										       value="<?= $Volume['volume_height']; ?>" placeholder="Altura em Metros:"
+										       value="<?= $Volume['volume_height']; ?>"
+										       placeholder="Altura em Metros:"
 										       required/>
 									</label>
 									<div class="clear"></div>
@@ -449,72 +426,94 @@
                         <?php
                         endforeach; ?>
 				</div>
+
 				<div class="pdt_volume_actions">
-					<button type="button" class="btn btn_blue icon-plus j_add_pdt_volume">Adicionar volume</button>
+					<button type="button" class="btn btn_blue icon-plus j_add_pdt_volume">Adicionar volume
+					</button>
 				</div>
 
-				<span class="section icon-box-remove">DIMENSÕES DO PRODUTO MONTADO:</span>
-				<div class="label_50">
-					<label class="label">
-						<span class="legend">Altura Em Metros:</span>
-						<input type="number" step="0.0001" name="pdt_dimension_heigth_mounted"
-						       value="<?= $pdt_dimension_heigth_mounted; ?>" placeholder="Altura em Metros:" required/>
-					</label>
-					<label class="label">
-						<span class="legend">Largura Em Metros:</span>
-						<input type="number" step="0.0001" name="pdt_dimension_width_mounted"
-						       value="<?= $pdt_dimension_width_mounted; ?>" placeholder="Largura em Metros:" required/>
-					</label>
+			</div>
 
-					<div class="clear"></div>
-				</div>
 
-				<div class="label_50">
-					<label class="label">
-						<span class="legend">Profundidade Em Metros:</span>
-						<input type="number" step="0.0001" name="pdt_dimension_depth_mounted"
-						       value="<?= $pdt_dimension_depth_mounted; ?>" placeholder="Profundidade em Metros:"
+			<div class="panel_header default">
+				<h2 class="icon-equalizer">DIMENSÕES DO PRODUTO MONTADO:</h2>
+			</div>
+
+
+			<div class="panel">
+				<div class='label_50'>
+					<label class='label'>
+						<span class='legend'>Altura Em Metros:</span>
+						<input type='number' step='0.0001' name='pdt_dimension_heigth_mounted'
+						       value="<?= $pdt_dimension_heigth_mounted; ?>" placeholder='Altura em Metros:'
 						       required/>
 					</label>
-					<label class="label">
-						<span class="legend">Peso Bruto Em KG:</span>
-						<input type="number" name="pdt_dimension_weight_mounted"
-						       value="<?= $pdt_dimension_weight_mounted; ?>" placeholder="Peso em KG:" required/>
+					<label class='label'>
+						<span class='legend'>Largura Em Metros:</span>
+						<input type='number' step='0.0001' name='pdt_dimension_width_mounted'
+						       value="<?= $pdt_dimension_width_mounted; ?>" placeholder='Largura em Metros:'
+						       required/>
 					</label>
 
-					<div class="clear"></div>
+					<div class='clear'></div>
 				</div>
 
-				<div class="clear"></div>
+				<div class='label_50'>
+					<label class='label'>
+						<span class='legend'>Profundidade Em Metros:</span>
+						<input type='number' step='0.0001' name='pdt_dimension_depth_mounted'
+						       value="<?= $pdt_dimension_depth_mounted; ?>"
+						       placeholder='Profundidade em Metros:'
+						       required/>
+					</label>
+					<label class='label'>
+						<span class='legend'>Peso Bruto Em KG:</span>
+						<input type='number' name='pdt_dimension_weight_mounted'
+						       value="<?= $pdt_dimension_weight_mounted; ?>" placeholder='Peso em KG:'
+						       required/>
+					</label>
+
+					<div class='clear'></div>
+				</div>
 			</div>
-		</div>
 
-		<div class="box box30">
-            <?php
-                $Image = (file_exists("../uploads/{$pdt_cover}") && !is_dir(
-                    "../uploads/{$pdt_cover}"
-                ) ? "uploads/{$pdt_cover}" : 'admin/_img/no_image.jpg');
-            ?>
-			<img class="pdt_cover" alt="Capa do Produto" title="Capa do Produto"
-			     src="../tim.php?src=<?= $Image; ?>&w=<?= THUMB_W; ?>&h=<?= THUMB_H; ?>"
-			     default="../tim.php?src=<?= $Image; ?>&w=<?= THUMB_W; ?>&h=<?= THUMB_H; ?>">
-            <?php
-                $Read->exeRead(DB_PDT_GALLERY_DORIPEL, "WHERE product_id = :id", "id={$pdt_id}");
-                if ($Read->getResult()):
-                    echo '<div class="pdt_images gallery pdt_single_image">';
-                    foreach ($Read->getResult() as $Image):
-                        $ImageUrl = ($Image['image'] && file_exists("../uploads/{$Image['image']}") && !is_dir(
-                            "../uploads/{$Image['image']}"
-                        ) ? "../uploads/{$Image['image']}" : '_img/no_image.jpg');
-                        echo "<img rel='Products' id='{$Image['id']}' alt='Imagem em {$pdt_title}' title='Imagem em {$pdt_title}' src='{$ImageUrl}'/>";
-                    endforeach;
-                    echo '</div>';
-                else:
-                    echo '<div class="pdt_images gallery pdt_single_image"></div>';
-                endif;
-            ?>
+			<div class="clear"></div>
 
-			<div class="box_content">
+
+		</main>
+
+		<aside class="box box30">
+
+			<div class="panel_header default">
+				<label class='label'>
+					<span class='legend'>Imagem principal (JPG <?= THUMB_W; ?>x<?= THUMB_H; ?>px):</span>
+					<input type="file" class="wc_loadimage" name="pdt_cover"/>
+				</label>
+
+                <?php
+                    $Image = (file_exists("../uploads/{$pdt_cover}") && !is_dir(
+                        "../uploads/{$pdt_cover}"
+                    ) ? "uploads/{$pdt_cover}" : 'admin/_img/no_image.jpg');
+                ?>
+				<img class="pdt_cover" alt="Capa do Produto" title="Capa do Produto"
+				     src="../tim.php?src=<?= $Image; ?>&w=<?= THUMB_W; ?>&h=<?= THUMB_H; ?>"
+				     default="../tim.php?src=<?= $Image; ?>&w=<?= THUMB_W; ?>&h=<?= THUMB_H; ?>">
+                <?php
+                    $Read->exeRead(DB_PDT_GALLERY_DORIPEL, "WHERE product_id = :id", "id={$pdt_id}");
+                    if ($Read->getResult()):
+                        echo '<div class="pdt_images gallery pdt_single_image">';
+                        foreach ($Read->getResult() as $Image):
+                            $ImageUrl = ($Image['image'] && file_exists("../uploads/{$Image['image']}") && !is_dir(
+                                "../uploads/{$Image['image']}"
+                            ) ? "../uploads/{$Image['image']}" : '_img/no_image.jpg');
+                            echo "<img rel='Products' id='{$Image['id']}' alt='Imagem em {$pdt_title}' title='Imagem em {$pdt_title}' src='{$ImageUrl}'/>";
+                        endforeach;
+                        echo '</div>';
+                    else:
+                        echo '<div class="pdt_images gallery pdt_single_image"></div>';
+                    endif;
+                ?>
+
 				<label class="label">
 					<span class="legend">Fotos Adicionais (JPG <?= THUMB_W; ?>x<?= THUMB_H; ?>px):</span>
 					<input type="file" name="image[]" multiple/>
@@ -534,39 +533,51 @@
 					<input type="file" class="wc_loadimage" name="pdt_scene"/>
 				</label>
 
-				<!-- <label class="label">
-                   <span class="legend">Hotsite (opcional):</span>
-                   <input type="url" name="pdt_hotlink" value="<= $pdt_hotlink; ?>" placeholder="https://"/>
-                 </label>-->
-				<div class="panel_header warning">
+				<h2 class='icon-file-pdf'>Gabarito de Montagem (PDF):</h2>
+				<label class='label'>
+					<span class='legend'></span>
+					<input type='file' value="<?= ($pdt_instrutions ? $pdt_instrutions : ''); ?>"
+					       name='pdt_instrutions'/>
+				</label>
 
-					<h2 class="icon-youtube">Youtube - Vídeo ID:</h2>
-					<label class="label">
-						<span class="legend" style="text-transform: none; color: #f2f2f2">youtube.com/watch?v=<b>VuM-UIMqHkk</b></span>
-						<input type="text" name="pdt_video" placeholder="Somente ID do Vídeo"
-						       value="<?= isset($pdt_video) ? $pdt_video : ''; ?>"/>
-					</label>
-				</div>
+				<h2 class="icon-youtube">Youtube - Vídeo ID:</h2>
+
+				<label class="label">
+					<span class="legend">youtube.com/watch?v=<b>VuM-UIMqHkk</b></span>
+					<input type=" text" name="pdt_video" placeholder="Somente ID do Vídeo"
+					       value="<?= isset($pdt_video) ? $pdt_video : ''; ?>"/>
+				</label>
 
 
 				<div class="m_top">&nbsp;</div>
-				<div class="wc_actions" style="text-align: center">
-					<label class="label_check label_publish <?= ($pdt_status == 1 ? 'active' : ''); ?>"><input
-								style="margin-top: -1px;" type="checkbox" value="1"
-								name="pdt_status" <?= ($pdt_status == 1 ? 'checked' : ''); ?>>
-						Publicar Agora!</label>
+				<div class="wc_actions">
+
+                    <?php
+                        echo Check::switchOnOff(
+                            'pdt_status',
+                            $pdt_status,
+                            'Publicado:',
+                            'SIM',
+                            'NÃO'
+                        );
+                    ?>
+
 					<button name="public" value="1" class="btn btn_green icon-share">ATUALIZAR</button>
 					<img class="form_load none" style="margin-left: 10px;" alt="Enviando Requisição!"
 					     title="Enviando Requisição!" src="_img/load.gif"/>
 				</div>
-				<div class="clear"></div>
+			</div>
+
+			<div class='panel panel_share'>
+				<h2 class="icon-share2">Compartilhe nas Redes Sociais:</h2>
                 <?php
                     $URLSHARE = "/movel/{$pdt_name}";
                     require '_tpl/Share.wc.php';
                 ?>
 			</div>
-		</div>
-		<div class="clear"></div>
+
+		</aside>
+
 	</form>
 </div>
 
