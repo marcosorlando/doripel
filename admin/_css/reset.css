@@ -816,7 +816,7 @@ form .section {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
-    padding: 9px 12px;
+    padding: 9px 16px;
     background: #888888;
     font-size: 0.95em;
     color: #ffffff !important;
@@ -1203,6 +1203,10 @@ form .section {
 
 .modal_confirm_content .btn {
     font-size: 0.8em;
+}
+
+.btn.icon-notext {
+    padding: 6px 8px;
 }
 
 .btn_whatsapp {

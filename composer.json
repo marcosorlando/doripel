@@ -1,6 +1,6 @@
 {
   "name": "localhost/doripel",
-  "description": "Website da Doripel Móveis",
+  "description": "Website da Doripel Móveis,",
   "license": "proprietary",
   "autoload": {
     "psr-4": {

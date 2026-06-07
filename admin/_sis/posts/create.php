@@ -183,23 +183,27 @@
 
 		<div class="box box30">
 
-			<div class="post_create_cover">
-				<div class="upload_progress none">0%</div>
-                <?php
-                    $PostCover = (!empty($post_cover) && \file_exists('../uploads/' . $post_cover) && !\is_dir(
-                        '../uploads/' . $post_cover
-                    ) ? 'uploads/' . $post_cover : 'admin/_img/no_image.jpg');
-                ?>
-				<img class="post_thumb post_cover" alt="Capa" title="Capa"
-				     src="../tim.php?src=<?= $PostCover; ?>&w=<?= IMAGE_W; ?>&h=<?= IMAGE_H; ?>"
-				     default="../tim.php?src=<?= $PostCover; ?>&w=<?= IMAGE_W; ?>&h=<?= IMAGE_H; ?>"/>
-			</div>
-
-			<div class="post_create_categories">
+			<div class="panel_header default">
 				<label class='label'>
 					<span class='legend'>Capa: (JPG <?= IMAGE_W; ?>x<?= IMAGE_H; ?>px)</span>
 					<input type="file" class="wc_loadimage" name="post_cover"/>
 				</label>
+
+				<div class="post_create_cover">
+					<div class="upload_progress none">0%</div>
+                    <?php
+                        $PostCover = (!empty($post_cover) && \file_exists('../uploads/' . $post_cover) && !\is_dir(
+                            '../uploads/' . $post_cover
+                        ) ? 'uploads/' . $post_cover : 'admin/_img/no_image.jpg');
+                    ?>
+					<img class="post_thumb post_cover" alt="Capa" title="Capa"
+					     src="../tim.php?src=<?= $PostCover; ?>&w=<?= IMAGE_W; ?>&h=<?= IMAGE_H; ?>"
+					     default="../tim.php?src=<?= $PostCover; ?>&w=<?= IMAGE_W; ?>&h=<?= IMAGE_H; ?>"/>
+				</div>
+			</div>
+
+			<div class="post_create_categories panel">
+
 
 				<label class="label">
 					<span class="legend">Vídeo: <b>ID do vídeo do Youtube</b>.</span>
@@ -364,17 +368,17 @@
 					     title="Enviando Requisição!" src="_img/load.gif"/>
 				</div>
 				<div class="clear"></div>
+
+				<div class='panel_share'>
+					<h2>Compartilhe nas Redes Sociais:</h2>
+                    <?php
+                        $URLSHARE = '/artigo/' . $post_name;
+
+                        require_once __DIR__ . '/../../_tpl/share.wc.php';
+                    ?>
+				</div>
 			</div>
 
-
-			<div class="panel_header default">
-				<h2>Compartilhe nas Redes Sociais:</h2>
-                <?php
-                    $URLSHARE = '/artigo/' . $post_name;
-
-                    require_once __DIR__ . '/../../_tpl/share.wc.php';
-                ?>
-			</div>
 
 		</div>
 	</form>

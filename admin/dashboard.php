@@ -1,8 +1,9 @@
 <?php
 
 // REMOVER DEPOIS DE ATUALIZAR
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
+    //@TODO
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
     ob_start();
     session_start();
@@ -53,7 +54,7 @@
         exit;
     }
 
-    $getViewInput = filter_input(INPUT_GET, 'wc', FILTER_DEFAULT);
+    $getViewInput = filter_input(INPUT_GET, 'wc');
     $getView = ('home' === $getViewInput ? 'home' . ADMIN_MODE : $getViewInput);
 
 // PARA SUA SEGURANÇA, NÃO REMOVA ESSA VALIDAÇÃO!

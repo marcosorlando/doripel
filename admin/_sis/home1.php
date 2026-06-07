@@ -226,7 +226,7 @@
                                 }
 
                                 $Created = date('d/m/y H\hi', strtotime((string)$Comm['created']));
-                                $Stars = str_repeat("<span class='icon-star-full icon-notext'></span>", $Comm['rank']);
+                                $Stars = str_repeat("<span class='icon-star-full'></span>", $Comm['rank']);
                                 $Status = ($Comm['status'] >= 2 ? 'pending' : null);
                                 $CommentRef = "comment{$Comm['id']}";
                                 $CommentLinkHtml = ($Link !== '#'

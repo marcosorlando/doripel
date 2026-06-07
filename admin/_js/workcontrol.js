@@ -1540,7 +1540,8 @@ function Trigger(Message) {
     TriggerClose();
     $('body').before("<div class='trigger_modal'>" + Message + "</div>");
     
-    $('.trigger_ajax').fadeIn().append("<div style='background-color: rgba(0,0,0,0.3); heigth: 2px; border-radius:" + " 4px; padding: 4px; width: 100%; position: absolute; left: 0; bottom: 0;'></div>");
+    $('.trigger_ajax').fadeIn().append("<div style='background-color: rgba(0,0,0,0.2); heigth: 2px; border-radius:" +
+        " 4px; padding: 4px; width: 100%; position: absolute; left: 0; bottom: 0;'></div>");
     
     $('.trigger_ajax div:last-child').animate({
         width: '-=98%'

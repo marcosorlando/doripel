@@ -299,7 +299,7 @@
                 return;
             }
 
-            if ('produto' === $this->file) {
+            if ('movel' === $this->file) {
                 $product = $this->fetchSingleRow(
                     $read,
                     'SELECT pdt_title, pdt_subtitle, pdt_cover FROM ' . DB_PDT_DORIPEL . ' WHERE pdt_name = :nm AND pdt_created <= NOW()',
@@ -325,7 +325,7 @@
                 return;
             }
 
-            if ('produtos' === $this->file) {
+            if ('moveis' === $this->file) {
                 $category = $this->fetchSingleRow(
                     $read,
                     'SELECT cat_title, cat_description FROM ' . DB_PDT_CATS_DORIPEL . ' WHERE cat_name = :nm',

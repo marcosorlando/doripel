@@ -1,18 +1,18 @@
 <?php
 
-use App\Conn\Read;
-use App\Models\Email;
+    use App\Conn\Read;
+    use App\Models\Email;
 
-$Read ??= new Read();
-$Email ??= new Email();
+    $Read ??= new Read();
+    $Email ??= new Email();
 
-$Read->exeRead(DB_PAGES, "WHERE page_name = :nm AND page_status = 1", "nm={$URL[0]}");
-if (!$Read->getResult()) {
-    require REQUIRE_PATH . '/404.php';
-    return;
-} else {
-    extract($Read->getResult()[0]);
-}
+    $Read->exeRead(DB_PAGES, "WHERE page_name = :nm AND page_status = 1", "nm={$URL[0]}");
+    if (!$Read->getResult()) {
+        require REQUIRE_PATH . '/404.php';
+        return;
+    } else {
+        extract($Read->getResult()[0]);
+    }
 ?>
 <div class="top_conversion breadcrumbs">
 	<div class="content">
@@ -31,16 +31,16 @@ if (!$Read->getResult()) {
 	</div>
 </div>
 <?php
-if (APP_COMMENTS && COMMENT_ON_PAGES) { ?>
-	<div class="container" style="background: #fff; padding: 20px 0;">
-		<div class="content">
-            <?php
-            $CommentKey = $page_id;
-            $CommentType = 'page';
-            require '_cdn/widgets/comments/comments.php';
-            ?>
-			<div class="clear"></div>
+    if (APP_COMMENTS && COMMENT_ON_PAGES) { ?>
+		<div class="container" style="background: #fff; padding: 20px 0;">
+			<div class="content">
+                <?php
+                    $CommentKey = $page_id;
+                    $CommentType = 'page';
+                    require 'assets/widgets/comments/comments.php';
+                ?>
+				<div class="clear"></div>
+			</div>
 		</div>
-	</div>
-<?php
-} ?>
+        <?php
+    } ?>

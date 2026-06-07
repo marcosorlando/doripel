@@ -106,7 +106,7 @@ $slide_status ??= '0';
                             <option value="" disabled="disabled" selected="selected">Selecione o nível de opacidade:
                             </option>
                             <?php
-                            foreach (getWcOpacitySlides() as $SlideOpacity => $Opacity):
+                            foreach (Check::getWcOpacitySlides() as $SlideOpacity => $Opacity):
                                 echo "<option " . ($slide_opacity == $SlideOpacity ? "selected='selected'" : null) . " value='{$SlideOpacity}'>{$Opacity}</option>";
                             endforeach;
                             ?>

@@ -160,7 +160,7 @@
                                                     $WC_TITLE_LINK = $title;
                                                     $WC_SHARE_HASH = "ZenTrampos";
                                                     $WC_SHARE_LINK = BASE . "/trampo/{$name}";
-                                                    //require './_cdn/widgets/share/share.wc.php';
+                                                    //require './assets/widgets/share/share.wc.php';
                                                 ?>
 											</div>
 											<div class="info pull-right text-right">
@@ -253,7 +253,7 @@
                 <?php
                     $CommentKey = $page_id;
                     $CommentType = 'page';
-                    require '_cdn/widgets/comments/comments.php';
+                    require 'assets/widgets/comments/comments.php';
                 ?>
 				<div class="clear"></div>
 			</div>

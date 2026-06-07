@@ -20,6 +20,7 @@
     use function implode;
     use function is_array;
     use function is_int;
+    use function is_numeric;
     use function is_string;
     use function mb_convert_case;
     use function mb_convert_encoding;
@@ -705,6 +706,96 @@
             }
 
             return $length / 25.4;
+        }
+
+        /**
+         * Calcula a cubagem a partir de altura, largura e profundidade.
+         */
+        public static function getWcCubagem(mixed $height, mixed $width, mixed $depth): float|int|null
+        {
+
+            if (!is_numeric($height) || !is_numeric($width) || !is_numeric($depth)) {
+                return null;
+            }
+
+            $cubagem = $height * $width * $depth;
+
+            return !empty($cubagem) ? $cubagem : null;
+        }
+
+        /**
+         * Retorna as classes de botões CTA ou o rótulo de uma classe específica.
+         *
+         * @return array<string, string>|string|null
+         */
+        public static function getWcBtnCta(?string $class = null): array|string|null
+        {
+
+            $btnClass = [
+                'btn-white' => 'Branco',
+                'btn-transparent-white' => 'Branco Transparente',
+                'btn-light-gray' => 'Cinza',
+                'btn-transparent-light-gray' => 'Cinza Transparente',
+                'btn-dark-gray"' => 'Grafite',
+                'btn-transparent-dark-gray' => 'Grafite Transparente',
+                'btn-deep-pink' => 'Azul Claro',
+                'btn-transparent-deep-pink' => 'Azul Claro Transparente',
+                'btn-black' => 'Azul Escuro',
+                'btn-transparent-black' => 'Azul Escuro Transparente'
+            ];
+
+            if (null === $class || '' === $class) {
+                return $btnClass;
+            }
+
+            return $btnClass[$class] ?? null;
+        }
+
+        /**
+         * Retorna as opções de arredondamento de botões ou o rótulo da opção informada.
+         *
+         * @return array<int, string>|string|null
+         */
+        public static function getWcBtnRounded(int|string|null $rounded = null): array|string|null
+        {
+
+            $btnClass = [
+                0 => 'NÃO',
+                1 => 'SIM'
+            ];
+
+            if (null === $rounded || '' === $rounded) {
+                return $btnClass;
+            }
+
+            $roundedKey = (int)$rounded;
+
+            return $btnClass[$roundedKey] ?? null;
+        }
+
+        /**
+         * Retorna as opções de opacidade dos slides ou o rótulo de uma opção específica.
+         *
+         * @return array<string, string>|string|null
+         */
+        public static function getWcOpacitySlides(?string $opacity = null): array|string|null
+        {
+
+            $opacitySlide = [
+                'opacity-none' => 'SEM OPACIDADE',
+                'opacity-very-light' => 'Opacidade Muito Clara',
+                'opacity-light' => 'Opacidade Clara',
+                'opacity-extra-medium' => 'Opacidade Padrão',
+                'opacity-medium' => 'Opacidade Média',
+                'opacity-full' => 'Opacidade Escura',
+                'opacity-full-dark' => 'Opacidade Muito Escura'
+            ];
+
+            if (null === $opacity || '' === $opacity) {
+                return $opacitySlide;
+            }
+
+            return $opacitySlide[$opacity] ?? null;
         }
 
         public static function safeHtmlChars(?string $value): string

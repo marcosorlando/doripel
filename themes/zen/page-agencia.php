@@ -401,7 +401,7 @@
                 <?php
                     $CommentKey = $page_id;
                     $CommentType = 'page';
-                    require '_cdn/widgets/comments/comments.php';
+                    require 'assets/widgets/comments/comments.php';
                 ?>
 				<div class="clear"></div>
 			</div>

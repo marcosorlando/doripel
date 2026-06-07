@@ -5,9 +5,14 @@
     $Read ??= new Read();
     $Admin['user_level'] = $Admin['user_level'] ?? $_SESSION['userLogin']['user_level'];
 
+    $getViewInput ??= filter_input(INPUT_GET, 'wc');
+
     if (APP_PORTFOLIO && $Admin['user_level'] >= LEVEL_WC_PORTFOLIO) {
         ?>
-		<li class="dashboard_nav_menu_li <?= strstr($getViewInput, 'custom/') ? 'dashboard_nav_menu_active' : ''; ?>"><a
+		<li class="dashboard_nav_menu_li <?= strstr(
+            $getViewInput,
+            'portfolio/'
+        ) ? 'dashboard_nav_menu_active' : ''; ?>"><a
 					class='icon-books' href='dashboard.php?wc=portfolio/home'>Trampos</a>
 
 			<ul class='dashboard_nav_menu_sub'>
@@ -26,6 +31,7 @@
 		</li>
         <?php
     }
+
     if (APP_CV && $Admin['user_level'] >= LEVEL_WC_CV) {
         ?>
 		<li class="dashboard_nav_menu_li <?php
@@ -71,6 +77,7 @@
 		</li>
         <?php
     }
+
     if (APP_CERTIFICATIONS && $Admin['user_level'] >= LEVEL_WC_CERTIFICATIONS) {
         ?>
 		<li class="dashboard_nav_menu_li <?php
@@ -94,6 +101,7 @@
 		</li>
         <?php
     }
+
     if (APP_HELLO && $Admin['user_level'] >= LEVEL_WC_HELLO) {
         $wc_hellobars_alerts = null;
         ?>
@@ -109,69 +117,6 @@
         <?php
     }
 
-    if (APP_LEADS && $Admin['user_level'] >= LEVEL_WC_LEADS) {
-        $wc_leads = null;
-        $Read->fullRead('SELECT count(lead_id) as total FROM ' . DB_LEADS . ' WHERE lead_status != 1');
-        if ($Read->getResult() && $Read->getResult()[0]['total'] >= 1) {
-            $wc_leads .= sprintf("<span class='wc_alert bar_yellow'>%s</span>", $Read->getResult()[0]['total']);
-        }
-        ?>
-		<li class="dashboard_nav_menu_li <?php
-            echo strstr(
-                (string)$getViewInput,
-                'leads/'
-            ) ? 'dashboard_nav_menu_active' : ''; ?>">
-			<a class="icon-users" title="Leads" href="dashboard.php?wc=leads/home">Base de Leads <?php
-                    echo $wc_leads; ?></a>
-		</li>
-        <?php
-    }
-    if (APP_THANKYOU_PAGES && $Admin['user_level'] >= LEVEL_WC_THANKYOU_PAGES) {
-        ?>
-		<li class="dashboard_nav_menu_li <?php
-            echo strstr(
-                (string)$getViewInput,
-                'thankyoupages/home'
-            ) ? 'dashboard_nav_menu_active' : ''; ?>">
-			<a class="icon-heart" href="dashboard.php?wc=thankyoupages/home">Thank You Pages</a>
-
-			<ul class="dashboard_nav_menu_sub">
-				<li class="dashboard_nav_menu_sub_li <?php
-                    echo 'thankyoupages/create' == $getViewInput ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a href="dashboard.php?wc=thankyoupages/create">&raquo; Nova Thank You Page</a>
-				</li>
-				<li class="dashboard_nav_menu_sub_li <?php
-                    echo 'thankyoupages/home' == $getViewInput ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a href="dashboard.php?wc=thankyoupages/home">&raquo; Ver Thank You Pages </a>
-				</li>
-			</ul>
-
-		</li>
-        <?php
-    }
-    if (APP_LANDING_PAGES && $Admin['user_level'] >= LEVEL_WC_LANDING_PAGES) {
-        ?>
-		<li class="dashboard_nav_menu_li <?php
-            echo strstr(
-                (string)$getViewInput,
-                'landingpages/home'
-            ) ? 'dashboard_nav_menu_active' : ''; ?>">
-			<a class="icon-download" href="dashboard.php?wc=landingpages/home">Landing Pages</a>
-
-			<ul class="dashboard_nav_menu_sub">
-				<li class="dashboard_nav_menu_sub_li <?php
-                    echo 'landingpages/create' == $getViewInput ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a href="dashboard.php?wc=landingpages/create">&raquo; Nova Landing Pages</a>
-				</li>
-				<li class="dashboard_nav_menu_sub_li <?php
-                    echo 'landingpages/home' == $getViewInput ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a href="dashboard.php?wc=landingpages/home">&raquo; Ver Landing Pages </a>
-				</li>
-			</ul>
-
-		</li>
-        <?php
-    }
     if (APP_MATERIALS !== 0) {
         ?>
 		<li class="dashboard_nav_menu_li <?php
@@ -224,6 +169,7 @@
 		</li>
         <?php
     }
+
     if (APP_PARTNERS !== 0) {
         ?>
 		<li class="dashboard_nav_menu_li <?php
@@ -271,7 +217,7 @@
         <?php
     }
 
-	/*DORIPEL*/
+    /*DORIPEL*/
 
     if (APP_PRODUCTS_DORIPEL && $_SESSION['userLogin']['user_level'] >= LEVEL_WC_PRODUCTS_DORIPEL) {
         $wc_pdt_alerts = null;
@@ -320,15 +266,7 @@
 		</li>
         <?php
     }
-    if (APP_HELLO && $Admin['user_level'] >= LEVEL_WC_HELLO) {
-        $wc_hellobars_alerts = null;
-        ?>
-		<li class="dashboard_nav_menu_li <?= strstr($getViewInput, 'hello/') ? 'dashboard_nav_menu_active' : ''; ?>">
-			<a class="icon-bullhorn" title="Hellobar"
-			   href="dashboard.php?wc=hello/home">Hellobar <?= $wc_hellobars_alerts; ?></a>
-		</li>
-        <?php
-    }
+
     if (APP_LEADS && $Admin['user_level'] >= LEVEL_WC_LEADS) {
         $wc_leads = null;
         $Read->fullRead('SELECT count(lead_id) as total FROM ' . DB_LEADS . ' WHERE lead_status != 1');
@@ -341,6 +279,7 @@
 		</li>
         <?php
     }
+
     if (APP_LANDING_PAGES && $Admin['user_level'] >= LEVEL_WC_LANDING_PAGES) {
         ?>
 		<li class="dashboard_nav_menu_li <?= strstr(
@@ -382,6 +321,7 @@
 		</li>
         <?php
     }
+
     if (APP_CTAS && $Admin['user_level'] >= LEVEL_WC_CTAS) {
         ?>
 		<li class="dashboard_nav_menu_li <?= strstr($getViewInput, 'ctas/home') ? 'dashboard_nav_menu_active' : ''; ?>">
@@ -419,48 +359,5 @@
 		</li>
         <?php
     }
-    if (APP_DEPOSITIONS) {
-        ?>
-		<li class="dashboard_nav_menu_li <?= strstr(
-            $getViewInput,
-            'depositions/home'
-        ) ? 'dashboard_nav_menu_active' : ''; ?>">
-			<a class="icon-man-woman" href="dashboard.php?wc=depositions/home">Depoimentos</a>
 
-			<ul class="dashboard_nav_menu_sub">
-				<li class="dashboard_nav_menu_sub_li <?= $getViewInput == 'depositions/create' ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a href="dashboard.php?wc=depositions/create">&raquo; Novo Depoimento</a>
-				</li>
-				<li class="dashboard_nav_menu_sub_li <?= $getViewInput == 'depositions/home' ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a href="dashboard.php?wc=depositions/home">&raquo; Depoimentos </a>
-				</li>
-			</ul>
-		</li>
-        <?php
-    }
-    if (APP_MATERIALS) {
-        ?>
-		<li class="dashboard_nav_menu_li <?= strstr($getViewInput, 'custom/') ? 'dashboard_nav_menu_active' : ''; ?>">
-			<a class="icon-youtube" title="Vídeos Youtube" href="dashboard.php?wc=videos/home">Vídeos Youtube</a>
-		</li>
-		<li class="dashboard_nav_menu_li <?= strstr($getViewInput, 'custom/') ? 'dashboard_nav_menu_active' : ''; ?>">
-			<a class="icon-book" title="Materiais" href="dashboard.php?wc=materiais/home">Materiais</a>
-
-			<ul class="dashboard_nav_menu_sub">
-				<li class="dashboard_nav_menu_sub_li <?= $getViewInput == 'materiais/home' ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a title="Ver Materiais" href="dashboard.php?wc=materiais/home">&raquo; Ver Materials </a>
-				</li>
-				<li class="dashboard_nav_menu_sub_li <?= strstr(
-                    $getViewInput,
-                    'materiais/categor'
-                ) ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a title="Categorias" href="dashboard.php?wc=materiais/categories">&raquo; Categorias</a>
-				</li>
-				<li class="dashboard_nav_menu_sub_li <?= $getViewInput == 'materiais/create' ? 'dashboard_nav_menu_active' : ''; ?>">
-					<a title="Novo Material" href="dashboard.php?wc=materiais/create">&raquo; Novo Material</a>
-				</li>
-			</ul>
-		</li>
-        <?php
-    }
 ?>

@@ -39,9 +39,9 @@
         }
     }
 
-    $S = \filter_input(INPUT_GET, 's', FILTER_DEFAULT);
-    $C = \filter_input(INPUT_GET, 'cat', FILTER_DEFAULT);
-    $T = \filter_input(INPUT_GET, 'tag', FILTER_DEFAULT);
+    $S = \filter_input(INPUT_GET, 's');
+    $C = \filter_input(INPUT_GET, 'cat');
+    $T = \filter_input(INPUT_GET, 'tag');
 
     $Search = \filter_input_array(INPUT_POST);
     if ($Search && (isset($Search['s']) || isset($Search['status']))) {

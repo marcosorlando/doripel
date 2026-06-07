@@ -98,7 +98,7 @@
                         <select name="cta_btn_color" required>
                             <option value="" disabled="disabled" selected="selected">Selecione o tipo do botão:</option>
                             <?php
-                                foreach (getWcBtnCta() as $BtnClass => $Option) {
+                                foreach (Check::getWcBtnCta() as $BtnClass => $Option) {
                                     echo "<option " . ($cta_btn_color == $BtnClass ? "selected='selected'" : null) . " value='{$BtnClass}'>{$Option}</option>";
                                 }
                             ?>
@@ -109,7 +109,7 @@
                         <select name="cta_btn_rounded">
                             <option value="" disabled="disabled" selected="selected">Selecione:</option>
                              <?php
-                                foreach (getWcBtnRounded() as $BtnRounded => $Rounded) {
+                                foreach (Check::getWcBtnRounded() as $BtnRounded => $Rounded) {
                                     echo "<option " . ($cta_btn_rounded == $BtnRounded ? "selected='selected'" : null) . " value='{$BtnRounded}'>{$Rounded}</option>";
                                 }
                             ?>

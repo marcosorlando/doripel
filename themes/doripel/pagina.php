@@ -1,49 +1,52 @@
 <?php
 
-use App\Models\Email;
-use App\Conn\Read;
-if (!$Read){
-  $Read = new Read;
-}
+    use App\Models\Email;
+    use App\Conn\Read;
 
-$Email = new Email;
+    if (!$Read) {
+        $Read = new Read;
+    }
 
-$Read->exeRead(DB_PAGES, "WHERE page_name = :nm", "nm={$URL[0]}");
-if (!$Read->getResult()){
-  require REQUIRE_PATH . '/404.php';
-  return;
-} else {
-  extract($Read->getResult()[0]);
-}
+    $Email = new Email;
+
+    $Read->exeRead(DB_PAGES, "WHERE page_name = :nm", "nm={$URL[0]}");
+    if (!$Read->getResult()) {
+        require REQUIRE_PATH . '/404.php';
+        return;
+    } else {
+        extract($Read->getResult()[0]);
+    }
 ?>
 <div class="top_conversion breadcrumbs">
-  <div class="content">
-    <p><a href="<?= BASE; ?>" title="<?= SITE_NAME; ?>"><?= SITE_NAME; ?></a> / <?= $page_title; ?></p>
-    <div class="clear"></div>
-  </div>
+	<div class="content">
+		<p><a href="<?= BASE; ?>" title="<?= SITE_NAME; ?>"><?= SITE_NAME; ?></a> / <?= $page_title; ?></p>
+		<div class="clear"></div>
+	</div>
 </div>
 
 <div class="container page_single" style="background: #fff;">
-  <div class="content">
+	<div class="content">
 
-    <?= isset($page_cover) ? "<img class='cover' title='{$page_title}' alt='{$page_title}' src=' " . BASE . "/tim.php?src=uploads/{$page_cover}&w=" . IMAGE_W . "&h=" . IMAGE_H . "'/>" : ""; ?>
+        <?= isset($page_cover) ? "<img class='cover' title='{$page_title}' alt='{$page_title}' src=' " . BASE . "/tim.php?src=uploads/{$page_cover}&w=" . IMAGE_W . "&h=" . IMAGE_H . "'/>" : ""; ?>
 
-    <h1 class="page_title"><?= $page_title; ?></h1>
-    <div class="htmlchars" style="background: #fff;">
-      <?= $page_content; ?>
-    </div>
-    <div class="clear"></div>
-  </div>
+		<h1 class="page_title"><?= $page_title; ?></h1>
+		<div class="htmlchars" style="background: #fff;">
+            <?= $page_content; ?>
+		</div>
+		<div class="clear"></div>
+	</div>
 </div>
-<?php if (APP_COMMENTS && COMMENT_ON_PAGES){ ?>
-  <div class="container" style="background: #fff; padding: 20px 0;">
-    <div class="content">
-      <?php
-      $CommentKey = $page_id;
-      $CommentType = 'page';
-      require '_cdn/widgets/comments/comments.php';
-      ?>
-      <div class="clear"></div>
-    </div>
-  </div>
-<?php } ?>
+<?php
+    if (APP_COMMENTS && COMMENT_ON_PAGES) { ?>
+		<div class="container" style="background: #fff; padding: 20px 0;">
+			<div class="content">
+                <?php
+                    $CommentKey = $page_id;
+                    $CommentType = 'page';
+                    require 'assets/widgets/comments/comments.php';
+                ?>
+				<div class="clear"></div>
+			</div>
+		</div>
+    <?php
+    } ?>

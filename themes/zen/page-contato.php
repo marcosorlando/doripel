@@ -140,7 +140,7 @@
 								<div class="wc_contact_modal_button form-group">
 									<button class="btn btn-primary">
 										<img style="display: none;"
-										     src="<?= BASE; ?>/_cdn/widgets/contact/images/load.gif"
+										     src="<?= BASE; ?>/assets/widgets/contact/images/load.gif"
 										     alt="Aguarde, enviando contato!" title="Aguarde, enviando contato!"/>
 										ENVIAR MENSAGEM
 									</button>
