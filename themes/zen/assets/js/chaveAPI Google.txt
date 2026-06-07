@@ -1,4 +1,0 @@
-Chave de API criada
-Transfira esta chave com o parâmetro key=API_KEY para usá-la no seu aplicativo.
-
-AIzaSyCZDgZ8SCgsKeFGVrShMLCxyXb3xezdXkQ

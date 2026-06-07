@@ -15,6 +15,9 @@ Thumbs.db
 *.swp
 *.swo
 error_log
+relatorios
+
+# Agents
 
 # Arquivos de ambiente e segurança
 .env

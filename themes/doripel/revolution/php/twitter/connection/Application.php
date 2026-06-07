@@ -36,7 +36,7 @@ class Application extends Base
      * @param $method
      * @return array
      */
-    protected function _buildHeaders($url,array $parameters = null,$method)
+    protected function _buildHeaders($url, ?array $parameters = null, $method = null)
     {
         return $headers = array(
                     "Authorization: Bearer " . $this->_getBearerToken()

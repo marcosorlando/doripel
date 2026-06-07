@@ -71,8 +71,7 @@ use App\Conn\Read;
                         $jSON['trigger'] = Check::ajaxErro('<b>OPPSSS:</b> E-mail informado não é válido!', E_USER_NOTICE);
                     } else {
                         $Cotacao = isset($PostData['lead_cotacao']) && is_array($PostData['lead_cotacao'])
-                            ? implode(', ', $PostData['lead_cotacao'])
-                            : '';
+                            ? implode(', ', $PostData['lead_cotacao']) : '';
                         $LeadData = [
                             'lead_name' => $PostData['lead_name'],
                             'lead_email' => $PostData['lead_email'],

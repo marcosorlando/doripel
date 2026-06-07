@@ -43,7 +43,7 @@ class User extends Base
      * @param $method
      * @return array
      */
-    protected function _buildHeaders($url,array $parameters = null,$method)
+    protected function _buildHeaders($url, ?array $parameters = null, $method = null)
     {
         $oauthHeaders = array(
             'oauth_version' => '1.0',
@@ -56,7 +56,7 @@ class User extends Base
 
         $data = $oauthHeaders;
         if ($method == self::METHOD_GET) {
-            $data = array_merge($oauthHeaders,$parameters);
+            $data = array_merge($oauthHeaders, $parameters ?? []);
         }
         $oauthHeaders['oauth_signature'] = $this->_buildOauthSignature($url,$data,$method);
         ksort($oauthHeaders);

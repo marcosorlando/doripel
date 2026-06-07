@@ -44,7 +44,7 @@ abstract class Base
      * @param $method
      * @return array
      */
-    abstract protected function _buildHeaders($url,array $parameters = null,$method);
+    abstract protected function _buildHeaders($url, ?array $parameters = null, $method = null);
 
 
     /**

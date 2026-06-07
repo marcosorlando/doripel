@@ -41,7 +41,8 @@
     "wc:legacy-apply": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply",
     "php:legacy": "bash .github/skills/php-legacy-modernizer/scripts/fix_php_legacy_generic.sh",
     "php:legacy-dr": "bash .github/skills/php-legacy-modernizer/scripts/fix_php_legacy_generic.sh --dry-run",
-    "php:legacy-apply": "bash .github/skills/php-legacy-modernizer/scripts/fix_php_legacy_generic.sh --apply"
+    "php:legacy-apply": "bash .github/skills/php-legacy-modernizer/scripts/fix_php_legacy_generic.sh --apply",
+    "lint": "find admin/_siswc/products -name '*.php' -print | xargs -n1 php -l"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.94"
