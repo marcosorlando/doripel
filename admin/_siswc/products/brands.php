@@ -5,20 +5,20 @@
     use App\Helpers\Check;
 
     $AdminLevel = LEVEL_WC_PRODUCTS_DORIPEL;
-    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
+    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
         Check::accessBlocked();
-    endif;
+    }
 
     // AUTO INSTANCE OBJECT READ
-    if (empty($Read)):
-        $Read = new Read;
-    endif;
+    if (empty($Read)) {
+        $Read ??= new Read();
+    }
 
     //AUTO DELETE POST TRASH
-    if (DB_AUTO_TRASH):
-        $Delete = new Delete;
+    if (DB_AUTO_TRASH) {
+        $Delete ??= new Delete();
         $Delete->exeDelete(DB_PDT_BRANDS_DORIPEL, "WHERE brand_title IS NULL AND brand_id >= :st", "st=1");
-    endif;
+    }
 ?>
 
 <header class="dashboard_header">
@@ -44,13 +44,13 @@
 <div class="dashboard_content">
     <?php
         $Read->exeRead(DB_PDT_BRANDS_DORIPEL, "ORDER By brand_title ASC");
-        if (!$Read->getResult()):
+        if (!$Read->getResult()) {
             echo Check::erro(
                 "<span class='al_center icon-notification'>Ainda não existem marcas ou fabricantes cadastradas {$Admin['user_name']}. Comece agora mesmo criando suas marcas e fabricantes de produtos!</span>",
                 E_USER_NOTICE
             );
-        else:
-            foreach ($Read->getResult() as $Brand):
+        } else {
+            foreach ($Read->getResult() as $Brand) {
                 $Read->fullRead(
                     "SELECT count(pdt_id) as total FROM " . DB_PDT_DORIPEL . " WHERE pdt_brand = :brand",
                     "brand={$Brand['brand_id']}"
@@ -69,7 +69,7 @@
 			   </div>
             </div>
         </article>";
-            endforeach;
-        endif;
+            }
+        }
     ?>
 </div>

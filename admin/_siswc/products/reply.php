@@ -6,32 +6,32 @@ use App\Conn\Update;
 use App\Helpers\Check;
 
 $AdminLevel = LEVEL_WC_PRODUCTS_DORIPEL;
-if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
+if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
     Check::accessBlocked();
-endif;
+}
 
 // AUTO INSTANCE OBJECT READ
-if (empty($Read)):
-    $Read = new Read;
-endif;
+if (empty($Read)) {
+    $Read ??= new Read();
+}
 
 // AUTO INSTANCE OBJECT CREATE
-if (empty($Create)):
-    $Create = new Create;
-endif;
+if (empty($Create)) {
+    $Create ??= new Create();
+}
 
 // AUTO INSTANCE OBJECT UPDATE
-if (empty($Update)):
-    $Update = new Update;
-endif;
+if (empty($Update)) {
+    $Update ??= new Update();
+}
 
 $PdtId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $Read->exeRead(DB_PDT_DORIPEL, "WHERE pdt_id = :id", "id={$PdtId}");
-if (!$Read->getResult()):
+if (!$Read->getResult()) {
     $_SESSION['trigger_controll'] = "<b>OPPSS {$Admin['user_name']}</b>, você tentou criar uma variação de um produto que não existe ou que foi removido recentemente!";
     header('Location: dashboard.php?wc=products/home');
     exit;
-endif;
+}
 
 $ProductCreate = $Read->getResult()[0];
 

@@ -5,32 +5,32 @@
     use App\Helpers\Check;
 
     $AdminLevel = LEVEL_WC_PRODUCTS_DORIPEL;
-    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
+    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
         Check::accessBlocked();
-    endif;
+    }
 
     // AUTO INSTANCE OBJECT READ
-    if (empty($Read)):
-        $Read = new Read;
-    endif;
+    if (empty($Read)) {
+        $Read ??= new Read();
+    }
 
     // AUTO INSTANCE OBJECT CREATE
-    if (empty($Create)):
-        $Create = new Create;
-    endif;
+    if (empty($Create)) {
+        $Create ??= new Create();
+    }
 
     $PdtId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-    if ($PdtId):
+    if ($PdtId) {
         $Read->exeRead(DB_PDT_DORIPEL, "WHERE pdt_id = :id", "id={$PdtId}");
-        if ($Read->getResult()):
+        if ($Read->getResult()) {
             $FormData = array_map(static fn($value) => Check::safeHtmlChars($value), $Read->getResult()[0]);
             extract($FormData);
-        else:
+        } else {
             $_SESSION['trigger_controll'] = "<b>OPPSS {$Admin['user_name']}</b>, você tentou editar um produto que não existe ou que foi removido recentemente!";
             header('Location: dashboard.php?wc=products/home');
             exit;
-        endif;
-    else:
+        }
+    } else {
         $Read->fullRead("SELECT count(pdt_id) as Total FROM " . DB_PDT_DORIPEL . " WHERE pdt_status = :st", "st=1");
 
         $PdtCreate = [
@@ -43,14 +43,14 @@
         header('Location: dashboard.php?wc=products/create&id=' . $Create->getResult());
         exit;
 
-    endif;
+    }
 
     $Search = filter_input_array(INPUT_POST);
-    if ($Search && !empty($Search['s'])):
+    if ($Search && !empty($Search['s'])) {
         $S = urlencode((string)$Search['s']);
         header("Location: dashboard.php?wc=product/search&s={$S}");
         exit;
-    endif;
+    }
 
     $ProductVolumes = [
         [
@@ -68,9 +68,9 @@
         'volume_height' => $FormData['pdt_dimension_heigth_cx2'] ?? '0',
     ];
 
-    if (array_filter($SecondLegacyVolume, static fn($value) => (float)$value > 0)):
+    if (array_filter($SecondLegacyVolume, static fn($value) => (float)$value > 0)) {
         $ProductVolumes[] = $SecondLegacyVolume;
-    endif;
+    }
 
     try {
         $Read->exeRead(
@@ -78,14 +78,14 @@
             "WHERE pdt_id = :id ORDER BY volume_order ASC, volume_id ASC",
             "id={$PdtId}"
         );
-        if ($Read->getResult()):
+        if ($Read->getResult()) {
             $ProductVolumes = array_map(static fn($Volume) => [
                 'volume_weight' => Check::safeHtmlChars($Volume['volume_weight'] ?? '0'),
                 'volume_depth' => Check::safeHtmlChars($Volume['volume_depth'] ?? '0'),
                 'volume_width' => Check::safeHtmlChars($Volume['volume_width'] ?? '0'),
                 'volume_height' => Check::safeHtmlChars($Volume['volume_height'] ?? '0'),
             ], $Read->getResult());
-        endif;
+        }
     } catch (\Throwable) {
         // Mantém compatibilidade enquanto a tabela auxiliar ainda não foi criada.
     }
@@ -145,7 +145,7 @@
 </div>
 
 <?php
-    if (E_PDT_SIZE): ?>
+    if (E_PDT_SIZE) { ?>
 		<div class="workcontrol_pdt_size">
 			<form name="pdt_size" action="" method="post">
 				<p class="icon-folder-plus">Estoque por variação:</p>
@@ -158,33 +158,33 @@
 					<div class="clear"></div>
                     <?php
                         $CatSizes = E_PDT_SIZE;
-                        if ($pdt_subcategory):
+                        if ($pdt_subcategory) {
                             $Read->fullRead(
                                 "SELECT cat_sizes FROM " . DB_PDT_CATS_DORIPEL . " WHERE cat_id = :id",
                                 "id={$pdt_subcategory}"
                             );
-                            if ($Read->getResult() && !empty($Read->getResult()[0]['cat_sizes'])):
+                            if ($Read->getResult() && !empty($Read->getResult()[0]['cat_sizes'])) {
                                 $CatSizes = $Read->getResult()[0]['cat_sizes'];
-                            endif;
-                        endif;
+                            }
+                        }
                         $WcPdtSize = explode(',', $CatSizes);
-                        foreach ($WcPdtSize as $Size):
+                        foreach ($WcPdtSize as $Size) {
                             $Size = trim(rtrim($Size));
                             $Read->fullRead(
                                 "SELECT stock_inventory, stock_sold FROM " . DB_PDT_STOCK_DORIPEL . " WHERE pdt_id = :pdt AND stock_code = :key",
                                 "pdt={$PdtId}&key={$Size}"
                             );
-                            if ($Read->getResult()):
+                            if ($Read->getResult()) {
                                 echo "<label><span class='size'>{$Size}:</span><input name='{$Size}' type='number' min='0' value='{$Read->getResult()[0]['stock_inventory']}'><span class='cart'><b class='icon-cart'>" . str_pad(
                                         $Read->getResult()[0]['stock_sold'],
                                         2,
                                         0,
                                         0
                                     ) . "</b></span></label>";
-                            else:
+                            } else {
                                 echo "<label><span class='size'>{$Size}:</span><input name='{$Size}' type='number' min='0' value='0'><span class='cart'><b class='icon-cart'>00</b></span></label>";
-                            endif;
-                        endforeach;
+                            }
+                        }
                     ?>
 				</div>
 				<button class="btn btn_green icon-ungroup">Atualizar Estoque!</button>
@@ -194,7 +194,7 @@
 			</form>
 		</div>
     <?php
-    endif; ?>
+    } ?>
 
 <div class="dashboard_content single_pdt_form">
 	<form class="auto_save" name="manage_pdt" action="" method="post" enctype="multipart/form-data">
@@ -231,9 +231,9 @@
                             $Read->fullRead(
                                 "SELECT DISTINCT upper(pdt_tags) as pdt_tags FROM " . DB_PDT_DORIPEL . " WHERE pdt_tags IS NOT NULL AND pdt_tags != ''"
                             );
-                            foreach ($Read->getResult() as $tags):
+                            foreach ($Read->getResult() as $tags) {
                                 echo '<option value="' . $tags['pdt_tags'] . '">';
-                            endforeach;
+                            }
                         ?>
 					</datalist>
 				</label>
@@ -247,24 +247,24 @@
 						<span class="legend">Padrão/Cor:</span>
                         <?php
                             $Read->exeRead(DB_PDT_COLORS_DORIPEL, "ORDER BY color_title ASC");
-                            if (!$Read->getResult()):
+                            if (!$Read->getResult()) {
                                 echo Check::erro(
                                     "<span class='icon-warning'>Cadastre alguns padrões e/ou cores antes de começar!</span>",
                                     E_USER_WARNING
                                 );
-                            else:
+                            } else {
                                 echo "<select name='pdt_color' required>";
                                 echo "<option value=''>Selecione um Padrão</option>";
-                                foreach ($Read->getResult() as $Color):
+                                foreach ($Read->getResult() as $Color) {
                                     echo "<option";
-                                    if ($pdt_color == $Color['color_title']):
+                                    if ($pdt_color == $Color['color_title']) {
                                         echo " selected='selected'";
-                                    endif;
+                                    }
                                     echo " value='{$Color['color_title']}'>{$Color['color_title']}</option>";
-                                endforeach;
+                                }
 
                                 echo "</select>";
-                            endif;
+                            }
                         ?>
 					</label>
 					<label class="label">
@@ -282,24 +282,24 @@
 						<span class="legend">Marca/Fabricante:</span>
                         <?php
                             $Read->exeRead(DB_PDT_BRANDS_DORIPEL, "ORDER BY brand_title ASC");
-                            if (!$Read->getResult()):
+                            if (!$Read->getResult()) {
                                 echo Check::erro(
                                     "<span class='icon-warning'>Cadastre algumas marcas ou fabricantes antes de começar!</span>",
                                     E_USER_WARNING
                                 );
-                            else:
+                            } else {
                                 echo "<select name='pdt_brand' required>";
                                 echo "<option value=''>Selecione um Fabricante</option>";
-                                foreach ($Read->getResult() as $Brand):
+                                foreach ($Read->getResult() as $Brand) {
                                     echo "<option";
-                                    if ($pdt_brand == $Brand['brand_id']):
+                                    if ($pdt_brand == $Brand['brand_id']) {
                                         echo " selected='selected'";
-                                    endif;
+                                    }
                                     echo " value='{$Brand['brand_id']}'>{$Brand['brand_title']}</option>";
-                                endforeach;
+                                }
 
                                 echo "</select>";
-                            endif;
+                            }
                         ?>
 					</label>
 
@@ -311,15 +311,15 @@
                             echo "<select name='pdt_line' required>";
                             echo "<option value=''>Selecione uma Linha/Ano:</option>";
 
-                            for ($i = 0; $i <= 2; $i++):
+                            for ($i = 0; $i <= 2; $i++) {
                                 $LineYear['line'] = $Line + $i;
 
                                 echo "<option";
-                                if ($pdt_line == $LineYear['line']):
+                                if ($pdt_line == $LineYear['line']) {
                                     echo " selected='selected'";
-                                endif;
+                                }
                                 echo " value='{$LineYear['line']}'> Linha {$LineYear['line']}</option>";
-                            endfor;
+                            }
                             echo "</select>";
 
 
@@ -330,35 +330,35 @@
 						<span class="legend">Categoria:</span>
                         <?php
                             $Read->exeRead(DB_PDT_CATS_DORIPEL, "WHERE cat_parent IS NULL ORDER BY cat_title ASC");
-                            if (!$Read->getResult()):
+                            if (!$Read->getResult()) {
                                 echo Check::erro(
                                     "<span class='icon-warning'>Cadastre algumas categorias de produtos antes de começar!</span>",
                                     E_USER_WARNING
                                 );
-                            else:
+                            } else {
                                 echo "<select name='pdt_subcategory' class='jwc_product_stock' required>";
                                 echo "<option value=''>Selecione uma Categoria</option>";
-                                foreach ($Read->getResult() as $Cat):
+                                foreach ($Read->getResult() as $Cat) {
                                     echo "<option disabled='disabled' value='{$Cat['cat_id']}'>{$Cat['cat_title']}</option>";
                                     $Read->exeRead(
                                         DB_PDT_CATS_DORIPEL,
                                         "WHERE cat_parent = :id",
                                         "id={$Cat['cat_id']}"
                                     );
-                                    if (!$Read->getResult()):
+                                    if (!$Read->getResult()) {
                                         echo "<option disabled='disabled' value=''>&raquo;&raquo; Cadastre uma categoria nessa sessão!</option>";
-                                    else:
-                                        foreach ($Read->getResult() as $SubCat):
+                                    } else {
+                                        foreach ($Read->getResult() as $SubCat) {
                                             echo "<option";
-                                            if ($pdt_subcategory == $SubCat['cat_id']):
+                                            if ($pdt_subcategory == $SubCat['cat_id']) {
                                                 echo " selected='selected'";
-                                            endif;
+                                            }
                                             echo " value='{$SubCat['cat_id']}'>&raquo;&raquo; {$SubCat['cat_title']}</option>";
-                                        endforeach;
-                                    endif;
-                                endforeach;
+                                        }
+                                    }
+                                }
                                 echo "</select>";
-                            endif;
+                            }
                         ?>
 					</label>
 				</div>
@@ -377,7 +377,7 @@
 			<div class='panel'>
 				<div class='j_pdt_volumes' data-next-volume="<?= count($ProductVolumes); ?>">
                     <?php
-                        foreach ($ProductVolumes as $VolumeIndex => $Volume): ?>
+                        foreach ($ProductVolumes as $VolumeIndex => $Volume) { ?>
 							<div class="j_pdt_volume_item" data-volume-index="<?= $VolumeIndex; ?>">
 								<span class="section icon-box-remove">Volume <?= $VolumeIndex + 1; ?></span>
 								<div class="label_50">
@@ -424,7 +424,7 @@
 								<div class="clear"></div>
 							</div>
                         <?php
-                        endforeach; ?>
+                        } ?>
 				</div>
 
 				<div class="pdt_volume_actions">
@@ -500,18 +500,18 @@
 				     default="../tim.php?src=<?= $Image; ?>&w=<?= THUMB_W; ?>&h=<?= THUMB_H; ?>">
                 <?php
                     $Read->exeRead(DB_PDT_GALLERY_DORIPEL, "WHERE product_id = :id", "id={$pdt_id}");
-                    if ($Read->getResult()):
+                    if ($Read->getResult()) {
                         echo '<div class="pdt_images gallery pdt_single_image">';
-                        foreach ($Read->getResult() as $Image):
+                        foreach ($Read->getResult() as $Image) {
                             $ImageUrl = ($Image['image'] && file_exists("../uploads/{$Image['image']}") && !is_dir(
                                 "../uploads/{$Image['image']}"
                             ) ? "../uploads/{$Image['image']}" : '_img/no_image.jpg');
                             echo "<img rel='Products' id='{$Image['id']}' alt='Imagem em {$pdt_title}' title='Imagem em {$pdt_title}' src='{$ImageUrl}'/>";
-                        endforeach;
+                        }
                         echo '</div>';
-                    else:
+                    } else {
                         echo '<div class="pdt_images gallery pdt_single_image"></div>';
-                    endif;
+                    }
                 ?>
 
 				<label class="label">

@@ -36,10 +36,12 @@
     "clean:minmin": "find . -type f -name '*.min.min*' -not -path './vendor/*' -print -delete",
     "cs:fix": "/opt/homebrew/opt/php@8.5/bin/php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --using-cache=yes --sequential",
     "cs:check": "/opt/homebrew/opt/php@8.5/bin/php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --using-cache=yes --sequential --dry-run --diff",
-    "wc:legacy-dr": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --dry-run `seu-diretorio-alvo`",
-    "wc:legacy-apply": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo`",
-    "wc:legacy-apply-report": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo` --report `caminho/para/o/arquivo/de/relatorio`",
-    "wc:legacy-apply-backup": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply `seu-diretorio-alvo` --report `caminho/para/o/arquivo/de/relatorio`"
+    "wc:legacy": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh",
+    "wc:legacy-dr": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --dry-run",
+    "wc:legacy-apply": "bash .github/skills/workcontrol-legacy-fixer/scripts/fix_php_legacy.sh --apply",
+    "php:legacy": "bash .github/skills/php-legacy-modernizer/scripts/fix_php_legacy_generic.sh",
+    "php:legacy-dr": "bash .github/skills/php-legacy-modernizer/scripts/fix_php_legacy_generic.sh --dry-run",
+    "php:legacy-apply": "bash .github/skills/php-legacy-modernizer/scripts/fix_php_legacy_generic.sh --apply"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.94"

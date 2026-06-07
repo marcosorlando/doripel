@@ -4,33 +4,33 @@ use App\Conn\Read;
 use App\Helpers\Check;
 
 $AdminLevel = LEVEL_WC_PRODUCTS_DORIPEL;
-if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
+if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
     Check::accessBlocked();
-endif;
+}
 
 // AUTO INSTANCE OBJECT READ
-if (empty($Read)):
-    $Read = new Read;
-endif;
+if (empty($Read)) {
+    $Read ??= new Read();
+}
 
 // AUTO INSTANCE OBJECT CREATE
-if (empty($Create)):
-    $Create = new Create;
-endif;
+if (empty($Create)) {
+    $Create ??= new Create();
+}
 
 $BrandId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-if ($BrandId):
+if ($BrandId) {
     $Read->exeRead(DB_PDT_BRANDS_DORIPEL, "WHERE brand_id = :id", "id={$BrandId}");
-    if ($Read->getResult()):
+    if ($Read->getResult()) {
         $FormData = array_map(static fn($value) => Check::safeHtmlChars($value), $Read->getResult()[0]);
         extract($FormData);
-    else:
+    } else {
         $_SESSION['trigger_controll'] = Check::erro("<b>OPPSS {$Admin['user_name']}</b>, você tentou editar um fabricante que não existe ou que foi removido recentemente!",
           E_USER_NOTICE);
         header('Location: dashboard.php?wc=products/brands');
         exit;
-    endif;
-else:
+    }
+} else {
     $Date = date('Y-m-d H:i:s');
     $Title = "Novo Fabricante - {$Date}";
     $Name = Check::name($Title);
@@ -38,7 +38,7 @@ else:
     $Create->exeCreate(DB_PDT_BRANDS_DORIPEL, $CarCreate);
     header('Location: dashboard.php?wc=products/brand&id=' . $Create->getResult());
     exit;
-endif;
+}
 ?>
 
 <header class="dashboard_header">

@@ -7,18 +7,18 @@
     use App\Models\Pager;
 
     $AdminLevel = LEVEL_WC_PRODUCTS_DORIPEL;
-    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
+    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
         Check::accessBlocked();
-    endif;
+    }
 
     // AUTO INSTANCE OBJECT READ
-    if (empty($Read)):
-        $Read = new Read;
-    endif;
+    if (empty($Read)) {
+        $Read ??= new Read();
+    }
 
     //AUTO DELETE PRODUCT TRASH
-    if (DB_AUTO_TRASH):
-        $Delete = new Delete;
+    if (DB_AUTO_TRASH) {
+        $Delete ??= new Delete();
         $Delete->exeDelete(
             DB_PDT_DORIPEL,
             "WHERE pdt_title IS NULL AND pdt_content IS NULL and pdt_status = :st",
@@ -29,43 +29,43 @@
         $Read->fullRead(
             "SELECT image FROM " . DB_PDT_IMAGE_DORIPEL . " WHERE product_id NOT IN(SELECT pdt_id FROM " . DB_PDT_DORIPEL . ")"
         );
-        if ($Read->getResult()):
+        if ($Read->getResult()) {
             $Delete->exeDelete(
                 DB_PDT_IMAGE_DORIPEL,
                 "WHERE id >= :id AND product_id NOT IN(SELECT pdt_id FROM " . DB_PDT_DORIPEL . ")",
                 "id=1"
             );
-            foreach ($Read->getResult() as $ImageRemove):
-                if (file_exists("../uploads/{$ImageRemove['image']}") && !is_dir("../uploads/{$ImageRemove['image']}")):
+            foreach ($Read->getResult() as $ImageRemove) {
+                if (file_exists("../uploads/{$ImageRemove['image']}") && !is_dir("../uploads/{$ImageRemove['image']}")) {
                     unlink("../uploads/{$ImageRemove['image']}");
-                endif;
-            endforeach;
-        endif;
-    endif;
+                }
+            }
+        }
+    }
 
     // AUTO INSTANCE OBJECT CREATE
-    if (empty($Create)):
-        $Create = new Create;
-    endif;
+    if (empty($Create)) {
+        $Create ??= new Create();
+    }
 
     $S = filter_input(INPUT_GET, "s", FILTER_DEFAULT);
     $O = filter_input(INPUT_GET, "opt", FILTER_DEFAULT);
 
     $WhereString = "";
     $WhereParams = "";
-    if (!empty($S)):
+    if (!empty($S)) {
         $WhereString = " AND (pdt_title LIKE :search OR pdt_content LIKE :search OR pdt_code = :code) ";
         $WhereParams = http_build_query(['search' => "%{$S}%", 'code' => $S]);
-    endif;
+    }
     $WhereOpt = ((!empty($O)) ? " AND (pdt_status != 1) " : "");
 
     $Search = filter_input_array(INPUT_POST);
-    if ($Search):
+    if ($Search) {
         $S = urlencode((string)($Search['s'] ?? ''));
         $O = urlencode((string)($Search['opt'] ?? ''));
         header("Location: dashboard.php?wc=products/home&opt={$O}&s={$S}");
         exit;
-    endif;
+    }
 
     $RedirectOpt = (!empty($WhereOpt) ? "&opt=outsale" : "");
     $RedirectSearch = (!empty($S) ? '&s=' . urlencode((string)$S) : '');
@@ -84,9 +84,9 @@
     );
     $ProductsResult = $Read->getResult();
 
-    if (!$ProductsResult && $Page > 1):
+    if (!$ProductsResult && $Page > 1) {
         $Pager->returnPage();
-    endif;
+    }
 ?>
 
 <header class="dashboard_header">
@@ -115,13 +115,13 @@
 </header>
 <div class="dashboard_content">
     <?php
-        if (!$ProductsResult):
+        if (!$ProductsResult) {
             echo Check::erro(
                 "Ainda não existem produtos cadastrados ou filtro não obteve resultados.",
                 E_USER_NOTICE
             );
-        else:
-            foreach ($ProductsResult as $Products):
+        } else {
+            foreach ($ProductsResult as $Products) {
                 extract($Products);
                 $PdtImage = ($pdt_cover && file_exists("../uploads/{$pdt_cover}") && !is_dir(
                     "../uploads/{$pdt_cover}"
@@ -162,14 +162,14 @@
                     "SELECT stock_code, stock_inventory, stock_sold FROM " . DB_PDT_STOCK_DORIPEL . " WHERE pdt_id = :id",
                     "id={$pdt_id}"
                 );
-                if ($Read->getResult()):
-                    foreach ($Read->getResult() as $StockVarKey):
-                        if ($StockVarKey['stock_code'] != 'default'):
+                if ($Read->getResult()) {
+                    foreach ($Read->getResult() as $StockVarKey) {
+                        if ($StockVarKey['stock_code'] != 'default') {
                             $PdtSoldVar .= " | {$StockVarKey['stock_code']}: {$StockVarKey['stock_sold']}";
                             $PdtStockVar .= " | {$StockVarKey['stock_code']}: {$StockVarKey['stock_inventory']}";
-                        endif;
-                    endforeach;
-                else:
+                        }
+                    }
+                } else {
                     //RETRO COMPATIBILIDADE WC
                     $CreateStock = [
                         'pdt_id' => $pdt_id,
@@ -178,7 +178,7 @@
 
                     ];
                     $Create->exeCreate(DB_PDT_STOCK_DORIPEL, $CreateStock);
-                endif;
+                }
 
                 echo "</header>
             </div>
@@ -198,7 +198,7 @@
             </div>
             </div>
         </article>";
-            endforeach;
+            }
 
             $Pager->exePaginator(
                 DB_PDT_DORIPEL,
@@ -207,6 +207,6 @@
             );
             echo $Pager->getPaginator();
 
-        endif;
+        }
     ?>
 </div>

@@ -5,20 +5,20 @@
     use App\Helpers\Check;
 
     $AdminLevel = LEVEL_WC_PRODUCTS_DORIPEL;
-    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
+    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
         Check::accessBlocked();
-    endif;
+    }
 
     // AUTO INSTANCE OBJECT READ
-    if (empty($Read)):
-        $Read = new Read;
-    endif;
+    if (empty($Read)) {
+        $Read ??= new Read();
+    }
 
     //AUTO DELETE POST TRASH
-    if (DB_AUTO_TRASH):
-        $Delete = new Delete;
+    if (DB_AUTO_TRASH) {
+        $Delete ??= new Delete();
         $Delete->exeDelete(DB_PDT_COLORS_DORIPEL, "WHERE color_title IS NULL AND color_id >= :st", "st=1");
-    endif;
+    }
 ?>
 
 <header class="dashboard_header">
@@ -44,13 +44,13 @@
 <div class="dashboard_content">
     <?php
         $Read->exeRead(DB_PDT_COLORS_DORIPEL, "ORDER By color_title ASC");
-        if (!$Read->getResult()):
+        if (!$Read->getResult()) {
             echo Check::erro(
                 "<span class='al_center icon-notification'>Ainda não existem padrões de cores cadastradas {$Admin['user_name']}. Comece agora mesmo criando seus padrões de cores!</span>",
                 E_USER_NOTICE
             );
-        else:
-            foreach ($Read->getResult() as $Color):
+        } else {
+            foreach ($Read->getResult() as $Color) {
                 $Read->fullRead(
                     "SELECT count(pdt_id) as total FROM " . DB_PDT_DORIPEL . " WHERE pdt_color = :color",
                     "color={$Color['color_id']}"
@@ -68,7 +68,7 @@
 </div>
             </div>
         </article>";
-            endforeach;
-        endif;
+            }
+        }
     ?>
 </div>

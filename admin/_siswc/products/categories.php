@@ -5,24 +5,24 @@
     use App\Helpers\Check;
 
     $AdminLevel = LEVEL_WC_PRODUCTS_DORIPEL;
-    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel):
+    if (!APP_PRODUCTS_DORIPEL || empty($DashboardLogin) || empty($Admin) || $Admin['user_level'] < $AdminLevel) {
         Check::accessBlocked();
-    endif;
+    }
 
     // AUTO INSTANCE OBJECT READ
-    if (empty($Read)):
-        $Read = new Read;
-    endif;
+    if (empty($Read)) {
+        $Read ??= new Read();
+    }
 
     //AUTO DELETE POST TRASH
-    if (DB_AUTO_TRASH):
-        $Delete = new Delete;
+    if (DB_AUTO_TRASH) {
+        $Delete ??= new Delete();
         $Delete->exeDelete(
             DB_PDT_CATS_DORIPEL,
             "WHERE cat_title IS NULL AND cat_parent IS NULL AND cat_id >= :st",
             "st=1"
         );
-    endif;
+    }
 ?>
 
 <header class="dashboard_header">
@@ -48,13 +48,13 @@
 <div class="dashboard_content">
     <?php
         $Read->exeRead(DB_PDT_CATS_DORIPEL, "WHERE cat_parent IS NULL ORDER BY cat_title ASC");
-        if (!$Read->getResult()):
+        if (!$Read->getResult()) {
             echo Check::erro(
                 "<span class='al_center icon-notification'>Ainda não existem categorias de produtos cadastradas {$Admin['user_name']}. Comece agora mesmo criando seu primeiro setor, e então suas categorias!</span>",
                 E_USER_NOTICE
             );
-        else:
-            foreach ($Read->getResult() as $Sector):
+        } else {
+            foreach ($Read->getResult() as $Sector) {
                 $Read->fullRead(
                     "SELECT count(pdt_id) AS total FROM " . DB_PDT_DORIPEL . " WHERE pdt_category = :sector",
                     "sector={$Sector['cat_id']}"
@@ -76,8 +76,8 @@
             </header>";
 
                 $Read->exeRead(DB_PDT_CATS_DORIPEL, "WHERE cat_parent = :sector", "sector={$Sector['cat_id']}");
-                if ($Read->getResult()):
-                    foreach ($Read->getResult() as $Cat):
+                if ($Read->getResult()) {
+                    foreach ($Read->getResult() as $Cat) {
                         $Read->fullRead(
                             "SELECT count(pdt_id) AS total FROM " . DB_PDT_DORIPEL . " WHERE pdt_subcategory = :cat",
                             "cat={$Cat['cat_id']}"
@@ -95,10 +95,10 @@
                             <span rel='product_subcategory' callback='ProductsDoripel' callback_action='cat_delete' class='j_delete_action_confirm btn btn_yellow icon-warning' style='display: none;' id='{$Cat['cat_id']}'>Deletar Categoria?</span>
 </div>
                         </article>";
-                    endforeach;
-                endif;
+                    }
+                }
                 echo "</article>";
-            endforeach;
-        endif;
+            }
+        }
     ?>
 </div>
