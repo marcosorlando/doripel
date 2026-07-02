@@ -7,9 +7,8 @@
     setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
     date_default_timezone_set('America/Sao_Paulo');
 
-    if (!$Read) {
-        $Read = new Read;
-    }
+
+    $Read ??= new Read();
 
     if (empty($URL[1])) {
         require REQUIRE_PATH . '/404.php';
@@ -133,7 +132,7 @@
                             foreach ($tags as $key => $value) {
                                 ?>
 								<a href="<?= BASE; ?>/pesquisa/<?= $value ?>"><?= $value ?></a>
-                            <?php
+                                <?php
                             } ?>
 					</div>
 				</div>
@@ -142,7 +141,8 @@
 					<div class="display-table width-100 border-all border-color-extra-light-gray padding-50px-all sm-padding-30px-all xs-padding-20px-all">
 
 						<div class="display-table-cell width-130px text-center vertical-align-top xs-margin-15px-bottom xs-width-100 xs-display-block xs-text-center">
-							<img src="<?= BASE; ?>/uploads/<?= $user_thumb; ?>" class="img-circle width-100px"
+							<img src="<?= BASE; ?>/uploads/<?= $user_thumb; ?>" class="img-circle height-130px
+							width-130px"
 							     alt="<?= $user_name; ?> <?= $user_lastname; ?>"
 							     title="<?= $user_name; ?> <?= $user_lastname; ?>"/>
 						</div>
@@ -150,7 +150,7 @@
 							<a href="#"
 							   class="text-extra-dark-gray text-uppercase alt-font font-weight-600 margin-10px-bottom display-inline-block text-small"><?= $user_name; ?> <?= $user_lastname; ?></a>
 							<p><?= $user_description; ?></p>
-							<a class="btn btn-very-small btn-black margin-20px-top">Todos as publicações do(a)
+							<a class="btn btn-very-small btn-black margin-20px-top">Todas as publicações do(a)
 								autor(a)</a>
 						</div>
 					</div>

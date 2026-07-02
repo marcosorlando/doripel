@@ -658,7 +658,7 @@ if (!defined('SIS_DB_HOST')) {
 }
 
 if (!defined('SIS_DB_NAME')) {
-    define('SIS_DB_NAME', 'uwdoripel_website');
+    define('SIS_DB_NAME', 'uwdoripel_site');
 }
 
 if (!defined('SIS_DB_PASS')) {
@@ -666,7 +666,7 @@ if (!defined('SIS_DB_PASS')) {
 }
 
 if (!defined('SIS_DB_USER')) {
-    define('SIS_DB_USER', 'uwdoripel_website');
+    define('SIS_DB_USER', 'uwdoripel_site');
 }
 
 if (!defined('SITE_ADDR_ADDR')) {
