@@ -1,96 +1,45 @@
 <?php
 
-use App\Helpers\Check;
+    use App\Helpers\Check;
 
-if (empty($WcSocialRequired)) {
-    $WcSocialRequired = true;
-    echo "<link rel='stylesheet' href='" . BASE . "/assets/widgets/share/share.wc.css'/>";
-}
+    $base = BASE;
+    $siteName = SITE_NAME;
+    $siteTwitter = SITE_SOCIAL_TWITTER;
 
-echo "<ul class='workcontrol_socialshare'>";
-echo "<li class='workcontrol_socialshare_cta'><strong>Compartilhe</strong> </li>";
+    if (empty($WcSocialRequired)) {
+        $WcSocialRequired = true;
+        echo "<link rel='stylesheet' href='{$base}/assets/widgets/share/share.wc.css'/>";
+    }
 
-$WcShareText = (empty($WC_TITLE_LINK) ? null : $WC_TITLE_LINK);
-$WcShareLink = (empty($WC_SHARE_LINK) ? BASE : $WC_SHARE_LINK);
-$WcShareHash = (empty($WC_SHARE_HASH) ? Check::name(SITE_NAME) : $WC_SHARE_HASH);
+    echo "<ul class='workcontrol_socialshare'>";
+    echo "<li class='workcontrol_socialshare_cta'><strong>Compartilhe</strong> </li>";
 
-/**
- * FACEBOOK.
- */
-$ShareIconText = 'Compartilhar no Facebook';
-echo \sprintf(
-        "<li class='workcontrol_socialshare_item workcontrol_socialshare_facebook'><a rel='%s' target='_blank' title='%s' href='https://www.facebook.com/sharer/sharer.php?u=%s'><img alt='%s' title='%s' src='",
-        $WcShareLink,
-        $ShareIconText,
-        $WcShareLink,
-        $ShareIconText,
-        $ShareIconText
-    ) . BASE . "/assets/widgets/share/icons/facebook.svg'/></a></li>";
+    $WcShareText = empty($WC_TITLE_LINK) ? '' : $WC_TITLE_LINK;
+    $WcShareLink = empty($WC_SHARE_LINK) ? $base : $WC_SHARE_LINK;
+    $WcShareHash = empty($WC_SHARE_HASH) ? Check::name($siteName) : $WC_SHARE_HASH;
 
-/**
- * Whatsapp +.
- */
-$whatsText = Check::safeUrlEncode(
-    '*Oie!* Estou lendo este artigo no Blog da ' . SITE_NAME . ' e resolvi compartilhar com você! Um excelente conteúdo com certeza você vai gostar. *Clique para ler!*'
-);
-$ShareIconText = 'Compartilhar no Whatsapp';
-echo \sprintf(
-        "<li class='workcontrol_socialshare_item workcontrol_socialshare_whatsapp'><a rel='%s' target='_blank' title='%s' href='https://api.whatsapp.com/send?text=%s %s'><img alt='%s' title='%s' src='",
-        $WcShareLink,
-        $ShareIconText,
-        $whatsText,
-        $WcShareLink,
-        $ShareIconText,
-        $ShareIconText
-    ) . BASE . "/assets/widgets/share/icons/whatsapp.svg'/></a></li>";
+// Facebook
+    $shareIconText = 'Compartilhar no Facebook';
+    echo "<li class='workcontrol_socialshare_item workcontrol_socialshare_facebook'><a rel='{$WcShareLink}' target='_blank' title='{$shareIconText}' href='https://www.facebook.com/sharer/sharer.php?u={$WcShareLink}'><img alt='{$shareIconText}' title='{$shareIconText}' src='{$base}/assets/widgets/share/icons/facebook.svg'/></a></li>";
 
-/**
- * Linkedin.
- */
-$ShareIconText = 'Compartilhar no Linkedin';
-echo \sprintf(
-        "<li class='workcontrol_socialshare_item workcontrol_socialshare_linkedin'><a rel='%s' target='_blank' title='%s' href='https://www.linkedin.com/cws/share?xd_origin_host=%s&amp;original_referer=%s&amp;url=%s&amp;isFramed=false&amp;token=&amp;lang=pt_BR&amp;_ts=1482238060107%%2E67#state=&amp;from_login=true'><img alt='%s' title='%s' src='",
-        $WcShareLink,
-        $ShareIconText,
-        $WcShareLink,
-        $WcShareLink,
-        $WcShareLink,
-        $ShareIconText,
-        $ShareIconText
-    ) . BASE . "/assets/widgets/share/icons/linkedin.svg'/></a></li>";
+// Whatsapp
+    $whatsText = Check::safeUrlEncode(
+        "*Oie!* Estou lendo este artigo no Blog da {$siteName} e resolvi compartilhar com você! Um excelente conteúdo com certeza você vai gostar. *Clique para ler!*"
+    );
+    $shareIconText = 'Compartilhar no Whatsapp';
+    echo "<li class='workcontrol_socialshare_item workcontrol_socialshare_whatsapp'><a rel='{$WcShareLink}' target='_blank' title='{$shareIconText}' href='https://api.whatsapp.com/send?text={$whatsText} {$WcShareLink}'><img alt='{$shareIconText}' title='{$shareIconText}' src='{$base}/assets/widgets/share/icons/whatsapp.svg'/></a></li>";
 
-/**
- * TWITTER.
- */
-$ShareIconText = 'Compartilhar no Twitter';
-$WcShareText = Check::safeUrlEncode($WcShareText);
-echo \sprintf(
-        "<li class='workcontrol_socialshare_item workcontrol_socialshare_twitter'><a rel='%s' target='_blank' title='%s' href='https://twitter.com/intent/tweet?url=%s&text=%s&via=",
-        $WcShareLink,
-        $ShareIconText,
-        $WcShareLink,
-        $WcShareText
-    ) . SITE_SOCIAL_TWITTER . \sprintf(
-        "'><img alt='%s' title='%s' src='",
-        $ShareIconText,
-        $ShareIconText
-    ) . BASE . "/assets/widgets/share/icons/twitter.svg'/></a></li>";
+// Linkedin
+    $shareIconText = 'Compartilhar no Linkedin';
+    echo "<li class='workcontrol_socialshare_item workcontrol_socialshare_linkedin'><a rel='{$WcShareLink}' target='_blank' title='{$shareIconText}' href='https://www.linkedin.com/cws/share?xd_origin_host={$WcShareLink}&amp;original_referer={$WcShareLink}&amp;url={$WcShareLink}&amp;isFramed=false&amp;token=&amp;lang=pt_BR&amp;_ts=1482238060107%2E67#state=&amp;from_login=true'><img alt='{$shareIconText}' title='{$shareIconText}' src='{$base}/assets/widgets/share/icons/linkedin.svg'/></a></li>";
 
-/**
- * E-MAIL.
- */
-$ShareIconText = 'Compartilhar por E-mail';
-echo \sprintf(
-        "<li class='workcontrol_socialshare_item workcontrol_socialshare_mail'><a rel='%s' target='_blank' title='%s' href='mailto:?to=&amp;&subject=Leia o artigo: %s&body=Estou lendo o artigo %s no Blog da ",
-        $WcShareLink,
-        $ShareIconText,
-        $WC_TITLE_LINK,
-        $WC_TITLE_LINK
-    ) . SITE_NAME . \sprintf(
-        " e o conteúdo está excelente acho que você vai gostar, para ler acesse %s'><img alt='%s' title='%s' src='",
-        $WcShareLink,
-        $ShareIconText,
-        $ShareIconText
-    ) . BASE . "/assets/widgets/share/icons/envelope.svg'/></a></li>";
+// Twitter
+    $WcShareText = Check::safeUrlEncode($WcShareText);
+    $shareIconText = 'Compartilhar no Twitter';
+    echo "<li class='workcontrol_socialshare_item workcontrol_socialshare_twitter'><a rel='{$WcShareLink}' target='_blank' title='{$shareIconText}' href='https://twitter.com/intent/tweet?url={$WcShareLink}&text={$WcShareText}&via={$siteTwitter}'><img alt='{$shareIconText}' title='{$shareIconText}' src='{$base}/assets/widgets/share/icons/twitter.svg'/></a></li>";
 
-echo '</ul>';
+// E-mail
+    $shareIconText = 'Compartilhar por E-mail';
+    echo "<li class='workcontrol_socialshare_item workcontrol_socialshare_mail'><a rel='{$WcShareLink}' target='_blank' title='{$shareIconText}' href='mailto:?to=&amp;&subject=Leia o artigo: {$WcShareText}&body=Estou lendo o artigo {$WC_TITLE_LINK} no Blog da {$siteName} e o conteúdo está excelente acho que você vai gostar, para ler acesse {$WcShareLink}'><img alt='{$shareIconText}' title='{$shareIconText}' src='{$base}/assets/widgets/share/icons/envelope.svg'/></a></li>";
+
+    echo '</ul>';

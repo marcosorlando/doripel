@@ -372,9 +372,10 @@
 				<div class='panel_share'>
 					<h2>Compartilhe nas Redes Sociais:</h2>
                     <?php
-                        $URLSHARE = '/artigo/' . $post_name;
-
-                        require_once __DIR__ . '/../../_tpl/share.wc.php';
+                        $WC_SHARE_LINK = '/artigo/' . $post_name;;
+                        $WC_SHARE_HASH = '#doripelMoveis';
+                        $WC_TITLE_LINK = $post_title;
+                        require_once __DIR__ . '/../../../assets/widgets/share/share.wc.php';
                     ?>
 				</div>
 			</div>

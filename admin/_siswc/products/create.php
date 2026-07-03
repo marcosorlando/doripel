@@ -570,8 +570,10 @@
 			<div class='panel panel_share'>
 				<h2 class="icon-share2">Compartilhe nas Redes Sociais:</h2>
                 <?php
-                    $URLSHARE = "/movel/{$pdt_name}";
-                    require_once 'assets/widgets/share/share.wc.php';
+                    $WC_SHARE_LINK = "/movel/{$pdt_name}";
+                    $WC_SHARE_HASH = "#doripelMoveis";
+                    $WC_TITLE_LINK = $pdt_title;
+                    require_once __DIR__ . '/../../../assets/widgets/share/share.product.wc.php';
                 ?>
 			</div>
 
