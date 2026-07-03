@@ -5,12 +5,12 @@
     namespace App\Config;
 
     use App\Bootstrap\ErrorHandler;
-    use App\Conn\Create;
     use App\Conn\Read;
-    use App\Conn\Update;
     use Closure;
     use Dotenv\Dotenv;
     use RuntimeException;
+
+    use const SITE_ADDR_SITE;
 
     final class ConfigLoader
     {
@@ -41,129 +41,6 @@
             self::defineSegmentationDefaults();
             self::defineLinkAndAccountConfig();
             self::configureErrorHandling();
-        }
-
-        /**
-         * Retorna todos os defaults de configuração definidos no código (ConfigLoader e
-         * arquivos Agency/Client), com os overrides de .env aplicados e SEM consultar o
-         * banco de dados. É a fonte de verdade do "código" usada pelo reset.
-         *
-         * @return array<string, null|scalar>
-         */
-        public static function codeDefaults(): array
-        {
-
-            self::loadEnv();
-
-            /** @var array<string, \Closure|scalar> $agency */
-            $agency = require __DIR__ . '/Agency.inc.php';
-            /** @var array<string, \Closure|scalar> $client */
-            $client = require __DIR__ . '/Client.inc.php';
-
-            return array_merge(
-                self::withEnvOverrides($agency),
-                self::withEnvOverrides($client),
-                self::adminDefaults(),
-                self::withEnvOverrides(self::mediaDefaults()),
-                self::withEnvOverrides(self::applicationModuleDefaults()),
-                self::withEnvOverrides(self::levelPermissionDefaults()),
-                self::withEnvOverrides(self::segmentationDefaults()),
-                self::withEnvOverrides(self::linkAndAccountDefaults())
-            );
-        }
-
-        /**
-         * Sobrescreve a tabela ws_config com os valores atuais das constantes do código.
-         * Usado exclusivamente pelo botão "Resetar Configurações". O uso normal do
-         * sistema mantém o BANCO como prioridade (ver loadConfigFromDatabase()).
-         *
-         * @return int quantidade de chaves sincronizadas
-         */
-        public static function syncConfigToDatabase(): int
-        {
-
-            if (!defined('DB_CONF') || '' === trim((string)constant('DB_CONF'))) {
-                return 0;
-            }
-
-            $table = (string)constant('DB_CONF');
-            $read = new Read();
-            $create = new Create();
-            $update = new Update();
-            $count = 0;
-
-            foreach (self::codeDefaults() as $key => $value) {
-                $type = self::configType($key);
-                if (null === $type) {
-                    continue;
-                }
-
-                $stored = is_scalar($value) ? (string)$value : '';
-
-                $read->fullRead('SELECT conf_id FROM ' . $table . ' WHERE conf_key = :k', 'k=' . $key);
-                $found = $read->getResult();
-
-                if (is_array($found) && [] !== $found) {
-                    $update->exeUpdate(
-                        $table,
-                        ['conf_value' => $stored, 'conf_type' => $type],
-                        'WHERE conf_id = :id',
-                        'id=' . (int)($found[0]['conf_id'] ?? 0)
-                    );
-                } else {
-                    $create->exeCreate(
-                        $table,
-                        ['conf_key' => $key, 'conf_value' => $stored, 'conf_type' => $type]
-                    );
-                }
-
-                ++$count;
-            }
-
-            return $count;
-        }
-
-        /**
-         * Classifica uma constante no grupo (conf_type) usado pela tela de configurações.
-         * Retorna null para constantes de infraestrutura, que não devem ir para ws_config.
-         */
-        private static function configType(string $key): ?string
-        {
-
-            foreach (['DB_', 'SIS_', 'REQUIRE_', 'INCLUDE_', 'WORKCONTROL_', 'BASE', 'THEME'] as $skip) {
-                if (str_starts_with($key, $skip)) {
-                    return null;
-                }
-            }
-
-            if (str_contains($key, 'SITE_ADDR')) {
-                return 'SITE_ADDR';
-            }
-
-            if (str_contains($key, 'SITE_SOCIAL')) {
-                return 'SOCIAL';
-            }
-
-            if (str_starts_with($key, 'ACC_')) {
-                return 'APP';
-            }
-
-            if (
-                str_starts_with($key, 'THUMB_')
-                || str_starts_with($key, 'AVATAR_')
-                || str_starts_with($key, 'SLIDE_')
-            ) {
-                return 'IMAGE';
-            }
-
-            $pos = strpos($key, '_');
-            $type = false !== $pos ? substr($key, 0, $pos) : $key;
-
-            if ('E' === $type) {
-                return 'ECOMMERCE';
-            }
-
-            return '' === $type ? 'ADMIN' : $type;
         }
 
         private static function loadEnv(): void
@@ -229,7 +106,7 @@
 
             self::defineIfNotDefined(
                 'BASE',
-                self::env('APP_URL', ($isLocal ? 'https://localhost/zen' : 'https://zen.ppg.br'))
+                self::env('APP_URL', ($isLocal ? 'https://localhost/zen' : 'https://' . SITE_ADDR_SITE))
             );
 
             if (!defined('THEME')) {
@@ -249,16 +126,7 @@
         private static function defineAdminDefaults(): void
         {
 
-            self::defineConstants(self::adminDefaults());
-        }
-
-        /**
-         * @return array<string, mixed>
-         */
-        private static function adminDefaults(): array
-        {
-
-            return [
+            $defaults = [
                 'ADMIN_NAME' => self::resolveEnvValue('ADMIN_NAME', 'ZENCONTROL'),
                 'ADMIN_DESC' => self::resolveEnvValue(
                     'ADMIN_DESC',
@@ -287,16 +155,7 @@
         private static function defineMediaDefaults(): void
         {
 
-            self::defineConstants(self::withEnvOverrides(self::mediaDefaults()));
-        }
-
-        /**
-         * @return array<string, scalar>
-         */
-        private static function mediaDefaults(): array
-        {
-
-            return [
+            $defaults = [
                 'IMAGE_W' => 1200,
                 'IMAGE_H' => 628,
                 'THUMB_W' => 800,
@@ -308,21 +167,14 @@
                 'VIDEO_W' => 1280,
                 'VIDEO_H' => 720,
             ];
+
+            self::defineConstants(self::withEnvOverrides($defaults));
         }
 
         private static function defineApplicationModules(): void
         {
 
-            self::defineConstants(self::withEnvOverrides(self::applicationModuleDefaults()));
-        }
-
-        /**
-         * @return array<string, scalar>
-         */
-        private static function applicationModuleDefaults(): array
-        {
-
-            return [
+            $defaults = [
                 'APP_POSTS' => 1,
                 'APP_POSTS_AMP' => 0,
                 'APP_POSTS_INSTANT_ARTICLE' => 0,
@@ -351,21 +203,14 @@
                 'APP_PRODUCTS_DORIPEL' => 1,
                 'APP_DEBUG' => self::env('APP_DEBUG')
             ];
+
+            self::defineConstants(self::withEnvOverrides($defaults));
         }
 
         private static function defineLevelPermissions(): void
         {
 
-            self::defineConstants(self::withEnvOverrides(self::levelPermissionDefaults()));
-        }
-
-        /**
-         * @return array<string, scalar>
-         */
-        private static function levelPermissionDefaults(): array
-        {
-
-            return [
+            $levels = [
                 'LEVEL_WC_POSTS' => 6,
                 'LEVEL_WC_COMMENTS' => 6,
                 'LEVEL_WC_LINKTREE' => 6,
@@ -395,21 +240,14 @@
                 'LEVEL_WC_CONFIG_API' => 10,
                 'LEVEL_WC_CONFIG_CODES' => 10,
             ];
+
+            self::defineConstants(self::withEnvOverrides($levels));
         }
 
         private static function defineSegmentationDefaults(): void
         {
 
-            self::defineConstants(self::withEnvOverrides(self::segmentationDefaults()));
-        }
-
-        /**
-         * @return array<string, scalar>
-         */
-        private static function segmentationDefaults(): array
-        {
-
-            return [
+            $defaults = [
                 'SEGMENT_FB_PAGE_ID' => '',
                 'SEGMENT_FB_PIXEL_ID' => '',
                 'SEGMENT_WC_USER' => 1,
@@ -419,21 +257,14 @@
                 'SEGMENT_GL_ADWORDS_ID' => '',
                 'SEGMENT_GL_ADWORDS_LABEL' => ''
             ];
+
+            self::defineConstants(self::withEnvOverrides($defaults));
         }
 
         private static function defineLinkAndAccountConfig(): void
         {
 
-            self::defineConstants(self::withEnvOverrides(self::linkAndAccountDefaults()));
-        }
-
-        /**
-         * @return array<string, scalar>
-         */
-        private static function linkAndAccountDefaults(): array
-        {
-
-            return [
+            $defaults = [
                 'APP_LINK_POSTS' => 1,
                 'APP_LINK_PAGES' => 1,
                 'APP_LINK_PRODUCTS' => 1,
@@ -449,6 +280,8 @@
                 'COMMENT_ORDER' => 'DESC',
                 'COMMENT_RESPONSE_ORDER' => 'ASC'
             ];
+
+            self::defineConstants(self::withEnvOverrides($defaults));
         }
 
         private static function defineCacheConfig(): void

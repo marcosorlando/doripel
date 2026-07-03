@@ -42,7 +42,6 @@
         $Create->exeCreate(DB_PDT_DORIPEL, $PdtCreate);
         header('Location: dashboard.php?wc=products/create&id=' . $Create->getResult());
         exit;
-
     }
 
     $Search = filter_input_array(INPUT_POST);
@@ -193,7 +192,7 @@
 				<div class="clear"></div>
 			</form>
 		</div>
-    <?php
+        <?php
     } ?>
 
 <div class="dashboard_content single_pdt_form">
@@ -423,7 +422,7 @@
 								</button>
 								<div class="clear"></div>
 							</div>
-                        <?php
+                            <?php
                         } ?>
 				</div>
 
@@ -572,7 +571,7 @@
 				<h2 class="icon-share2">Compartilhe nas Redes Sociais:</h2>
                 <?php
                     $URLSHARE = "/movel/{$pdt_name}";
-                    require '_tpl/Share.wc.php';
+                    require_once 'assets/widgets/share/share.wc.php';
                 ?>
 			</div>
 
