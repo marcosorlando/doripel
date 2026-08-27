@@ -139,7 +139,7 @@
 		<div class="row">
 			<div class="col-md-6 sm-margin-50px-bottom xs-margin-30px-bottom wow fadeIn">
 				<h5 class="alt-font text-extra-dark-gray font-weight-600"><?= $pdt_title; ?></h5>
-				<p><?= $pdt_subtitle; ?></p>
+				<p><?= $pdt_content; ?></p>
 				<a href="#" class="jwc_contact btn btn-deep-pink btn-medium"><i class="fa fa-shopping-bag"></i> Onde
 					Comprar?</a>
 				<a href="<?= BASE; ?>/uploads/<?= $pdt_instrutions; ?>" target="_blank"

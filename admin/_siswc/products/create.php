@@ -547,7 +547,6 @@
 					       value="<?= isset($pdt_video) ? $pdt_video : ''; ?>"/>
 				</label>
 
-
 				<div class="m_top">&nbsp;</div>
 				<div class="wc_actions">
 
