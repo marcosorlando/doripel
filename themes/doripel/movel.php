@@ -42,14 +42,14 @@
 <section class="wow fadeIn bg-light-gray padding-35px-tb page-title-small top-space">
 	<div class="container">
 		<div class="row equalize xs-equalize-auto">
-			<div class="col-lg-8 col-md-6 col-sm-6 col-xs-12 display-table">
+			<div class="col-lg-7 col-md-6 col-sm-6 col-xs-12 display-table">
 				<div class="display-table-cell vertical-align-middle text-left xs-text-center">
 					<!-- start page title -->
 					<h1 class="alt-font text-extra-dark-gray font-weight-600 no-margin-bottom text-uppercase"><?= $pdt_title; ?></h1>
 					<!-- end page title -->
 				</div>
 			</div>
-			<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 display-table text-right xs-text-left xs-margin-10px-top">
+			<div class="col-lg-5 col-md-6 col-sm-6 col-xs-12 display-table text-right xs-text-left xs-margin-10px-top">
 				<div class="display-table-cell vertical-align-middle breadcrumb text-small alt-font">
 					<!-- breadcrumb -->
 					<ul class="xs-text-center text-uppercase">
@@ -57,10 +57,30 @@
 							<h2 class="text-medium"><?= $pdt_color; ?></h2>
 						</li>
 						<li>
-							<h3 class="text-medium">REF.:<?= $pdt_ref ?></h3>
+							<h3 class="text-medium">REF.: <b><?= $pdt_ref ?></b></h3>
 						</li>
 					</ul>
 					<!-- end breadcrumb -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- start call to action section -->
+<section class='parallax wow fadeIn' data-stellar-background-ratio='0.2'
+         style="background-image:url('<?= BASE; ?>/uploads/<?= $pdt_scene; ?>');">
+
+	<div class='container'>
+		<div class='row'>
+			<div class='col-lg-8 center-col display-table extra-small-screen text-center col-md-8 xs-padding-15px-lr'>
+				<div class='display-table-cell vertical-align-middle'>
+					<span class='margin-15px-bottom display-block alt-font text-uppercase xs-margin-5px-bottom'>REQUINTE E SOFISTICAÇÃO</span>
+					<h3 class='alt-font text-extra-dark-gray font-weight-600'><?= $pdt_title; ?>
+						<br><?= $pdt_color; ?>
+					</h3>
+					<a href=""
+					   class="jwc_contact btn btn-transparent-deep-pink bg-white btn-large margin-20px-top xs-no-margin-top wow fadeInUp"><i
+								class="fa fa-shopping-bag"></i> ONDE COMPRAR</a>
 				</div>
 			</div>
 		</div>
@@ -75,7 +95,7 @@
 				<div class="swiper-full-screen swiper-container white-move">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
-							<img src="<?= BASE . '/tim.php?src=uploads/' . $pdt_cover; ?>&w=700&h=700"
+							<img src="<?= BASE . '/tim.php?src=uploads/' . $pdt_cover; ?>&w=auto&h=auto"
 							     title="<?= $pdt_title . ' - ' . $pdt_color . ' - ' . $pdt_ref; ?>"
 							     alt="<?= $pdt_title . ' - ' . $pdt_color . ' - ' . $pdt_ref; ?>">
 						</div>
@@ -89,7 +109,7 @@
                                     extract($Imagens);
                                     ?>
 									<div class="swiper-slide">
-										<img src="<?= BASE . '/tim.php?src=uploads/' . $image ?>&w=700&h=700"
+										<img src="<?= BASE . '/tim.php?src=uploads/' . $image ?>&w=auto&h=auto"
 										     title="<?= $pdt_title . ' - ' . $pdt_color . ' - ' . $pdt_ref; ?>"
 										     alt="<?= $pdt_title . ' - ' . $pdt_color . ' - REF.: ' . $pdt_ref; ?>">
 									</div>
@@ -173,25 +193,7 @@
         require REQUIRE_PATH . "/inc/video_popup.php";
     }
 ?>
-<!-- start call to action section -->
-<section class="parallax wow fadeIn" data-stellar-background-ratio="0.2"
-         style="background-image:url('<?= BASE; ?>/uploads/<?= $pdt_scene; ?>');">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 center-col display-table extra-small-screen text-center col-md-8 xs-padding-15px-lr">
-				<div class="display-table-cell vertical-align-middle">
-					<span class="margin-15px-bottom display-block alt-font text-uppercase xs-margin-5px-bottom">REQUINTE E SOFISTICAÇÃO</span>
-					<h3 class="alt-font text-extra-dark-gray font-weight-600"><?= $pdt_title; ?>
-						<br><?= $pdt_color; ?>
-					</h3>
-					<a href=""
-					   class="jwc_contact  btn btn-transparent-deep-pink bg-white btn-large margin-20px-top xs-no-margin-top wow fadeInUp"><i
-								class="fa fa-shopping-bag"></i> ONDE COMPRAR</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+
 <?php
     include_once "./assets/widgets/contact/contact.wc.php";
 ?>

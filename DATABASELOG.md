@@ -138,3 +138,22 @@ CREATE TABLE IF NOT EXISTS `ws_products_volumes_doripel` (
   KEY `idx_product` (`pdt_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 ```
+
+## Produtos Doripel - opcionais por produto
+
+```sql
+CREATE TABLE IF NOT EXISTS `ws_products_optionals_doripel` (
+  `optional_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pdt_id` int(11) unsigned NOT NULL,
+  `optional_order` int(11) unsigned NOT NULL DEFAULT 1,
+  `pdt_optional_ref` varchar(120) DEFAULT NULL,
+  `pdt_optional_title` varchar(255) DEFAULT NULL,
+  `pdt_optional_img` varchar(255) DEFAULT NULL,
+  `pdt_optional_desc` text DEFAULT NULL,
+  `optional_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `optional_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`optional_id`),
+  UNIQUE KEY `uniq_product_optional_order` (`pdt_id`, `optional_order`),
+  KEY `idx_product_optional` (`pdt_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```

@@ -458,14 +458,11 @@ Personaliza mensagens do sistema
     margin-top: 2px;
     background: #888;
     font-size: 0.9em;
-    color: #fff !important;
+    color: #fff;
     text-decoration: none !important;
     text-align: center;
     border: none;
     border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    text-shadow: 1px 1px #555;
 }
 
 .btn_medium {

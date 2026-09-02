@@ -174,6 +174,212 @@
         }
     }
 
+    if (!function_exists('productsDoripelNormalizeOptionals')) {
+        /**
+         * @param mixed $rawOptionals
+         *
+         * @return array<int, array{pdt_optional_ref: string, pdt_optional_title: string, pdt_optional_img: string, pdt_optional_desc: string}>
+         */
+        function productsDoripelNormalizeOptionals(mixed $rawOptionals): array
+        {
+
+            if (!is_array($rawOptionals)) {
+                return [];
+            }
+
+            $optionals = [];
+            foreach ($rawOptionals as $index => $optional) {
+                if (!is_array($optional)) {
+                    continue;
+                }
+
+                $optionals[(int)$index] = [
+                    'pdt_optional_ref' => trim((string)($optional['pdt_optional_ref'] ?? '')),
+                    'pdt_optional_title' => trim((string)($optional['pdt_optional_title'] ?? '')),
+                    'pdt_optional_img' => trim((string)($optional['pdt_optional_img_current'] ?? '')),
+                    'pdt_optional_desc' => trim((string)($optional['pdt_optional_desc'] ?? '')),
+                ];
+            }
+
+            return $optionals;
+        }
+    }
+
+    if (!function_exists('productsDoripelMergeExistingOptionalImages')) {
+        /**
+         * @param array<int, array{pdt_optional_ref: string, pdt_optional_title: string, pdt_optional_img: string, pdt_optional_desc: string}> $optionals
+         */
+        function productsDoripelMergeExistingOptionalImages(int $productId, array &$optionals, Read $read): void
+        {
+
+            try {
+                $read->exeRead(
+                    DB_PDT_OPTIONALS_DORIPEL,
+                    "WHERE pdt_id = :id ORDER BY optional_order ASC, optional_id ASC",
+                    "id={$productId}"
+                );
+            } catch (Throwable) {
+                return;
+            }
+
+            if (!$read->getResult()) {
+                return;
+            }
+
+            $existingOptionals = array_values($read->getResult());
+            foreach ($optionals as $index => &$optional) {
+                if ('' !== $optional['pdt_optional_img']) {
+                    continue;
+                }
+
+                $existingOptional = $existingOptionals[$index] ?? null;
+                if (!is_array($existingOptional) || empty($existingOptional['pdt_optional_img'])) {
+                    continue;
+                }
+
+                $optional['pdt_optional_img'] = (string)$existingOptional['pdt_optional_img'];
+            }
+            unset($optional);
+        }
+    }
+
+    if (!function_exists('productsDoripelFilterFilledOptionals')) {
+        /**
+         * @param array<int, array{pdt_optional_ref: string, pdt_optional_title: string, pdt_optional_img: string, pdt_optional_desc: string}> $optionals
+         *
+         * @return list<array{pdt_optional_ref: string, pdt_optional_title: string, pdt_optional_img: string, pdt_optional_desc: string}>
+         */
+        function productsDoripelFilterFilledOptionals(array $optionals): array
+        {
+
+            $filteredOptionals = [];
+            foreach ($optionals as $optional) {
+                if (!array_filter($optional, static fn($value) => $value !== '')) {
+                    continue;
+                }
+
+                $filteredOptionals[] = $optional;
+            }
+
+            return $filteredOptionals;
+        }
+    }
+
+    if (!function_exists('productsDoripelOptionalImageFiles')) {
+        /**
+         * @param mixed $rawFiles
+         *
+         * @return array<int, array{name: string, type: string, tmp_name: string, error: int, size: int}>
+         */
+        function productsDoripelOptionalImageFiles(mixed $rawFiles): array
+        {
+
+            if (!is_array($rawFiles) || !is_array($rawFiles['name'] ?? null)) {
+                return [];
+            }
+
+            $imageFiles = [];
+            foreach ($rawFiles['name'] as $index => $fields) {
+                if (!is_array($fields) || empty($fields['pdt_optional_img'])) {
+                    continue;
+                }
+
+                $error = (int)($rawFiles['error'][$index]['pdt_optional_img'] ?? UPLOAD_ERR_NO_FILE);
+                if (UPLOAD_ERR_NO_FILE === $error) {
+                    continue;
+                }
+
+                $imageFiles[(int)$index] = [
+                    'name' => (string)$fields['pdt_optional_img'],
+                    'type' => (string)($rawFiles['type'][$index]['pdt_optional_img'] ?? ''),
+                    'tmp_name' => (string)($rawFiles['tmp_name'][$index]['pdt_optional_img'] ?? ''),
+                    'error' => $error,
+                    'size' => (int)($rawFiles['size'][$index]['pdt_optional_img'] ?? 0),
+                ];
+            }
+
+            return $imageFiles;
+        }
+    }
+
+    if (!function_exists('productsDoripelUploadOptionalImages')) {
+        /**
+         * @param array<int, array{pdt_optional_ref: string, pdt_optional_title: string, pdt_optional_img: string, pdt_optional_desc: string}> $optionals
+         * @param array<int, array{name: string, type: string, tmp_name: string, error: int, size: int}> $imageFiles
+         */
+        function productsDoripelUploadOptionalImages(
+            array &$optionals,
+            array $imageFiles,
+            string $productName,
+            Upload $upload,
+            array &$uploadedImages
+        ): ?string {
+
+            foreach ($optionals as $index => &$optional) {
+                if (!isset($imageFiles[$index])) {
+                    continue;
+                }
+
+                if (UPLOAD_ERR_OK !== $imageFiles[$index]['error']) {
+                    return 'Não foi possível enviar a imagem do opcional ' . ($index + 1) . '. Tente novamente.';
+                }
+
+                $currentImage = $optional['pdt_optional_img'];
+                $imageName = $productName . '-opcional-' . ($index + 1) . '-' . time();
+                $upload->image($imageFiles[$index], $imageName, 600);
+
+                if (!$upload->getResult()) {
+                    return 'Selecione uma imagem válida para o opcional ' . ($index + 1) . '.';
+                }
+
+                if (
+                    '' !== $currentImage
+                    && file_exists("../../uploads/{$currentImage}")
+                    && !is_dir("../../uploads/{$currentImage}")
+                ) {
+                    unlink("../../uploads/{$currentImage}");
+                }
+
+                $optional['pdt_optional_img'] = $upload->getResult();
+                $uploadedImages[$index] = $upload->getResult();
+            }
+            unset($optional);
+
+            return null;
+        }
+    }
+
+    if (!function_exists('productsDoripelSaveOptionals')) {
+        /**
+         * @param list<array{pdt_optional_ref: string, pdt_optional_title: string, pdt_optional_img: string, pdt_optional_desc: string}> $optionals
+         */
+        function productsDoripelSaveOptionals(
+            int $productId,
+            array $optionals,
+            Read $read,
+            Delete $delete,
+            Create $create
+        ): bool {
+
+            $read->fullRead("SELECT 1 FROM " . DB_PDT_OPTIONALS_DORIPEL . " LIMIT 1");
+            $delete->exeDelete(DB_PDT_OPTIONALS_DORIPEL, "WHERE pdt_id = :id", "id={$productId}");
+
+            foreach ($optionals as $index => $optional) {
+                $create->exeCreate(DB_PDT_OPTIONALS_DORIPEL, [
+                    'pdt_id' => $productId,
+                    'optional_order' => $index + 1,
+                    'pdt_optional_ref' => $optional['pdt_optional_ref'],
+                    'pdt_optional_title' => $optional['pdt_optional_title'],
+                    'pdt_optional_img' => $optional['pdt_optional_img'],
+                    'pdt_optional_desc' => $optional['pdt_optional_desc'],
+                    'optional_created' => date('Y-m-d H:i:s'),
+                ]);
+            }
+
+            return true;
+        }
+    }
+
 //DEFINE O CALLBACK E RECUPERA O POST
     $jSON = null;
     $CallBack = 'ProductsDoripel';
@@ -224,13 +430,36 @@
                 else:
                     $Product = $Read->getResult()[0];
                     $ProductVolumes = productsDoripelNormalizeVolumes($PostData['volumes'] ?? null, $Product);
+                    $ProductOptionals = productsDoripelNormalizeOptionals($PostData['optionals'] ?? null);
 
-                    unset($PostData['pdt_id'], $PostData['pdt_cover'], $PostData['pdt_scene'], $PostData['image'], $PostData['pdt_instrutions'], $PostData['volumes']);
+                    unset($PostData['pdt_id'], $PostData['pdt_cover'], $PostData['pdt_scene'], $PostData['image'], $PostData['pdt_instrutions'], $PostData['volumes'], $PostData['optionals']);
                     productsDoripelSyncLegacyVolumeFields($PostData, $ProductVolumes);
 
                     $PostData['pdt_name'] = (!empty($PostData['pdt_name']) ? Check::name(
                             $PostData['pdt_name']
                         ) : Check::name($PostData['pdt_title'])) . $Ref;
+
+                    productsDoripelMergeExistingOptionalImages((int)$PdtId, $ProductOptionals, $Read);
+                    $UploadedOptionalImages = [];
+                    $OptionalImageError = productsDoripelUploadOptionalImages(
+                        $ProductOptionals,
+                        productsDoripelOptionalImageFiles($_FILES['optionals'] ?? null),
+                        $PostData['pdt_name'],
+                        $Upload,
+                        $UploadedOptionalImages
+                    );
+                    if (null !== $OptionalImageError):
+                        $jSON['trigger'] = Check::ajaxErro(
+                            "<b class='icon-image'>ERRO AO ENVIAR IMAGEM DO OPCIONAL:</b> Olá {$_SESSION['userLogin']['user_name']}, {$OptionalImageError}",
+                            E_USER_WARNING
+                        );
+                        echo json_encode($jSON);
+                        return;
+                    endif;
+                    $ProductOptionals = productsDoripelFilterFilledOptionals($ProductOptionals);
+                    if ($UploadedOptionalImages) {
+                        $jSON['optional_images'] = $UploadedOptionalImages;
+                    }
 
                     //UPLOAD PDF
                     if (!empty($_FILES['pdt_instrutions'])):
@@ -419,6 +648,14 @@
                             E_USER_WARNING
                         );
                     }
+                    try {
+                        productsDoripelSaveOptionals((int)$PdtId, $ProductOptionals, $Read, $Delete, $Create);
+                    } catch (Throwable) {
+                        $jSON['trigger'] .= Check::ajaxErro(
+                            "<span class='icon-warning'><b>ATENÇÃO:</b> O produto foi atualizado, mas os opcionais não foram salvos na tabela auxiliar. Crie a tabela " . DB_PDT_OPTIONALS_DORIPEL . " antes de usar opcionais ilimitados.</span>",
+                            E_USER_WARNING
+                        );
+                    }
                     $jSON['view'] = BASE . '/movel/' . $PostData['pdt_name'];
                 endif;
                 break;
@@ -499,6 +736,11 @@
                         $Delete->exeDelete(DB_PDT_VOLUMES_DORIPEL, "WHERE pdt_id = :id", "id={$Product['pdt_id']}");
                     } catch (Throwable) {
                         // A tabela de volumes pode ainda não existir em ambientes sem a migração.
+                    }
+                    try {
+                        $Delete->exeDelete(DB_PDT_OPTIONALS_DORIPEL, "WHERE pdt_id = :id", "id={$Product['pdt_id']}");
+                    } catch (Throwable) {
+                        // A tabela de opcionais pode ainda não existir em ambientes sem a migração.
                     }
                     $jSON['success'] = true;
                 endif;

@@ -12,7 +12,7 @@
     }
 
     echo "<ul class='workcontrol_socialshare'>";
-    echo "<li class='workcontrol_socialshare_cta'><strong>Compartilhe</strong> </li>";
+    // echo "<li class='workcontrol_socialshare_cta'><strong>Compartilhe</strong> </li>";
 
     $WcShareText = empty($WC_TITLE_LINK) ? null : $WC_TITLE_LINK;
     $WcShareLink = empty($WC_SHARE_LINK) ? $base : "{$base}/{$WC_SHARE_LINK}";

@@ -88,6 +88,33 @@
     } catch (\Throwable) {
         // Mantém compatibilidade enquanto a tabela auxiliar ainda não foi criada.
     }
+
+    $ProductOptionals = [
+        [
+            'pdt_optional_ref' => '',
+            'pdt_optional_title' => '',
+            'pdt_optional_img' => '',
+            'pdt_optional_desc' => '',
+        ],
+    ];
+
+    try {
+        $Read->exeRead(
+            DB_PDT_OPTIONALS_DORIPEL,
+            "WHERE pdt_id = :id ORDER BY optional_order ASC, optional_id ASC",
+            "id={$PdtId}"
+        );
+        if ($Read->getResult()) {
+            $ProductOptionals = array_map(static fn($Optional) => [
+                'pdt_optional_ref' => Check::safeHtmlChars($Optional['pdt_optional_ref'] ?? ''),
+                'pdt_optional_title' => Check::safeHtmlChars($Optional['pdt_optional_title'] ?? ''),
+                'pdt_optional_img' => Check::safeHtmlChars($Optional['pdt_optional_img'] ?? ''),
+                'pdt_optional_desc' => Check::safeHtmlChars($Optional['pdt_optional_desc'] ?? ''),
+            ], $Read->getResult());
+        }
+    } catch (\Throwable) {
+        // Mantém compatibilidade enquanto a tabela auxiliar ainda não foi criada.
+    }
 ?>
 
 <header class="dashboard_header">
@@ -369,6 +396,89 @@
 
 			</div>
 
+			<div class='panel_header default'>
+				<h2 class='icon-insert-template'>OPCIONAIS DO PRODUTO:</h2>
+			</div>
+			<div class="panel">
+				<div class="j_pdt_optionals" data-next-optional="<?= count($ProductOptionals); ?>">
+                    <?php
+                        foreach ($ProductOptionals as $OptionalIndex => $Optional) { ?>
+							<div class="j_pdt_optional_item" data-optional-index="<?= $OptionalIndex; ?>">
+								<span class="section icon-insert-template">Opcional <?= $OptionalIndex + 1; ?></span>
+								<div class="label_50">
+									<label class='label'>
+										<span class='legend'>Ref. do Opcional:</span>
+										<input type='text'
+										       name='optionals[<?= $OptionalIndex; ?>][pdt_optional_ref]'
+										       value="<?= $Optional['pdt_optional_ref']; ?>"/>
+									</label>
+									<label class='label'>
+										<span class='legend'>Título do Opcional:</span>
+										<input type='text'
+										       name='optionals[<?= $OptionalIndex; ?>][pdt_optional_title]'
+										       value="<?= $Optional['pdt_optional_title']; ?>"/>
+									</label>
+									<div class="clear"></div>
+								</div>
+
+								<div class="label_50">
+									<label class='label'>
+										<span class='legend'>Imagem do Opcional:</span>
+										<input type='hidden'
+										       name='optionals[<?= $OptionalIndex; ?>][pdt_optional_img_current]'
+										       value="<?= $Optional['pdt_optional_img']; ?>"/>
+										<input type='file'
+										       class="j_pdt_optional_img"
+										       name='optionals[<?= $OptionalIndex; ?>][pdt_optional_img]'
+										       accept="image/*"/>
+                                        <?php
+                                            if ($Optional['pdt_optional_img']) { ?>
+												<span><b>Imagem atual:</b> <?= $Optional['pdt_optional_img']; ?></span>
+                                                <?php
+                                            } ?>
+									</label>
+
+                                    <?php
+                                        $OptionalImage = ($Optional['pdt_optional_img'] && file_exists(
+                                            "../uploads/{$Optional['pdt_optional_img']}"
+                                        ) && !is_dir(
+                                            "../uploads/{$Optional['pdt_optional_img']}"
+                                        ) ? "uploads/{$Optional['pdt_optional_img']}" : 'admin/_img/no_image.jpg');
+                                    ?>
+									<div for="" class="label">
+										<img style="display: block; margin: 0 auto" class='j_pdt_optional_preview'
+										     alt='Imagem do Opcional'
+										     title='Imagem do Opcional'
+										     src="../tim.php?src=<?= $OptionalImage; ?>&w=300&h=auto"
+										     default="../tim.php?src=<?= $OptionalImage; ?>&w=300&h=auto"/>
+
+									</div>
+
+									<div class="clear"></div>
+								</div>
+
+								<label class='label'>
+									<span class='legend'>Descrição Opcional:</span>
+									<textarea id="pdt_optional_desc_<?= $OptionalIndex; ?>"
+									          name='optionals[<?= $OptionalIndex; ?>][pdt_optional_desc]'
+									          class='work_mce_basic'
+									          rows='5'><?= $Optional['pdt_optional_desc']; ?></textarea>
+								</label>
+
+								<button type="button" class="btn btn_red icon-cross j_remove_pdt_optional">Remover
+									opcional
+								</button>
+								<div class="clear"></div>
+							</div>
+                            <?php
+                        } ?>
+				</div>
+
+				<div class="pdt_volume_actions">
+					<button type="button" class="btn btn_blue icon-plus j_add_pdt_optional">Adicionar opcional
+					</button>
+				</div>
+			</div>
 
 			<div class="panel_header default">
 				<h2 class="icon-box-add">VOLUMES DO PRODUTO:</h2>
@@ -583,6 +693,181 @@
 
 
 <script>
+    (function () {
+        var wrapper = document.querySelector('.j_pdt_optionals');
+        var addButton = document.querySelector('.j_add_pdt_optional');
+
+        if (!wrapper || !addButton) {
+            return;
+        }
+
+        function renderOptional(index) {
+            var displayIndex = index + 1;
+
+            return '<div class="j_pdt_optional_item" data-optional-index="' + index + '">' +
+                '<span class="section icon-insert-template">Opcional ' + displayIndex + '</span>' +
+                '<div class="label_50">' +
+                '<label class="label"><span class="legend">Ref. do Opcional:</span>' +
+                '<input type="text" name="optionals[' + index + '][pdt_optional_ref]" value=""/></label>' +
+                '<label class="label"><span class="legend">Título do Opcional:</span>' +
+                '<input type="text" name="optionals[' + index + '][pdt_optional_title]" value=""/></label>' +
+                '<div class="clear"></div></div>' +
+                '<div class="label_50">' +
+                '<label class="label"><span class="legend">Imagem do Opcional:</span>' +
+                '<input type="hidden" name="optionals[' + index + '][pdt_optional_img_current]" value=""/>' +
+                '<input type="file" class="j_pdt_optional_img" name="optionals[' + index + '][pdt_optional_img]" accept="image/*"/></label>' +
+                '<div for="" class="label">' +
+                '<img class="j_pdt_optional_preview" alt="Imagem do Opcional" title="Imagem do Opcional" src="../tim' +
+                '.php?src=admin/_img/no_image.jpg&w=300&h=auto" default="../tim.php?src=admin/_img/no_image' +
+                '.jpg&w=300&h=300"/>' +
+                '</div>' +
+                '<div class="clear"></div></div>' +
+                '<label class="label"><span class="legend">Descrição Opcional:</span>' +
+                '<textarea id="pdt_optional_desc_' + index + '" name="optionals[' + index + '][pdt_optional_desc]" class="work_mce_basic" rows="5"></textarea></label>' +
+                '<button type="button" class="btn btn_red icon-cross j_remove_pdt_optional">Remover opcional</button>' +
+                '<div class="clear"></div></div>';
+        }
+
+        function initOptionalEditor(index) {
+            var editorId = 'pdt_optional_desc_' + index;
+
+            if (typeof tinyMCE === 'undefined' || !document.getElementById(editorId)) {
+                return;
+            }
+
+            if (tinyMCE.get(editorId)) {
+                tinyMCE.execCommand('mceRemoveEditor', false, editorId);
+            }
+
+            tinyMCE.execCommand('mceAddEditor', false, editorId);
+        }
+
+        function removeOptionalEditor(item) {
+            var textarea = item ? item.querySelector('textarea.work_mce_basic') : null;
+
+            if (textarea && typeof tinyMCE !== 'undefined' && tinyMCE.get(textarea.id)) {
+                tinyMCE.execCommand('mceRemoveEditor', false, textarea.id);
+            }
+        }
+
+        function syncUploadedOptionalImages(data) {
+            if (!data || !data.optional_images) {
+                return;
+            }
+
+            Object.keys(data.optional_images).forEach(function (index) {
+                var image = data.optional_images[index];
+                var hidden = wrapper.querySelector('[name="optionals[' + index + '][pdt_optional_img_current]"]');
+                var item = hidden ? hidden.closest('.j_pdt_optional_item') : null;
+                var preview = item ? item.querySelector('.j_pdt_optional_preview') : null;
+                var imageUrl = '../tim.php?src=uploads/' + image + '&w=300&h=300';
+
+                if (hidden) {
+                    hidden.value = image;
+                }
+
+                if (preview) {
+                    preview.setAttribute('default', imageUrl);
+                    preview.setAttribute('src', imageUrl);
+                }
+            });
+        }
+
+        function refreshRemoveButtons() {
+            var items = wrapper.querySelectorAll('.j_pdt_optional_item');
+            var canRemove = items.length > 1;
+
+            items.forEach(function (item, index) {
+                var title = item.querySelector('.section');
+                var removeButton = item.querySelector('.j_remove_pdt_optional');
+
+                if (title) {
+                    title.textContent = 'Opcional ' + (index + 1);
+                }
+
+                if (removeButton) {
+                    removeButton.style.display = canRemove ? 'inline-block' : 'none';
+                }
+            });
+        }
+
+        addButton.addEventListener('click', function () {
+            var index = parseInt(wrapper.getAttribute('data-next-optional'), 10) || wrapper.querySelectorAll('.j_pdt_optional_item').length;
+            wrapper.insertAdjacentHTML('beforeend', renderOptional(index));
+            wrapper.setAttribute('data-next-optional', String(index + 1));
+            initOptionalEditor(index);
+            refreshRemoveButtons();
+        });
+
+        wrapper.addEventListener('click', function (event) {
+            var button = event.target.closest('.j_remove_pdt_optional');
+
+            if (!button || wrapper.querySelectorAll('.j_pdt_optional_item').length <= 1) {
+                return;
+            }
+
+            var item = button.closest('.j_pdt_optional_item');
+            removeOptionalEditor(item);
+            item.remove();
+            refreshRemoveButtons();
+        });
+
+        wrapper.addEventListener('change', function (event) {
+            var input = event.target.closest('.j_pdt_optional_img');
+
+            if (!input) {
+                return;
+            }
+
+            var item = input.closest('.j_pdt_optional_item');
+            var target = item ? item.querySelector('.j_pdt_optional_preview') : null;
+
+            if (!target) {
+                return;
+            }
+
+            if (!input.files || !input.files[0]) {
+                target.setAttribute('src', target.getAttribute('default'));
+                return;
+            }
+
+            if (!input.files[0].type.match(/^image\/(jpeg|png|gif|webp)$/)) {
+                if (typeof Trigger === 'function') {
+                    Trigger('<div class="trigger trigger_alert trigger_ajax"><b>ERRO AO SELECIONAR:</b> O arquivo <b>' + input.files[0].name + '</b> não é válido! <b>Selecione uma imagem (.jpg, .jpeg, .png, .gif ou .webp)</b></div>');
+                }
+                input.value = '';
+                target.setAttribute('src', target.getAttribute('default'));
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function (readerEvent) {
+                target.setAttribute('src', readerEvent.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        });
+
+        if (window.jQuery) {
+            jQuery(document).ajaxSuccess(function (event, xhr, settings, data) {
+                if (!settings || settings.url.indexOf('_ajax/ProductsDoripel.ajax.php') === -1) {
+                    return;
+                }
+
+                if (!data && xhr && xhr.responseText) {
+                    try {
+                        data = JSON.parse(xhr.responseText);
+                    } catch (error) {
+                        data = null;
+                    }
+                }
+
+                syncUploadedOptionalImages(data);
+            });
+        }
+
+        refreshRemoveButtons();
+    })();
+
     (function () {
         var wrapper = document.querySelector('.j_pdt_volumes');
         var addButton = document.querySelector('.j_add_pdt_volume');

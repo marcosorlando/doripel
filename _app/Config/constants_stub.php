@@ -373,6 +373,10 @@ if (!defined('DB_PDT_IMAGE_DORIPEL')) {
     define('DB_PDT_IMAGE_DORIPEL', 'ws_products_images_doripel');
 }
 
+if (!defined('DB_PDT_OPTIONALS_DORIPEL')) {
+    define('DB_PDT_OPTIONALS_DORIPEL', 'ws_products_optionals_doripel');
+}
+
 if (!defined('DB_PDT_STOCK_DORIPEL')) {
     define('DB_PDT_STOCK_DORIPEL', 'ws_products_stock_doripel');
 }
