@@ -146,7 +146,7 @@ input.btn {
 .htmlchars {
     display: block;
     width: 100%;
-    padding: 30px;
+    padding: 20px;
     color: #666666;
 }
 
@@ -170,6 +170,7 @@ input.btn {
     font-weight: 400;
     margin-bottom: 10px
 }
+
 .htmlchars h5:before {
     content: '\2713';
     font-size: 1.1em;
@@ -204,6 +205,7 @@ input.btn {
     font-size: 1.35em;
     font-weight: 600;
 }
+
 .htmlchars p {
     margin-bottom: 10px;
     font-size: 1.05em;
@@ -219,7 +221,7 @@ input.btn {
 
 .htmlchars ul, .htmlchars ol {
     list-style: square;
-    margin: 25px;
+    margin: 10px;
     font-size: 1.05em;
     font-weight: 300;
     line-height: 1.5;
@@ -227,7 +229,7 @@ input.btn {
 }
 
 .htmlchars ul li, .htmlchars ol li {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .htmlchars form {

@@ -51,6 +51,13 @@
     text-align: center;
 }
 
+.espacador {
+    clear: both;
+    display: block;
+    width: 100%;
+    margin: 15px 0;
+}
+
 /*FLOAT*/
 .fl_left {
     float: left;

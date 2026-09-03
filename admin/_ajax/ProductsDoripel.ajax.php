@@ -498,12 +498,12 @@
                             unlink("../../uploads/{$Product['pdt_cover']}");
                         endif;
 
-                        $Upload->image($File, "{$PostData['pdt_name']}", 900);
+                        $Upload->image($File, "{$PostData['pdt_name']}", 1200);
                         if ($Upload->getResult()):
                             $PostData['pdt_cover'] = $Upload->getResult();
                         else:
                             $jSON['trigger'] = Check::ajaxErro(
-                                "<b class='icon-image'>ERRO AO ENVIAR CAPA:</b> Olá {$_SESSION['userLogin']['user_name']}, selecione uma imagem JPG de 900x900px para a capa!",
+                                "<b class='icon-image'>ERRO AO ENVIAR CAPA:</b> Olá {$_SESSION['userLogin']['user_name']}, selecione uma imagem JPG de 1200x1200px para a capa!",
                                 E_USER_WARNING
                             );
                             echo json_encode($jSON);
@@ -555,7 +555,7 @@
                             $Upload->image(
                                 $UploadFile,
                                 "{$PostData['pdt_name']}-{$gbLoop}-" . time() . base64_encode(time()),
-                                1000
+                                1200
                             );
                             if ($Upload->getResult()):
                                 $gbCreate = ['product_id' => $PdtId, "image" => $Upload->getResult()];
