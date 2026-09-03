@@ -201,7 +201,48 @@
 	</div>
 </section>
 <!-- end about product section -->
+
+
 <?php
+    $Read->exeRead(DB_PDT_OPTIONALS_DORIPEL, " WHERE pdt_id = :pdt_id", "pdt_id=$pdt_id");
+
+    if ($Read->getResult()) {
+        ?>
+
+		<!-- start opctionals product section -->
+		<section class='wow fadeIn bg-extra-light-gray optionals'>
+			<div class='container'>
+				<h3 class='alt-font text-deep-pink font-weight-600'><b
+							class="text-pink">Opcionais:</b> <?= $pdt_title;
+                    ?></h3>
+
+				<div class='row'>
+                    <?php
+                        foreach ($Read->getResult() as $opt) {
+                            echo "<div class='col-md-6 sm-margin-50px-bottom xs-margin-30px-bottom wow fadeIn'>
+								<div class='row'>
+									<div class='col-md-5'>
+										<img src='" . BASE . "/tim.php?src=uploads/{$opt['pdt_optional_img']}&w=600&h=auto'
+										alt='{$opt['pdt_optional_title']} - imagem demonstrativa'>
+									</div>
+									<div class='col-md-7'>
+										<span class='ref'><img class='icon-opt' src='" . INCLUDE_PATH . "/images/apple-touch-icon-57x57.png'
+										alt='Doripel ícone'> REF.: {$opt['pdt_optional_ref']}</span>
+										
+										<p class='title'>{$opt['pdt_optional_title']}</p>
+										<div class='htmlchars'>{$opt['pdt_optional_desc']}</div>
+									</div>
+								</div>
+							</div>";
+                        }
+                    ?>
+				</div>
+			</div>
+		</section>
+		<!-- end about product section -->
+
+        <?php
+    }
     if ($pdt_video) {
         require REQUIRE_PATH . "/inc/video_popup.php";
     }
@@ -209,7 +250,7 @@
 <section class='no-padding-top' id="relacionados">
 	<div class='container'>
 		<div class='row'>
-			<div class='col-12 sm-margin-60px-bottom xs-margin-40px-bottom'>
+			<div class='col-12 padding-40px-top sm-margin-60px-bottom xs-margin-40px-bottom'>
 
 				<h6>Produtos Relacionados:</h6>
 

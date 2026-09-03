@@ -1041,6 +1041,45 @@ section.half-section {
     padding: 80px 0;
 }
 
+section.optionals {
+    padding: 70px 0;
+}
+
+section.optionals h3 {
+    font-size: 1.4em;
+    margin-bottom: 35px;
+}
+
+section.optionals .row img {
+    border-radius: 3px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+section.optionals .row img.icon-opt {
+    border-radius: 0;
+    box-shadow: none;
+    width: 35px;
+    height: 35px;
+}
+
+section.optionals .row span.ref {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #fafafa;
+    border-radius: 3px;
+}
+
+section.optionals .row p {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 10px;
+
+}
+
+#gtx-trans{display: none !important;}
+
 .overlap-section {
     margin-top: -14%;
     position: relative
