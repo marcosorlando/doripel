@@ -1,5 +1,4 @@
 function initialize() {
-
     // Exibir mapa;
     var myLatlng = new google.maps.LatLng(-28.230553, -51.515820);
     var mapOptions = {

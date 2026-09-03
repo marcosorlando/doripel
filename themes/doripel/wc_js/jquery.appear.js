@@ -1,6 +1,5 @@
 /*
- * jQuery appear plugin
- *
+ * jQuery appear plugin *
  * Copyright (c) 2012 Andrey Sidorov
  * licensed under MIT license.
  *

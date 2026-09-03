@@ -6,7 +6,6 @@
  * This content is released under the MIT license
  * http://markdalgleish.mit-license.org
  */
-
 ;(function($, window, document, undefined) {
 
 	var pluginName = 'stellar',

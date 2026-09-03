@@ -141,13 +141,13 @@
 	<!-- bootstrap -->
 	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/bootstrap.min.css'/>
 	<!-- et line icon -->
-	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/et-line-icons.css'/>
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/et-line-icons.min.css'/>
 	<!-- font-awesome icon -->
 	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/font-awesome.min.css'/>
 	<!-- themify icon -->
-	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/themify-icons.css'>
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/themify-icons.min.css'>
 	<!-- flaticon icon -->
-	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/flaticon.css'>
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/flaticon.min.css'>
 	<!-- swiper carousel -->
 	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/swiper.min.css'>
 	<!-- justified gallery -->
@@ -159,18 +159,18 @@
 	<link rel='stylesheet' type='text/css' href='<?= INCLUDE_PATH; ?>/revolution/css/layers.css'>
 	<link rel='stylesheet' type='text/css' href='<?= INCLUDE_PATH; ?>/revolution/css/navigation.css'>
 	<!-- bootsnav -->
-	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/bootsnav.css'>
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/bootsnav.min.css'>
 	<!-- style -->
-	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/css/style.css'/>
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/css/style.min.css'/>
 	<!-- responsive css -->
-	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/responsive.css'/>
+	<link rel='stylesheet' href='<?= INCLUDE_PATH; ?>/wc_css/responsive.min.css'/>
 
 	<!--ZEN THEME JS-->
 
 	<!-- JS BASE ASSETS PROJECT -->
-	<script src=" <?= BASE; ?>/assets/js/jquery.js"></script>
+	<script src=" <?= BASE; ?>/assets/js/jquery.min.js"></script>
 	<script src="<?= BASE; ?>/assets/js/workcontrol.min.js"></script>
-	<script src='<?= BASE; ?>/assets/shadowbox/shadowbox.js'></script>
+	<script src='<?= BASE; ?>/assets/shadowbox/shadowbox.min.js'></script>
 
 	<!-- Facebook Pixel Code -->
 	<script>
@@ -504,23 +504,23 @@
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.js'></script>
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/modernizr.js'></script>
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/bootstrap.min.js'></script>
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.easing.1.3.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.easing.1.3.min.js'></script>
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/skrollr.min.js'></script>
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/smooth-scroll.js'></script>
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.appear.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.appear.min.js'></script>
 <!-- menu navigation -->
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/bootsnav.js'></script>
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.nav.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/bootsnav.min.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.nav.min.js'></script>
 <!-- animation -->
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/wow.min.js'></script>
 <!-- page scroll -->
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/page-scroll.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/page-scroll.min.js'></script>
 <!-- swiper carousel -->
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/swiper.min.js'></script>
 <!-- counter -->
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.count-to.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.count-to.min.js'></script>
 <!-- parallax -->
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.stellar.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.stellar.min.js'></script>
 <!-- magnific popup -->
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.magnific-popup.min.js'></script>
 <!-- portfolio with shorting tab -->
@@ -528,16 +528,16 @@
 <!-- images loaded -->
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/imagesloaded.pkgd.min.js'></script>
 <!-- pull menu -->
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/classie.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/classie.min.js'></script>
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/hamburger-menu.js'></script>
 <!-- counter -->
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/counter.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/counter.min.js'></script>
 <!-- fit video -->
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.fitvids.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/jquery.fitvids.min.js'></script>
 <!-- equalize -->
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/equalize.min.js'></script>
 <!-- skill bars -->
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/skill.bars.jquery.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/skill.bars.jquery.min.js'></script>
 <!-- justified gallery -->
 <script type='text/javascript' src='<?= INCLUDE_PATH; ?>/wc_js/justified-gallery.min.js'></script>
 <!--pie chart-->
@@ -568,7 +568,7 @@
         src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.slideanims.min.js'></script>
 <script type='text/javascript'
         src='<?= INCLUDE_PATH; ?>/revolution/js/extensions/revolution.extension.video.min.js'></script>
-<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/js/main.js'></script>
+<script type='text/javascript' src='<?= INCLUDE_PATH; ?>/js/main.min.js'></script>
 <!--ZEN THEME JS-->
 
 <!--ACCESS-->

@@ -27,7 +27,10 @@ img {
     max-width: 100% !important;
 }
 
-video {width: 100%; height: auto}
+video {
+    width: 100%;
+    height: auto
+}
 
 h3 {
     font-size: 1.4em;
@@ -61,17 +64,17 @@ h6 {
     font-size: 1.25em;
     font-weight: 400;
     font-family: 'Ubuntu', sans-serif;
-    border-left: 2px solid var(--color-background-two);
+    border-left: 2px solid #007bff;
     width: 100%;
-    padding: 50px;
-    margin: 0 auto;
+    padding: 30px;
+    margin: 10px auto;
     line-height: 30px;
 }
 
 h6:before {
     content: '" ';
     font-family: 'Ubuntu';
-    color: var(--color-background-two);
+    color: #007bff;
     font-size: 1.35em;
     font-weight: 600;
 }
@@ -79,7 +82,7 @@ h6:before {
 h6:after {
     content: ' "';
     font-family: 'Ubuntu';
-    color: var(--color-background-two);
+    color: #007bff;
     font-size: 1.35em;
     font-weight: 600;
 }
@@ -118,14 +121,14 @@ iframe {
     font-size: 1.2em;
     font-weight: bold;
     text-transform: uppercase;
-    background: #0E96E5;
+    background: #0e96e5;
     border-bottom: 5px solid #096397;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .btn_cta_blue:hover {
     background-color: #096397;
-    border-color: #0A537D;
+    border-color: #0a537d;
 }
 
 .btn_cta_green {
@@ -133,14 +136,14 @@ iframe {
     font-size: 1.2em;
     font-weight: bold;
     text-transform: uppercase;
-    background: #00B494;
+    background: #00b494;
     border-bottom: 5px solid #008068;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .btn_cta_green:hover {
     background-color: #008068;
-    border-color: #0B5747;
+    border-color: #0b5747;
 }
 
 .btn_cta_yellow {
@@ -148,14 +151,14 @@ iframe {
     font-size: 1.2em;
     font-weight: bold;
     text-transform: uppercase;
-    background: #FAAD50;
-    border-bottom: 5px solid #CC8D41;
+    background: #faad50;
+    border-bottom: 5px solid #cc8d41;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .btn_cta_yellow:hover {
-    background-color: #CC8D41;
-    border-color: #A67436;
+    background-color: #cc8d41;
+    border-color: #a67436;
 }
 
 .btn_cta_red {
@@ -163,14 +166,14 @@ iframe {
     font-size: 1.2em;
     font-weight: bold;
     text-transform: uppercase;
-    background: #F45563;
-    border-bottom: 5px solid #C54550;
+    background: #f45563;
+    border-bottom: 5px solid #c54550;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .btn_cta_red:hover {
-    background-color: #C54550;
-    border-color: #93343C;
+    background-color: #c54550;
+    border-color: #93343c;
 }
 
 form {
@@ -218,7 +221,7 @@ form input[type="submit"] {
     font-size: 1.2em;
     font-weight: bold;
     text-transform: uppercase;
-    background: #00B494;
+    background: #00b494;
     border-bottom: 5px solid #008068;
     border-radius: 3px;
     -moz-border-radius: 3px;
@@ -228,5 +231,5 @@ form input[type="submit"] {
 form button:hover,
 form input[type="submit"]:hover {
     background-color: #008068;
-    border-color: #0B5747;
+    border-color: #0b5747;
 }

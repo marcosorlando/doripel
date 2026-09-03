@@ -190,7 +190,7 @@ $(function () {
         //var caracteresRestantes = (parseInt(limite) - parseInt(caracteresDigitados));
         $(".caracteres").text(caracteresDigitados);
         
-        if (parseInt(caracteresDigitados) <= 151) {
+        if (parseInt(caracteresDigitados) <= 155) {
             $(".caracteres").css('background-color', 'lawngreen').text(caracteresDigitados + ' ✅ Otimizado!');
         } else {
             $(".caracteres").css('background-color', 'yellow').text(caracteresDigitados + ' ⚠️ Pode Melhorar!');
@@ -206,9 +206,7 @@ $(function () {
         let caracteresRestantes = (parseInt(limite) - parseInt(caracteresDigitados));
         $(".caracteres").text(caracteresRestantes);
     });
-    ////
     
-    ////
 });
 
 //############## ON READY

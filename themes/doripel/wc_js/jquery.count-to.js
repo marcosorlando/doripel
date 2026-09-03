@@ -4,7 +4,6 @@
     this.options  = $.extend({}, CountTo.DEFAULTS, this.dataOptions(), options);
     this.init();
   };
-
   CountTo.DEFAULTS = {
     from: 0,               // the number the element should start at
     to: 0,                 // the number the element should end at

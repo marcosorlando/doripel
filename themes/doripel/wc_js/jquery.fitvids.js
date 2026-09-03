@@ -8,7 +8,6 @@
 * Released under the WTFPL license - http://sam.zoy.org/wtfpl/
 *
 */
-
 ;(function( $ ){
 
   'use strict';

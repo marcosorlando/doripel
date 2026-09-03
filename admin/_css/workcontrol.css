@@ -48,6 +48,12 @@ button,
     background: #0c1b26;
 }
 
+.caracteres {
+    padding: 4px 8px;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
 .login_bg {
     position: fixed;
     top: 0;
@@ -1037,7 +1043,7 @@ textarea:focus {
     color: #888;
 }
 
-.dashboard_comments article p > span{
+.dashboard_comments article p > span {
     color: #faad50;
     padding: 0 !important;
     margin-left: 2px;
@@ -1863,14 +1869,14 @@ div.mce-fullscreen {
     display: inline-block;
     margin-right: 10px;
     color: #333;
-    font-weight:600;
+    font-weight: 600;
 }
 
-.product_brand h1 span, .product_color h1 span, .product_subcategory h1 span{
+.product_brand h1 span, .product_color h1 span, .product_subcategory h1 span {
     font-size: 0.675em;
     text-transform: uppercase;
     font-weight: 400;
-     color: #777777;
+    color: #777777;
 }
 
 

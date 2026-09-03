@@ -16,7 +16,6 @@
  *   scrollSpeed: 750
  * });
  */
-
 ;(function($, window, document, undefined){
 
 	// our plugin constructor

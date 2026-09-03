@@ -152,29 +152,62 @@ input.btn {
 
 .htmlchars h3 {
     display: block;
-    font-size: 2em;
-    font-weight: 300;
-    margin-bottom: 30px
+    font-size: 1.4em;
+    margin-bottom: 30px;
+    font-weight: 600;
 }
 
 .htmlchars h4 {
     display: block;
-    font-size: 1.8em;
-    font-weight: 300;
-    margin-bottom: 30px
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-bottom: 20px
 }
 
 .htmlchars h5 {
     display: block;
-    font-size: 1.6em;
-    font-weight: 300;
-    margin-bottom: 30px
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-bottom: 10px
+}
+.htmlchars h5:before {
+    content: '\2713';
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #007bff;
+    margin-right: 4px
 }
 
+.htmlchars h6 {
+    font-size: 1.25em;
+    font-weight: 400;
+    font-family: 'Ubuntu', sans-serif;
+    border-left: 2px solid #007bff;
+    width: 100%;
+    padding: 50px;
+    margin: 0 auto;
+    line-height: 30px;
+}
+
+.htmlchars h6:before {
+    content: '" ';
+    font-family: 'Ubuntu';
+    color: #007bff;
+    font-size: 1.35em;
+    font-weight: 600;
+}
+
+.htmlchars h6:after {
+    content: ' "';
+    font-family: 'Ubuntu';
+    color: #007bff;
+    font-size: 1.35em;
+    font-weight: 600;
+}
 .htmlchars p {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 1.05em;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.65;
     letter-spacing: 0.04em;
 }

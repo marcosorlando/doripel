@@ -130,9 +130,9 @@
 			Gerenciar Produto
 		</p>
 	</div>
-
+	
 	<div class="dashboard_header_search">
-		<a title="Criar Variação Deste Produto"
+		<a title="Criar Variação deste Produto"
 		   href="dashboard.php?wc=products/reply&id=<?= ($pdt_parent ?: $PdtId); ?>"
 		   class="btn btn_blue icon-copy">Criar
 			Variação!</a>
@@ -178,7 +178,7 @@
 				<input type="hidden" name="callback" value="ProductsDoripel"/>
 				<input type="hidden" name="callback_action" value="pdt_stock"/>
 				<input type="hidden" name="pdt_id" value="<?= $PdtId; ?>"/>
-
+				
 				<div class="inputs jwc_product_stock_target">
 					<div class="callback_return"></div>
 					<div class="clear"></div>
@@ -227,31 +227,32 @@
 		<input type="hidden" name="callback" value="ProductsDoripel"/>
 		<input type="hidden" name="callback_action" value="manager"/>
 		<input type="hidden" name="pdt_id" value="<?= $PdtId; ?>"/>
-
+		
 		<main class="box box70">
-
+			
 			<div class="panel_header default">
 				<h2 class='icon-newspaper'>Dados do Produto:</h2>
 			</div>
-
+			
 			<div class="panel">
-
+				
 				<label class="label">
 					<span class="legend">Produto:</span>
 					<input class="font_large" type="text" name="pdt_title" value="<?= $pdt_title; ?>"
 					       placeholder="Nome do Produto:" required/>
 				</label>
-
+				
 				<label class="label">
-					<span class="legend">Breve Descrição:</span>
-					<textarea class="font_medium" name="pdt_subtitle" rows="3"
-					          required><?= $pdt_subtitle; ?></textarea>
-				</label>
+					<span class="legend">Breve Descrição: <span class='caracteres'></span></span>
 
+					<textarea maxlength="255" class="font_medium subtitle_optimize"" name="pdt_subtitle" rows="3"
+					required><?= $pdt_subtitle; ?></textarea>
+				</label>
+				
 				<label class="label">
 					<span class="legend">TAGS (palavras-chave separadas por vírgula:</span>
 					<input class='font_medium' type="text" name="pdt_tags" value="<?= $pdt_tags; ?>" list="tags"/>
-
+					
 					<datalist id="tags">
                         <?php
                             $Read->fullRead(
@@ -263,7 +264,7 @@
                         ?>
 					</datalist>
 				</label>
-
+				
 				<div class="label_33">
 					<label class="label">
 						<span class="legend">Referência: (VPN)</span>
@@ -299,10 +300,10 @@
 						       title="O campo não deve conter LETRAS" maxlength="13" pattern="[0-9]+$"
 						       value="<?= ($pdt_code ? $pdt_code : ''); ?>" required/>
 					</label>
-
+				
 				</div>
-
-
+				
+				
 				<div class="label_33">
 					<label class="label">
 						<span class="legend">Marca/Fabricante:</span>
@@ -328,7 +329,7 @@
                             }
                         ?>
 					</label>
-
+					
 					<label class="label">
 						<span class="legend">Linha/Ano:</span>
                         <?php
@@ -351,7 +352,7 @@
 
                         ?>
 					</label>
-
+					
 					<label class="label">
 						<span class="legend">Categoria:</span>
                         <?php
@@ -388,14 +389,14 @@
                         ?>
 					</label>
 				</div>
-
+				
 				<label class="label">
 					<span class="legend">Descrição Completa:</span>
 					<textarea name="pdt_content" class="work_mce" rows="10"><?= $pdt_content; ?></textarea>
 				</label>
-
+			
 			</div>
-
+			
 			<div class='panel_header default'>
 				<h2 class='icon-insert-template'>OPCIONAIS DO PRODUTO:</h2>
 			</div>
@@ -420,7 +421,7 @@
 									</label>
 									<div class="clear"></div>
 								</div>
-
+								
 								<div class="label_50">
 									<label class='label'>
 										<span class='legend'>Imagem do Opcional:</span>
@@ -451,12 +452,12 @@
 										     title='Imagem do Opcional'
 										     src="../tim.php?src=<?= $OptionalImage; ?>&w=300&h=auto"
 										     default="../tim.php?src=<?= $OptionalImage; ?>&w=300&h=auto"/>
-
+									
 									</div>
-
+									
 									<div class="clear"></div>
 								</div>
-
+								
 								<label class='label'>
 									<span class='legend'>Descrição Opcional:</span>
 									<textarea id="pdt_optional_desc_<?= $OptionalIndex; ?>"
@@ -464,7 +465,7 @@
 									          class='work_mce_basic'
 									          rows='5'><?= $Optional['pdt_optional_desc']; ?></textarea>
 								</label>
-
+								
 								<button type="button" class="btn btn_red icon-cross j_remove_pdt_optional">Remover
 									opcional
 								</button>
@@ -473,13 +474,13 @@
                             <?php
                         } ?>
 				</div>
-
+				
 				<div class="pdt_volume_actions">
 					<button type="button" class="btn btn_blue icon-plus j_add_pdt_optional">Adicionar opcional
 					</button>
 				</div>
 			</div>
-
+			
 			<div class="panel_header default">
 				<h2 class="icon-box-add">VOLUMES DO PRODUTO:</h2>
 			</div>
@@ -507,7 +508,7 @@
 									</label>
 									<div class="clear"></div>
 								</div>
-
+								
 								<div class="label_50">
 									<label class="label">
 										<span class="legend">Largura Em Metros:</span>
@@ -535,20 +536,20 @@
                             <?php
                         } ?>
 				</div>
-
+				
 				<div class="pdt_volume_actions">
 					<button type="button" class="btn btn_blue icon-plus j_add_pdt_volume">Adicionar volume
 					</button>
 				</div>
-
+			
 			</div>
-
-
+			
+			
 			<div class="panel_header default">
 				<h2 class="icon-equalizer">DIMENSÕES DO PRODUTO MONTADO:</h2>
 			</div>
-
-
+			
+			
 			<div class="panel">
 				<div class='label_50'>
 					<label class='label'>
@@ -563,10 +564,10 @@
 						       value="<?= $pdt_dimension_width_mounted; ?>" placeholder='Largura em Metros:'
 						       required/>
 					</label>
-
+					
 					<div class='clear'></div>
 				</div>
-
+				
 				<div class='label_50'>
 					<label class='label'>
 						<span class='legend'>Profundidade Em Metros:</span>
@@ -581,18 +582,18 @@
 						       value="<?= $pdt_dimension_weight_mounted; ?>" placeholder='Peso em KG:'
 						       required/>
 					</label>
-
+					
 					<div class='clear'></div>
 				</div>
 			</div>
-
+			
 			<div class="clear"></div>
-
-
+		
+		
 		</main>
-
+		
 		<aside class="box box30">
-
+			
 			<div class="panel_header default">
 				<label class='label'>
 					<span class='legend'>Imagem principal (JPG <?= THUMB_W; ?>x<?= THUMB_H; ?>px):</span>
@@ -622,7 +623,7 @@
                         echo '<div class="pdt_images gallery pdt_single_image"></div>';
                     }
                 ?>
-
+				
 				<label class="label">
 					<span class="legend">Fotos Adicionais (JPG <?= THUMB_W; ?>x<?= THUMB_H; ?>px):</span>
 					<input type="file" name="image[]" multiple/>
@@ -636,27 +637,27 @@
 				<img class="pdt_scene" alt="Cena do Produto" title="Cena do Produto"
 				     src="../tim.php?src=<?= $Cena; ?>&w=1920/2&h=1152/2"
 				     default="../tim.php?src=<?= $Cena; ?>&w=1920&h=1152"/>
-
+				
 				<label class="label">
 					<span class="legend">Cena (JPG 1920x1152px):</span>
 					<input type="file" class="wc_loadimage" name="pdt_scene"/>
 				</label>
-
+				
 				<h2 class='icon-file-pdf'>Gabarito de Montagem (PDF):</h2>
 				<label class='label'>
 					<span class='legend'></span>
 					<input type='file' value="<?= ($pdt_instrutions ? $pdt_instrutions : ''); ?>"
 					       name='pdt_instrutions'/>
 				</label>
-
+				
 				<h2 class="icon-youtube">Youtube - Vídeo ID:</h2>
-
+				
 				<label class="label">
 					<span class="legend">youtube.com/watch?v=<b>VuM-UIMqHkk</b></span>
 					<input type=" text" name="pdt_video" placeholder="Somente ID do Vídeo"
 					       value="<?= isset($pdt_video) ? $pdt_video : ''; ?>"/>
 				</label>
-
+				
 				<div class="m_top">&nbsp;</div>
 				<div class="wc_actions">
 
@@ -669,13 +670,13 @@
                             'NÃO'
                         );
                     ?>
-
+					
 					<button name="public" value="1" class="btn btn_green icon-share">ATUALIZAR</button>
 					<img class="form_load none" style="margin-left: 10px;" alt="Enviando Requisição!"
 					     title="Enviando Requisição!" src="_img/load.gif"/>
 				</div>
 			</div>
-
+			
 			<div class='panel panel_share'>
 				<h2 class="icon-share2">Compartilhe nas Redes Sociais:</h2>
                 <?php
@@ -685,9 +686,9 @@
                     require_once __DIR__ . '/../../../assets/widgets/share/share.product.wc.php';
                 ?>
 			</div>
-
+		
 		</aside>
-
+	
 	</form>
 </div>
 
@@ -696,14 +697,14 @@
     (function () {
         var wrapper = document.querySelector('.j_pdt_optionals');
         var addButton = document.querySelector('.j_add_pdt_optional');
-
+        
         if (!wrapper || !addButton) {
             return;
         }
-
+        
         function renderOptional(index) {
             var displayIndex = index + 1;
-
+            
             return '<div class="j_pdt_optional_item" data-optional-index="' + index + '">' +
                 '<span class="section icon-insert-template">Opcional ' + displayIndex + '</span>' +
                 '<div class="label_50">' +
@@ -727,70 +728,70 @@
                 '<button type="button" class="btn btn_red icon-cross j_remove_pdt_optional">Remover opcional</button>' +
                 '<div class="clear"></div></div>';
         }
-
+        
         function initOptionalEditor(index) {
             var editorId = 'pdt_optional_desc_' + index;
-
+            
             if (typeof tinyMCE === 'undefined' || !document.getElementById(editorId)) {
                 return;
             }
-
+            
             if (tinyMCE.get(editorId)) {
                 tinyMCE.execCommand('mceRemoveEditor', false, editorId);
             }
-
+            
             tinyMCE.execCommand('mceAddEditor', false, editorId);
         }
-
+        
         function removeOptionalEditor(item) {
             var textarea = item ? item.querySelector('textarea.work_mce_basic') : null;
-
+            
             if (textarea && typeof tinyMCE !== 'undefined' && tinyMCE.get(textarea.id)) {
                 tinyMCE.execCommand('mceRemoveEditor', false, textarea.id);
             }
         }
-
+        
         function syncUploadedOptionalImages(data) {
             if (!data || !data.optional_images) {
                 return;
             }
-
+            
             Object.keys(data.optional_images).forEach(function (index) {
                 var image = data.optional_images[index];
                 var hidden = wrapper.querySelector('[name="optionals[' + index + '][pdt_optional_img_current]"]');
                 var item = hidden ? hidden.closest('.j_pdt_optional_item') : null;
                 var preview = item ? item.querySelector('.j_pdt_optional_preview') : null;
                 var imageUrl = '../tim.php?src=uploads/' + image + '&w=300&h=300';
-
+                
                 if (hidden) {
                     hidden.value = image;
                 }
-
+                
                 if (preview) {
                     preview.setAttribute('default', imageUrl);
                     preview.setAttribute('src', imageUrl);
                 }
             });
         }
-
+        
         function refreshRemoveButtons() {
             var items = wrapper.querySelectorAll('.j_pdt_optional_item');
             var canRemove = items.length > 1;
-
+            
             items.forEach(function (item, index) {
                 var title = item.querySelector('.section');
                 var removeButton = item.querySelector('.j_remove_pdt_optional');
-
+                
                 if (title) {
                     title.textContent = 'Opcional ' + (index + 1);
                 }
-
+                
                 if (removeButton) {
                     removeButton.style.display = canRemove ? 'inline-block' : 'none';
                 }
             });
         }
-
+        
         addButton.addEventListener('click', function () {
             var index = parseInt(wrapper.getAttribute('data-next-optional'), 10) || wrapper.querySelectorAll('.j_pdt_optional_item').length;
             wrapper.insertAdjacentHTML('beforeend', renderOptional(index));
@@ -798,39 +799,39 @@
             initOptionalEditor(index);
             refreshRemoveButtons();
         });
-
+        
         wrapper.addEventListener('click', function (event) {
             var button = event.target.closest('.j_remove_pdt_optional');
-
+            
             if (!button || wrapper.querySelectorAll('.j_pdt_optional_item').length <= 1) {
                 return;
             }
-
+            
             var item = button.closest('.j_pdt_optional_item');
             removeOptionalEditor(item);
             item.remove();
             refreshRemoveButtons();
         });
-
+        
         wrapper.addEventListener('change', function (event) {
             var input = event.target.closest('.j_pdt_optional_img');
-
+            
             if (!input) {
                 return;
             }
-
+            
             var item = input.closest('.j_pdt_optional_item');
             var target = item ? item.querySelector('.j_pdt_optional_preview') : null;
-
+            
             if (!target) {
                 return;
             }
-
+            
             if (!input.files || !input.files[0]) {
                 target.setAttribute('src', target.getAttribute('default'));
                 return;
             }
-
+            
             if (!input.files[0].type.match(/^image\/(jpeg|png|gif|webp)$/)) {
                 if (typeof Trigger === 'function') {
                     Trigger('<div class="trigger trigger_alert trigger_ajax"><b>ERRO AO SELECIONAR:</b> O arquivo <b>' + input.files[0].name + '</b> não é válido! <b>Selecione uma imagem (.jpg, .jpeg, .png, .gif ou .webp)</b></div>');
@@ -839,20 +840,20 @@
                 target.setAttribute('src', target.getAttribute('default'));
                 return;
             }
-
+            
             var reader = new FileReader();
             reader.onload = function (readerEvent) {
                 target.setAttribute('src', readerEvent.target.result);
             };
             reader.readAsDataURL(input.files[0]);
         });
-
+        
         if (window.jQuery) {
             jQuery(document).ajaxSuccess(function (event, xhr, settings, data) {
                 if (!settings || settings.url.indexOf('_ajax/ProductsDoripel.ajax.php') === -1) {
                     return;
                 }
-
+                
                 if (!data && xhr && xhr.responseText) {
                     try {
                         data = JSON.parse(xhr.responseText);
@@ -860,25 +861,25 @@
                         data = null;
                     }
                 }
-
+                
                 syncUploadedOptionalImages(data);
             });
         }
-
+        
         refreshRemoveButtons();
     })();
-
+    
     (function () {
         var wrapper = document.querySelector('.j_pdt_volumes');
         var addButton = document.querySelector('.j_add_pdt_volume');
-
+        
         if (!wrapper || !addButton) {
             return;
         }
-
+        
         function renderVolume(index) {
             var displayIndex = index + 1;
-
+            
             return '<div class="j_pdt_volume_item" data-volume-index="' + index + '">' +
                 '<span class="section icon-box-remove">Volume ' + displayIndex + '</span>' +
                 '<div class="label_50">' +
@@ -896,43 +897,43 @@
                 '<button type="button" class="btn btn_red icon-cross j_remove_pdt_volume">Remover volume</button>' +
                 '<div class="clear"></div></div>';
         }
-
+        
         function refreshRemoveButtons() {
             var items = wrapper.querySelectorAll('.j_pdt_volume_item');
             var canRemove = items.length > 1;
-
+            
             items.forEach(function (item, index) {
                 var title = item.querySelector('.section');
                 var removeButton = item.querySelector('.j_remove_pdt_volume');
-
+                
                 if (title) {
                     title.textContent = 'Volume ' + (index + 1);
                 }
-
+                
                 if (removeButton) {
                     removeButton.style.display = canRemove ? 'inline-block' : 'none';
                 }
             });
         }
-
+        
         addButton.addEventListener('click', function () {
             var index = parseInt(wrapper.getAttribute('data-next-volume'), 10) || wrapper.querySelectorAll('.j_pdt_volume_item').length;
             wrapper.insertAdjacentHTML('beforeend', renderVolume(index));
             wrapper.setAttribute('data-next-volume', String(index + 1));
             refreshRemoveButtons();
         });
-
+        
         wrapper.addEventListener('click', function (event) {
             var button = event.target.closest('.j_remove_pdt_volume');
-
+            
             if (!button || wrapper.querySelectorAll('.j_pdt_volume_item').length <= 1) {
                 return;
             }
-
+            
             button.closest('.j_pdt_volume_item').remove();
             refreshRemoveButtons();
         });
-
+        
         refreshRemoveButtons();
     })();
 </script>

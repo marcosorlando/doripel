@@ -2,6 +2,8 @@
 
     use App\Conn\Read;
     use App\Conn\Update;
+    use App\Helpers\Check;
+    use App\Models\Pager;
 
     setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
     date_default_timezone_set('America/Sao_Paulo');
@@ -39,7 +41,7 @@
     $ProductVolumeCount = count($ProductVolumes);
     $ProductCubage = doripelProductCubage($ProductVolumes);
 ?>
-<section class="wow fadeIn bg-light-gray padding-35px-tb page-title-small top-space">
+<section class="wow fadeIn bg-light-gray padding-15px-tb page-title-small top-space">
 	<div class="container">
 		<div class="row equalize xs-equalize-auto">
 			<div class="col-lg-7 col-md-6 col-sm-6 col-xs-12 display-table">
@@ -67,16 +69,18 @@
 	</div>
 </section>
 <!-- start call to action section -->
+<!-- @SCENE OLD
 <section class='parallax wow fadeIn' data-stellar-background-ratio='0.2'
-         style="background-image:url('<?= BASE; ?>/uploads/<?= $pdt_scene; ?>');">
+         style="background-image:url('<= BASE; ?>/uploads/<= $pdt_scene; ?>');">
 
-	<div class='container'>
+		<div class='container'>
 		<div class='row'>
 			<div class='col-lg-8 center-col display-table extra-small-screen text-center col-md-8 xs-padding-15px-lr'>
 				<div class='display-table-cell vertical-align-middle'>
-					<span class='margin-15px-bottom display-block alt-font text-uppercase xs-margin-5px-bottom'>REQUINTE E SOFISTICAÇÃO</span>
-					<h3 class='alt-font text-extra-dark-gray font-weight-600'><?= $pdt_title; ?>
-						<br><?= $pdt_color; ?>
+					<span class='text-pink margin-15px-bottom display-block alt-font text-uppercase
+					xs-margin-5px-bottom'>REQUINTE E SOFISTICAÇÃO</span>
+					<h3 class='alt-font text-extra-dark-gray font-weight-600'><= $pdt_title; ?>
+						<br><= $pdt_color; ?>
 					</h3>
 					<a href=""
 					   class="jwc_contact btn btn-transparent-deep-pink bg-white btn-large margin-20px-top xs-no-margin-top wow fadeInUp"><i
@@ -86,8 +90,13 @@
 		</div>
 	</div>
 </section>
+-->
 <!-- start about product section -->
-<section class="wow fadeIn no-padding bg-light-gray top-space">
+<section class="wow fadeIn no-padding bg-light-gray">
+	<figure class="col-12 pdt_image-scene">
+		<img src="<?= BASE . '/tim.php?src=uploads/' . $pdt_scene ?>&w=100%&h=auto"'
+		alt="<?= "{$pdt_title} - foto ambientada" ?>">
+	</figure>
 	<div class="container-fluid">
 		<div class="row equalize sm-equalize-auto">
 			<!-- start post item -->
@@ -147,6 +156,8 @@
 							<b><?= doripelNormalizeDimension($pdt_dimension_weight_mounted ?? 0); ?></b> Kg
 						</li>
 					</ul>
+					<a href="#relacionados" class="btn btn-deep-pink wc_goto"><i class="fa fa-"></i> Outras Opções de
+						Cores</a>
 				</div>
 			</div>
 		</div>
@@ -158,10 +169,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 sm-margin-50px-bottom xs-margin-30px-bottom wow fadeIn">
-				<h5 class="alt-font text-extra-dark-gray font-weight-600"><?= $pdt_title; ?></h5>
-				<p><?= $pdt_content; ?></p>
-				<a href="#" class="jwc_contact btn btn-deep-pink btn-medium"><i class="fa fa-shopping-bag"></i> Onde
-					Comprar?</a>
+				<h3 class="alt-font text-deep-pink font-weight-600"><?= $pdt_title; ?></h3>
+				<div class="htmlchars"><?= $pdt_content; ?></div>
+				<span class="jwc_contact btn btn-deep-pink btn-medium"><i class="fa fa-shopping-bag"></i> Onde
+					Comprar?</span>
 				<a href="<?= BASE; ?>/uploads/<?= $pdt_instrutions; ?>" target="_blank"
 				   title="Clique para Baixar o Manual em PDF" class="btn btn-transparent-deep-pink btn-medium"><i
 							class="fa fa-file-pdf-o"></i> Manual
@@ -170,16 +181,18 @@
 			<div class="col-md-4 col-md-offset-2 wow fadeIn">
 				<ul class="list-style-8 margin-twelve-left">
 					<li class="text-uppercase text-extra-dark-gray">
-						<span class="display-block text-extra-small text-medium-gray">Referência</span><?= $pdt_ref ?>
+						<span class="display-block text-small text-deep-pink">Referência</span><?= $pdt_ref ?>
 					</li>
 					<li class="text-uppercase text-extra-dark-gray">
-						<span class="display-block text-extra-small text-medium-gray">Código de Barras (EAN)</span><?= $pdt_code ?>
+						<span class="display-block text-small text-deep-pink">Código de Barras (EAN)</span><?=
+                            $pdt_code ?>
 					</li>
 					<li class="text-uppercase text-extra-dark-gray">
-						<span class="display-block text-extra-small text-medium-gray">Padrão de Cor</span><?= $pdt_color ?>
+						<span class="display-block text-small text-deep-pink">Padrão de Cor</span><?= $pdt_color ?>
 					</li>
 					<li class="text-uppercase text-extra-dark-gray">
-						<span class="display-block text-extra-small text-medium-gray">Cubagem na caixa (<span><?= $ProductVolumeCount; ?></span> volumes)</span>
+						<span class="display-block text-small text-deep-pink">Cubagem na caixa (<span><?=
+                                    $ProductVolumeCount; ?></span> volumes)</span>
                         <?= number_format($ProductCubage, 4, ',', '.') ?> M&sup3;
 					</li>
 				</ul>
@@ -193,6 +206,33 @@
         require REQUIRE_PATH . "/inc/video_popup.php";
     }
 ?>
+<section class='no-padding-top' id="relacionados">
+	<div class='container'>
+		<div class='row'>
+			<div class='col-12 sm-margin-60px-bottom xs-margin-40px-bottom'>
+
+				<h6>Produtos Relacionados:</h6>
+
+                <?php
+                    $refParent = strstr((string)$pdt_ref, '-', true) ?: (string)$pdt_ref;
+                    $Read->fullRead(
+                        'SELECT pdt_title, pdt_name, pdt_cover, pdt_ref, pdt_created, pdt_color FROM ' .
+                        DB_PDT_DORIPEL . ' WHERE pdt_status = 1 AND pdt_id != :id AND pdt_ref LIKE :ref ORDER BY pdt_created DESC',
+                        "id={$pdt_id}&ref={$refParent}-%"
+                    );
+
+                    if ($Read->getResult()) {
+                        foreach ($Read->getResult() as $Post) {
+                            extract($Post);
+                            $BOX = 1;
+                            require REQUIRE_PATH . '/inc/produto.php';
+                        }
+                    }
+                ?>
+			</div>
+		</div>
+	</div>
+</section>
 
 <?php
     include_once "./assets/widgets/contact/contact.wc.php";

@@ -5,7 +5,6 @@
  */
  
 (function ( $ ) {
- 
     $.fn.skillBars = function( options ) {
  
         var settings = $.extend({
@@ -41,7 +40,7 @@
 			obj.find(settings.classes.skillBarBar).animate({
 				width: parseInt(obj.attr('data-percent'))+'%'
 			}, settings.speed);
-						
+			
 			function updateValue(){
 				from += increment;
                 loopCount++;

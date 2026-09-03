@@ -1,6 +1,5 @@
 /*!
- * The Final Countdown for jQuery v2.0.4
- */
+ * The Final Countdown for jQuery v2.0.4 */
 (function(factory) {
     "use strict";
     if (typeof define === "function" && define.amd) {
@@ -186,4 +185,3 @@
         });
     };
 });
-		
